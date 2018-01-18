@@ -118,10 +118,7 @@
 
         </div>
 
-        <footer>
-            <div class="logo-footer"><p>FireBets</p></div>
-            <div><p>© Общество с ограниченной ответственностью «FireBets», 2017</p>
-                <p>Не зарегистрированный товарный знак FireBets.BY</p></div>
-        </footer>
+        <%@include file="jspf/footer.jspf"%>
+
     </body>
 </html>
