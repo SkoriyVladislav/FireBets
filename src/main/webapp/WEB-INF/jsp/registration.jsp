@@ -51,31 +51,7 @@
             </div>
         </div>
 
-        <header class="text-center">
-            <ul class="menu">
-                <li><a href="../index.html" class="link-block-menu"><p>Главная</p></a></li>
-                <li class="has-dropdown">
-                    <a href="#" class="link-block-menu"><p>Профиль</p></a>
-                    <ul class="dropdown animated-fast fadeInUpMenu" >
-                        <li><a href="#">Мои ставки</a></li>
-                        <li><a href="#">Кошелёк</a></li>
-                    </ul>
-                </li>
-                <li><a href="#" class="link-block-menu"><p>Новости</p></a></li>
-                <li><a href="#" class="link-block-menu"><p>О компании</p></a></li>
-                <li><a href="#" class="link-block-menu"><p>Связаться с нами</p></a></li>
-                <li class="has-dropdown">
-                    <a href="#" class="link-block-menu"><p>Помощь</p></a>
-                    <ul class="dropdown dropdown-1 animated-fast fadeInUpMenu">
-                        <li><a href="#">Как сделать ставку?</a></li>
-                        <li><a href="#">Как пополнить счёт?</a></li>
-                        <li><a href="#">Как вывести деньги?</a></li>
-                    </ul>
-                </li>
-            </ul>
-            </div>
-        </header>
-
+        <%@include file="jspf/header.jspf"%>
 
         <div class="head-title">
             <div class="middle">

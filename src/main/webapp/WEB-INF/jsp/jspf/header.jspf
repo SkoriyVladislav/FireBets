@@ -1,0 +1,31 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Skori
+  Date: 18.01.2018
+  Time: 10:38
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<header class="text-center">
+    <ul class="menu">
+        <li><a href="../../index.html" class="link-block-menu"><p>Главная</p></a></li>
+        <li class="has-dropdown">
+            <a href="#" class="link-block-menu"><p>Профиль</p></a>
+            <ul class="dropdown animated-fast fadeInUpMenu" >
+                <li><a href="#">Мои ставки</a></li>
+                <li><a href="#">Кошелёк</a></li>
+            </ul>
+        </li>
+        <li><a href="#" class="link-block-menu"><p>Новости</p></a></li>
+        <li><a href="#" class="link-block-menu"><p>О компании</p></a></li>
+        <li><a href="#" class="link-block-menu"><p>Связаться с нами</p></a></li>
+        <li class="has-dropdown">
+            <a href="#" class="link-block-menu"><p>Помощь</p></a>
+            <ul class="dropdown dropdown-1 animated-fast fadeInUpMenu">
+                <li><a href="#">Как сделать ставку?</a></li>
+                <li><a href="#">Как пополнить счёт?</a></li>
+                <li><a href="#">Как вывести деньги?</a></li>
+            </ul>
+        </li>
+    </ul>
+</header>
