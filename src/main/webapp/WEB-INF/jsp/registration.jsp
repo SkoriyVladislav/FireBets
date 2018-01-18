@@ -24,31 +24,15 @@
                 FireBets
             </div>
 
-            <div class = "authorization">
-                <div class="auth-form">
-                    <form>
-                        <div class="input-left input-login">
-                            <input type="text" name="login" placeholder='Логин' autocomplete="off" value=""/>
-                        </div>
+            <c:choose>
+                <c:when test="${sessionScope.user == null}">
+                    <%@include file="jspf/user_login.jspf" %>
+                </c:when>
 
-                        <div class="input-right input-pass">
-                            <input type="password" name="password" class="formlogin" placeholder='Пароль' autocomplete="off" value=""/>
-                        </div>
-
-                        <div class="input-left input-enter">
-                            <input id="enter" type="submit" value="Вход"/>
-                        </div>
-
-                        <div class="remember-pass">
-                            <a href="#" class="link-block-remember-pass text-center">Забыли пароль? </a>
-                        </div>
-
-                        <div class="input-left input-registr">
-                            <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" title="Регистрация в букмекерской конторе Fire Bets" class="link-block-registration">Регистрация </a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                <c:otherwise>
+                    <%@include file="jspf/user_profile.jspf" %>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <%@include file="jspf/header.jspf"%>

@@ -1,0 +1,15 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Skori
+  Date: 18.01.2018
+  Time: 10:56
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div class = "authorization">
+    <div class="auth-form">
+        <div class="input-left input-registr">
+            <a href="${pageContext.request.contextPath}/controller?command=go_to_profile" title="${sessionScope.user}" class="link-block-registration">Регистрация </a>
+        </div>
+    </div>
+</div>
