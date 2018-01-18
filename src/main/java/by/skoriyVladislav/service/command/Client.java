@@ -30,6 +30,9 @@ public class Client {
             case LOGIN:
                 command = new Login(receiver);
                 break;
+            case LOGOUT:
+                command = new Logout(receiver);
+                break;
         }
         return command;
     }

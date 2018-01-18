@@ -12,9 +12,12 @@
             <a href="${pageContext.request.contextPath}/controller?command=go_to_profile"  class="link-block-registration">Привет, ${sessionScope.user.name}!</a>
         </div>
 
+
         <div class="input-left input-enter">
-            <input type="hidden" name="command" value="logout"/>
-            <input id="enter" type="submit" value="Выход"/>
+            <form method="get" action="controller">
+                <input type="hidden" name="command" value="logout"/>
+                <input id="enter" type="submit" value="Выход"/>
+            </form>
         </div>
     </div>
 </div>
