@@ -17,12 +17,15 @@ public class Receiver {
             case GO_TO_INDEX:
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
+
             case GO_TO_PROFILE:
                 request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);
                 break;
+
             case GO_TO_REGISTRATION:
                 request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
                 break;
+
             case REGISTRATION:
                 String login = request.getParameter("login");
                 String password = request.getParameter("pwd1");
@@ -34,6 +37,7 @@ public class Receiver {
                 UserDAO userDAO= factory.getUserDAO();
                 userDAO.registerUser(login, password, name, surname, "user", 0.0, email);
                 break;
+
             case LOGIN:
                 String login1 = request.getParameter("login");
                 String password1 = request.getParameter("password");
@@ -42,7 +46,12 @@ public class Receiver {
                 UserDAO userDAO1 = factory1.getUserDAO();
                 User user = userDAO1.createUser(login1, password1);
                 request.getSession().setAttribute("user", user);
-                request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+                break;
+
+            case LOGOUT:
+                request.getSession().setAttribute("user", null);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
         }
     }
