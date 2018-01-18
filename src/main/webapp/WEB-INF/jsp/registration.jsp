@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Skori
@@ -25,12 +26,12 @@
             </div>
 
             <c:choose>
-                <c:when test="${sessionScope.user == null}">
-                    <%@include file="jspf/user_login.jspf" %>
+                <c:when test="${sessionScope.user != null}">
+                    <%@include file="jspf/user_profile.jspf" %>
                 </c:when>
 
                 <c:otherwise>
-                    <%@include file="jspf/user_profile.jspf" %>
+                    <%@include file="jspf/user_login.jspf" %>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -47,7 +48,7 @@
 
         <div class="registerSteps">
 
-            <form onsubmit="return validateForm()" name="reg-form">
+            <form onsubmit="return validateForm()" name="reg-form" action="controller" method="get">
                 <div class="label">Логин:</div>
                 <div class="field">
                     <input type="text" name="login" class="inputPole" value="" placeholder=" " required />

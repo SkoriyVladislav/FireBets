@@ -9,7 +9,12 @@
 <div class = "authorization">
     <div class="auth-form">
         <div class="input-left input-registr">
-            <a href="${pageContext.request.contextPath}/controller?command=go_to_profile" title="${sessionScope.user}" class="link-block-registration">Регистрация </a>
+            <a href="${pageContext.request.contextPath}/controller?command=go_to_profile"  class="link-block-registration">Привет, ${sessionScope.user.name}!</a>
+        </div>
+
+        <div class="input-left input-enter">
+            <input type="hidden" name="command" value="logout"/>
+            <input id="enter" type="submit" value="Выход"/>
         </div>
     </div>
 </div>
