@@ -1,0 +1,1 @@
+INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES ('admin', 'admin', 'admin', 'admin', 'admin', 0, 'Skoriy.97@gmail.com')
