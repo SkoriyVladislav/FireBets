@@ -140,12 +140,10 @@ Matches_idMatchs</ColNames>
     <column id="34" parent="12" name="goalsTeam1">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="35" parent="12" name="goalsTeam2">
       <Position>6</Position>
       <DataType>int(11)|0</DataType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <index id="36" parent="12" name="Teams_idx">
       <ColNames>Team1

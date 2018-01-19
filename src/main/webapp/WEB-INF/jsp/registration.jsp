@@ -12,7 +12,7 @@
         <meta charset="UTF-8">
         <title>Registration</title>
         <script src="${pageContext.servletContext.contextPath}/web/js/jsScripts.js"></script>
-        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleFireBets.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleRegistr.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
     </head>

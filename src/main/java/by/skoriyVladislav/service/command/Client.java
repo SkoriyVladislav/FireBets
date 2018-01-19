@@ -15,8 +15,8 @@ public class Client {
         TypeCommand cmd = TypeCommand.valueOf(commandStr.toUpperCase());
         ICommand command = null;
         switch(cmd) {
-            case GO_TO_INDEX:
-                command = new GoToPageIndex(receiver);
+            case GO_TO_MAIN:
+                command = new GoToPageMain(receiver);
                 break;
             case GO_TO_REGISTRATION:
                 command = new GoToPageRegistration(receiver);

@@ -1,7 +1,9 @@
 package by.skoriyVladislav.service.command;
 
 import by.skoriyVladislav.dal.DAOFactory;
+import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
+import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.service.command.command_type.TypeCommand;
 
@@ -14,8 +16,12 @@ import java.util.List;
 public class Receiver {
     public void action(TypeCommand cmd, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch(cmd){
-            case GO_TO_INDEX:
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+            case GO_TO_MAIN:
+                DAOFactory daoFactory = DAOFactory.getInstance();
+                MatchDAO matchDAO = daoFactory.getMatchDAO();
+                List<Match> matches = matchDAO.createMatches();
+                request.getSession().setAttribute("matches", matches);
+                request.getRequestDispatcher("main.jsp").forward(request, response);
                 break;
 
             case GO_TO_PROFILE:
@@ -36,6 +42,10 @@ public class Receiver {
                 DAOFactory factory = DAOFactory.getInstance();
                 UserDAO userDAO= factory.getUserDAO();
                 userDAO.registerUser(login, password, name, surname, "user", 0.0, email);
+
+                User user = userDAO.createUser(login, password);
+                request.getSession().setAttribute("user", user);
+                response.sendRedirect("index.jsp");
                 break;
 
             case LOGIN:
@@ -44,9 +54,10 @@ public class Receiver {
 
                 DAOFactory factory1 = DAOFactory.getInstance();
                 UserDAO userDAO1 = factory1.getUserDAO();
-                User user = userDAO1.createUser(login1, password1);
-                request.getSession().setAttribute("user", user);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                User user1 = userDAO1.createUser(login1, password1);
+                request.getSession().setAttribute("user", user1);
+                response.sendRedirect("index.jsp");
+                //request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
 
             case LOGOUT:

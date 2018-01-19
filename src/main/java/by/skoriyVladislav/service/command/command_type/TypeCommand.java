@@ -6,7 +6,7 @@ public enum TypeCommand {
     LOGOUT,
     GO_TO_REGISTRATION,
     GO_TO_PROFILE,
-    GO_TO_INDEX;
+    GO_TO_MAIN;
 
     TypeCommand() {
     }
