@@ -1,6 +1,7 @@
 package by.skoriyVladislav.entity.match;
 
 public class Match {
+    private int id;
     private String team1;
     private String team2;
     private String data;
@@ -12,8 +13,9 @@ public class Match {
     private int goalsTeam1;
     private int goalsTeam2;
 
-    public Match(String team1, String team2, String data, String time,
+    public Match(int id, String team1, String team2, String data, String time,
                  double coefTeam1, double coefTeam2, double coefDraw, double coefExAcc, int goalsTeam1, int goalsTeam2) {
+        this.id = id;
         this.team1 = team1;
         this.team2 = team2;
         this.data = data;
@@ -24,6 +26,14 @@ public class Match {
         this.coefExAcc = coefExAcc;
         this.goalsTeam1 = goalsTeam1;
         this.goalsTeam2 = goalsTeam2;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTeam1() {

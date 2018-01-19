@@ -5,8 +5,7 @@ import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.UserRole;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MatchDAOImpl implements MatchDAO {
 
@@ -59,14 +58,13 @@ public class MatchDAOImpl implements MatchDAO {
                         coefExAcc = resultSet1.getDouble("CoefExAcc");
                     }
                 }
-                match = new Match(team1, team2, dateTime[0], dateTime[1], coefTeam1, coefTeam2, coefDraw, coefExAcc, goalsTeam1, goalsTeam2);
-                //match = new User(login, name, surname, password, money, email, role);
+                match = new Match(id, team1, team2, dateTime[0], dateTime[1], coefTeam1, coefTeam2, coefDraw, coefExAcc, goalsTeam1, goalsTeam2);
                 matches.add(match);
             }
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
-
+        matches.sort(Comparator.comparing(Match::getData).thenComparing(Match::getTime).reversed());
         return matches;
     }
 }
