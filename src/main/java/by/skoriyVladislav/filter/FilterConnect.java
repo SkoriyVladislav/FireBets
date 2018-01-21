@@ -1,5 +1,7 @@
 package by.skoriyVladislav.filter;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -23,20 +25,27 @@ public class FilterConnect implements Filter {
         @Override
         public String getParameter(String paramName) {
             String value = super.getParameter(paramName);
-            if ("go_to_make_bets".equals(paramName)) {
-                value = "go_to_login";
+            try {
+                BadCommands.valueOf(value.toUpperCase());
+                return "go_to_login";
+            } catch (IllegalArgumentException ex) {
+                return value;
             }
-            return value;
         }
 
         @Override
         public String[] getParameterValues(String paramName) {
             String values[] = super.getParameterValues(paramName);
-            if (!"dangerousParamName".equals(paramName)) {
-                for (int index = 0; index < values.length; index++) {
+
+            for (int index = 0; index < values.length; index++) {
+                try {
+                    BadCommands.valueOf(values[index].toUpperCase());
                     values[index] = "go_to_login";
+                } catch (IllegalArgumentException ex) {
+
                 }
             }
+
             return values;
         }
     }
