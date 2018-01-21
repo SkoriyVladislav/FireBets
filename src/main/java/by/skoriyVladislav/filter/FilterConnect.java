@@ -61,7 +61,11 @@ public class FilterConnect implements Filter {
 
     @Override
     public void doFilter (ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        chain.doFilter(new FilterRequest((HttpServletRequest) request), response);
+        if (((HttpServletRequest) request).getSession().getAttribute("user") == null) {
+            chain.doFilter(new FilterRequest((HttpServletRequest) request), response);
+        } else {
+            chain.doFilter( request, response);
+        }
     }
 
     @Override
