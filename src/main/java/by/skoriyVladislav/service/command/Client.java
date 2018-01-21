@@ -24,6 +24,9 @@ public class Client {
             case GO_TO_PROFILE:
                 command = new GoToPageProfile(receiver);
                 break;
+            case GO_TO_LOGIN:
+                command = new GoToPageLogin(receiver);
+                break;
             case REGISTRATION:
                 command = new Registration(receiver);
                 break;

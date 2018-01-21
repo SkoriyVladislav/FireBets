@@ -32,6 +32,10 @@ public class Receiver {
                 request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
                 break;
 
+            case GO_TO_LOGIN:
+                request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+                break;
+
             case REGISTRATION:
                 String login = request.getParameter("login");
                 String password = request.getParameter("pwd1");
@@ -40,7 +44,7 @@ public class Receiver {
                 String email = request.getParameter("email");
 
                 DAOFactory factory = DAOFactory.getInstance();
-                UserDAO userDAO= factory.getUserDAO();
+                UserDAO userDAO = factory.getUserDAO();
                 userDAO.registerUser(login, password, name, surname, "user", 0.0, email);
 
                 User user = userDAO.createUser(login, password);
