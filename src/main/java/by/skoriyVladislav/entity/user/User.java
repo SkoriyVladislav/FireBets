@@ -4,17 +4,15 @@ public class User {
     private String login;
     private String name;
     private String surname;
-    private String password;
     private double balance;
     private String email;
     private UserRole role;
 
 
-    public User(String login, String name, String surname, String password, double balance, String email, UserRole role) {
+    public User(String login, String name, String surname, double balance, String email, UserRole role) {
         this.login = login;
         this.name = name;
         this.surname = surname;
-        this.password = password;
         this.balance = balance;
         this.email = email;
         this.role = role;
@@ -42,14 +40,6 @@ public class User {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public double getBalance() {

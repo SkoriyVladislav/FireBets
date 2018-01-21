@@ -40,11 +40,10 @@ public class UserDAOImpl implements UserDAO {
                 String login = resultSet.getString("Login");
                 String name = resultSet.getString("Name");
                 String surname = resultSet.getString("SurName");
-                String password = resultSet.getString("Password");
                 double money = resultSet.getDouble("Balance");
                 String email = resultSet.getString("Email");
                 UserRole role = UserRole.valueOf(resultSet.getString("Role").toUpperCase());
-                user = new User(login, name, surname, password, money, email, role);
+                user = new User(login, name, surname, money, email, role);
             }
 
         } catch (SQLException e) {
