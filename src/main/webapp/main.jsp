@@ -71,7 +71,7 @@
                         </div>
 
                         <div style="margin-left: -2.5%">
-                            <a href="#" class="link-block-match"><c:out value="${match.team1}"/> - <c:out value="${match.team2}"/></a>
+                            <a href="${pageContext.request.contextPath}/controller?command=go_to_make_bet&match=${match.id}" class="link-block-match"><c:out value="${match.team1}"/> - <c:out value="${match.team2}"/></a>
                         </div>
 
                         <div class="coeff-info">
