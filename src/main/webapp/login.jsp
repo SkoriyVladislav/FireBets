@@ -1,5 +1,4 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'default'}"/>
 <fmt:setBundle basename="textcontent.pagecontent"/>

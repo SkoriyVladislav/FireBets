@@ -7,7 +7,7 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'default'}"/>
-<fmt:setBundle basename="textcontent.page_content"/>
+<fmt:setBundle basename="textcontent.pagecontent"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
