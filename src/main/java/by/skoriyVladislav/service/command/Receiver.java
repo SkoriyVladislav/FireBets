@@ -1,6 +1,7 @@
 package by.skoriyVladislav.service.command;
 
 import by.skoriyVladislav.dal.DAOFactory;
+import by.skoriyVladislav.dal.bet_dao.BetDAO;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.match.Match;
@@ -35,6 +36,10 @@ public class Receiver {
                 request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
                 break;
 
+            case GO_TO_MAKE_BET:
+                request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
+                break;
+
             case GO_TO_LOGIN:
                 String nfrom = URLEncoder.encode(request.getRequestURI(), "UTF-8");
                 String from = nfrom.substring(3);
@@ -60,6 +65,17 @@ public class Receiver {
                 User user = userDAO.createUser(login, password);
                 request.getSession().setAttribute("user", user);
                 response.sendRedirect("index.jsp");
+                break;
+
+            case MAKE_BET:
+                int matchId = Integer.getInteger(request.getParameter("match"));
+                String userLogin = ((User)request.getSession().getAttribute("user")).getLogin();
+                int size = Integer.getInteger(request.getParameter("size"));
+                String typeOfBet = request.getParameter("type");
+
+                DAOFactory factory2 = DAOFactory.getInstance();
+                BetDAO betDAO = factory2.getBetDAO();
+                betDAO.registrationBet(userLogin, matchId, size, typeOfBet);
                 break;
 
             case LOGIN:
