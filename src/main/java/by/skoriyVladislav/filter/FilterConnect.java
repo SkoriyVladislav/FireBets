@@ -1,7 +1,5 @@
 package by.skoriyVladislav.filter;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +14,14 @@ public class FilterConnect implements Filter {
     private FilterConfig config = null;
     private boolean active = true;
 
+    @Override
+    public void doFilter (ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        if (((HttpServletRequest) request).getSession().getAttribute("user") == null) {
+            chain.doFilter(new FilterRequest((HttpServletRequest) request), response);
+        } else {
+            chain.doFilter( request, response);
+        }
+    }
     class FilterRequest extends HttpServletRequestWrapper {
 
         public FilterRequest(HttpServletRequest request) {
@@ -59,14 +65,6 @@ public class FilterConnect implements Filter {
         }
     }
 
-    @Override
-    public void doFilter (ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (((HttpServletRequest) request).getSession().getAttribute("user") == null) {
-            chain.doFilter(new FilterRequest((HttpServletRequest) request), response);
-        } else {
-            chain.doFilter( request, response);
-        }
-    }
 
     @Override
     public void destroy() {

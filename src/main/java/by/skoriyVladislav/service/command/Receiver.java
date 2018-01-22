@@ -5,12 +5,15 @@ import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.User;
+import by.skoriyVladislav.service.ServiceFactory;
 import by.skoriyVladislav.service.command.command_type.TypeCommand;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.Enumeration;
 import java.util.List;
 
 public class Receiver {
@@ -33,7 +36,14 @@ public class Receiver {
                 break;
 
             case GO_TO_LOGIN:
-                request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+                String nfrom = URLEncoder.encode(request.getRequestURI(), "UTF-8");
+                String from = nfrom.substring(3);
+                if (request.getQueryString() != null) {
+                    from += "?" + request.getQueryString();
+                }
+                from = from.replace("&", "%26");
+                response.sendRedirect("login.jsp?from=" + from);
+                //request.getRequestDispatcher("/WEB-INF/jsp/login.jsp?from=" + from).forward(request, response);
                 break;
 
             case REGISTRATION:
@@ -60,7 +70,14 @@ public class Receiver {
                 UserDAO userDAO1 = factory1.getUserDAO();
                 User user1 = userDAO1.createUser(login1, password1);
                 request.getSession().setAttribute("user", user1);
-                response.sendRedirect("index.jsp");
+
+                String from1 = request.getParameter("from");
+                //String from1 = ServiceFactory.getInstance().getLastCommand();
+                if (from1 != null) {
+                    response.sendRedirect(from1);
+                } else {
+                    response.sendRedirect("index.jsp");
+                }
                 //request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
 
