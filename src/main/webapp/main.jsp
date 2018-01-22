@@ -8,12 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'default'}"/>
+<fmt:setBundle basename="textcontent.page_content"/>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>FireBets</title>
-        <script src="${pageContext.servletContext.contextPath}/web/js/jsScripts.js"></script>
-        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleIndex.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleMain.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
     </head>

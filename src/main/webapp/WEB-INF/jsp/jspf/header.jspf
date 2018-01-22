@@ -10,7 +10,7 @@
     <ul class="menu">
         <li><a href="../../index.html" class="link-block-menu"><p>Главная</p></a></li>
         <li class="has-dropdown">
-            <a href="#" class="link-block-menu"><p>Профиль</p></a>
+            <a href="#" class="link-block-menu"><p> <fmt:message key="header.profile"/> </p></a>
             <ul class="dropdown animated-fast fadeInUpMenu" >
                 <li><a href="#">Мои ставки</a></li>
                 <li><a href="#">Кошелёк</a></li>
