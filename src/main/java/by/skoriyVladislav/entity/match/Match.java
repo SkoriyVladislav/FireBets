@@ -10,11 +10,11 @@ public class Match {
     private double coefTeam2;
     private double coefDraw;
     private double coefExAcc;
-    private int goalsTeam1;
-    private int goalsTeam2;
+    private Integer goalsTeam1 = null;
+    private Integer goalsTeam2 = null;
 
     public Match(int id, String team1, String team2, String data, String time,
-                 double coefTeam1, double coefTeam2, double coefDraw, double coefExAcc, int goalsTeam1, int goalsTeam2) {
+                 double coefTeam1, double coefTeam2, double coefDraw, double coefExAcc, Integer goalsTeam1, Integer goalsTeam2) {
         this.id = id;
         this.team1 = team1;
         this.team2 = team2;
@@ -100,19 +100,19 @@ public class Match {
         this.coefExAcc = coefExAcc;
     }
 
-    public int getGoalsTeam1() {
+    public Integer getGoalsTeam1() {
         return goalsTeam1;
     }
 
-    public void setGoalsTeam1(int goalsTeam1) {
+    public void setGoalsTeam1(Integer goalsTeam1) {
         this.goalsTeam1 = goalsTeam1;
     }
 
-    public int getGoalsTeam2() {
+    public Integer getGoalsTeam2() {
         return goalsTeam2;
     }
 
-    public void setGoalsTeam2(int goalsTeam2) {
+    public void setGoalsTeam2(Integer goalsTeam2) {
         this.goalsTeam2 = goalsTeam2;
     }
 }

@@ -37,6 +37,11 @@ public class Receiver {
                 break;
 
             case GO_TO_MAKE_BET:
+                DAOFactory daoFactory3 = DAOFactory.getInstance();
+                MatchDAO matchDAO3 = daoFactory3.getMatchDAO();
+                Match match = matchDAO3.createMatch(Integer.parseInt(request.getParameter("match")));
+                request.getSession().setAttribute("match", match);
+
                 request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;
 
@@ -87,11 +92,11 @@ public class Receiver {
                 User user1 = userDAO1.createUser(login1, password1);
                 request.getSession().setAttribute("user", user1);
 
-                String from1 = request.getParameter("from");
-                //String from1 = ServiceFactory.getInstance().getLastCommand();
-                if (from1 != null) {
+                try {
+                    String from1 = request.getParameter("from");
                     response.sendRedirect(from1);
-                } else {
+                    //String from1 = ServiceFactory.getInstance().getLastCommand();
+                } catch (NullPointerException ex) {
                     response.sendRedirect("index.jsp");
                 }
                 //request.getRequestDispatcher("index.jsp").forward(request, response);

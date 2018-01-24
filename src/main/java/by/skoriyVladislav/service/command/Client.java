@@ -18,27 +18,35 @@ public class Client {
             case GO_TO_MAIN:
                 command = new GoToPageMain(receiver);
                 break;
+
             case GO_TO_REGISTRATION:
                 command = new GoToPageRegistration(receiver);
                 break;
+
             case GO_TO_PROFILE:
                 command = new GoToPageProfile(receiver);
                 break;
+
             case GO_TO_LOGIN:
                 command = new GoToPageLogin(receiver);
                 break;
+
             case GO_TO_MAKE_BET:
                 command = new GoToPageMakeBet(receiver);
                 break;
+
             case MAKE_BET:
                 command = new MakeBet(receiver);
                 break;
+
             case REGISTRATION:
                 command = new Registration(receiver);
                 break;
+
             case LOGIN:
                 command = new Login(receiver);
                 break;
+
             case LOGOUT:
                 command = new Logout(receiver);
                 break;

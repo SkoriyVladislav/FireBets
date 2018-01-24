@@ -363,37 +363,35 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
     margin-left: 12.5%;
     border-bottom: 2px solid #696969;
     padding-bottom: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .match {
-    margin-right: 3.5%;
-    margin-left: 3.5%;
+    margin-top: 1.5%;
+    margin-left: 1.5%;
+    width: 97%;
     border-bottom: 1px solid #b1b1b1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.match-info {
-    margin-right: 3.5%;
-    margin-left: 3.5%;
-    border-bottom: 1px solid #b1b1b1;
-    display: flex;
-    justify-content: space-between;
 }
 
 .coeff {
-    width: 20%;
-    margin-right: 1.5%;
+    margin-left: 1.5%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .coeff-info {
-    width: 17%;
-    margin-right: 1.5%;
+    width: 75%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+}
+
+.coeff-val {
+    margin-left: 5px;
 }
 
 .link-block-match {
@@ -407,12 +405,4 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
 
 .link-block-match:hover {
     color: rgba(0,0,0,.5);
-}
-
-.match-step{
-    width: auto;
-    margin-left: 2.5%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 }

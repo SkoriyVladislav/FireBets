@@ -1,4 +1,4 @@
-package by.skoriyVladislav.filter;
+package by.skoriyVladislav.servlet.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

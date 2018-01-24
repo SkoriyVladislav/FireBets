@@ -79,8 +79,19 @@ public class MatchDAOImpl implements MatchDAO {
         String team2 = resultSet.getString("team2");
         String[] dateTime = resultSet.getString("datetime").replace(".", " ").split(" ");
         int id = resultSet.getInt("idMatchs");
-        int goalsTeam1 = resultSet.getInt("goalsTeam1");
-        int goalsTeam2 = resultSet.getInt("goalsTeam2");
+
+        Integer goalsTeam1;
+        try {
+            goalsTeam1 = Integer.valueOf(resultSet.getString("goalsTeam1"));
+        } catch (Exception ex) {
+            goalsTeam1 = null;
+        }
+        Integer goalsTeam2;
+        try {
+            goalsTeam2 = Integer.valueOf(resultSet.getString("goalsTeam2"));
+        } catch (Exception ex) {
+            goalsTeam2 = null;
+        }
 
         double coefTeam1 = 0.0;
         double coefTeam2 = 0.0;
