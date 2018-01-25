@@ -381,17 +381,17 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .coeff-info {
-    width: 75%;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
 }
 
 .coeff-val {
-    margin-left: 5px;
+    margin-left: 1px;
 }
 
 .link-block-match {
@@ -405,4 +405,8 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
 
 .link-block-match:hover {
     color: rgba(0,0,0,.5);
+}
+
+.ExAccVal {
+    display: none;
 }

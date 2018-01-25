@@ -37,18 +37,18 @@ COMMENT = 'Всё пользователи';
 -- Table `FireBets`.`Matches`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FireBets`.`Matches` (
-  `idMatchs` INT NOT NULL AUTO_INCREMENT,
+  `idMatches` INT NOT NULL AUTO_INCREMENT,
   `Team1` VARCHAR(45) NOT NULL COMMENT 'Команда 1',
   `Team2` VARCHAR(45) NOT NULL COMMENT 'Команда 2',
   `DateTime` DATETIME(6) NOT NULL COMMENT 'Дата и время проведения матча',
-  PRIMARY KEY (`idMatchs`),
+  PRIMARY KEY (`idMatches`),
   INDEX `Teams_idx` (`Team1` ASC, `Team2` ASC))
 ENGINE = InnoDB
 COMMENT = 'Матчи';
 
 
 -- -----------------------------------------------------
--- Table `FireBets`.`Bets`
+-- Table `FireBets`.`Bet`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `FireBets`.`Bets` (
   `Users_Login` VARCHAR(30) NOT NULL COMMENT 'Логин пользователя создавшего ставку',
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `FireBets`.`Bets` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Bets_Matches1`
     FOREIGN KEY (`Matches_idMatchs`)
-    REFERENCES `FireBets`.`Matches` (`idMatchs`)
+    REFERENCES `FireBets`.`Matches` (`idMatches`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `FireBets`.`Coefficient` (
   PRIMARY KEY (`Matches_idMatchs`),
   CONSTRAINT `fk_Coefficient_Matches1`
     FOREIGN KEY (`Matches_idMatchs`)
-    REFERENCES `FireBets`.`Matches` (`idMatchs`)
+    REFERENCES `FireBets`.`Matches` (`idMatches`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

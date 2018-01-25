@@ -1,6 +1,7 @@
 package by.skoriyVladislav.dal.bet_dao.impl;
 
 import by.skoriyVladislav.dal.bet_dao.BetDAO;
+import by.skoriyVladislav.entity.bets.Bet;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,10 +12,10 @@ public class BetDAOImpl implements BetDAO {
     private final static String URL = "jdbc:mysql://localhost:3306/firebets";
     private final static String USERNAME = "root";
     private final static String PASSWORD = "root";
-    private final static String REGISTRATION_BET = "INSERT INTO bets (Login, idMatchs, Size, Type) VALUES (?, ?, ?, ?)";
+    private final static String REGISTRATION_BET = "INSERT INTO bets (Users_Login, Matches_idMatchs, Size, Type, goalsTeam1, goalsTeam2) VALUES (?, ?, ?, ?, ?, ?)";
 
     @Override
-    public boolean registrationBet(String login, int matchID, double size, String type) {
+    public boolean registrationBet(Bet bet) throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         }
@@ -25,14 +26,18 @@ public class BetDAOImpl implements BetDAO {
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(REGISTRATION_BET)) {
-            preparedStatement.setString(1, login);
-            preparedStatement.setInt(2, matchID);
-            preparedStatement.setDouble(3, size);
-            preparedStatement.setString(4, type);
+            preparedStatement.setString(1, bet.getLoginUser());
+            preparedStatement.setInt(2, bet.getIdMatches());
+            preparedStatement.setDouble(3, bet.getSize());
+            preparedStatement.setString(4, bet.getType().getName());
+            preparedStatement.setObject(5, bet.getGoalsTeam1());
+            preparedStatement.setObject(6, bet.getGoalsTeam2());
+            //preparedStatement.setInt(5, bet.getGoalsTeam1());
+            //preparedStatement.setInt(6, bet.getGoalsTeam2());
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new SQLException(e);
         }
 
         return true;

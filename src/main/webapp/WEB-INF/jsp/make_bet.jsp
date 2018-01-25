@@ -16,6 +16,26 @@
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleMakeBet.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        <script>
+            function agreeForm(box) {
+                // Если поставлен флажок, снимаем блокирование кнопки
+                var vis = (box.checked) ? "block" : "none";
+                var req = (box.checked) ? "true" : "false";
+                // В противном случае вновь блокируем кнопку
+                document.getElementById('div1').style.display = vis;
+                document.getElementById('div2').style.display = vis;
+                document.getElementById('div3').style.display = vis;
+                document.getElementById('div4').style.display = vis;
+
+                if (req == "true") {
+                    document.getElementById('div3').setAttribute('required', "true");
+                    document.getElementById('div4').setAttribute('required', "true");
+                } else {
+                    document.getElementById('div3').removeAttribute('required');
+                    document.getElementById('div3').removeAttribute('required');
+                }
+            }
+        </script>
     </head>
 
     <body>
@@ -29,7 +49,7 @@
 
         <%@include file="jspf/header.jspf"%>
 
-        <form action="controller" method="get">
+        <form action="controller" method="post">
             <div>
                 <div class="matches">
                     <div class="match">
@@ -53,42 +73,50 @@
                                 <div>Победа <c:out value="${sessionScope.match.team1}"/>: </div>
                                 <div class="coeff-val" >
                                     Коэфф: <c:out value="${sessionScope.match.coefTeam1}"/>
-                                    <input type="radio" name="type" value="team1">
                                 </div>
+                            </div>
+                            <div>
+                                <input type="radio" name="betType" value="team1" onclick="agreeForm(document.getElementById('form1'))" required>
                             </div>
 
                             <div class="coeff" >
                                 <div>Ничья: </div>
                                 <div class="coeff-val" >
                                     Коэфф: <c:out value="${sessionScope.match.coefDraw}"/>
-                                    <input type="radio" name="type" value="draw">
                                 </div>
+                            </div>
+                            <div>
+                                <input type="radio" name="betType" value="draw" onclick="agreeForm(document.getElementById('form1'))" required>
                             </div>
 
                             <div class="coeff" >
                                 <div>Победа <c:out value="${sessionScope.match.team2}"/>: </div>
                                 <div class="coeff-val" >
                                     Коэфф: <c:out value="${sessionScope.match.coefTeam2}"/>
-                                    <input type="radio" name="type" value="team2">
                                 </div>
+                            </div>
+                            <div>
+                                <input type="radio" name="betType" value="team2" onclick="agreeForm(document.getElementById('form1'))" required >
                             </div>
 
                             <div class="coeff" >
                                 <div>Точный счёт: </div>
                                 <div class="coeff-val">
                                     Коэфф: <c:out value="${sessionScope.match.coefExAcc}"/>
-                                    <input type="radio" name="type" value="exAcc">
                                 </div>
+                            </div>
+                            <div class="ExAcc" >
+                                <input id="form1" type="radio" name="betType" value="exAcc" onclick="agreeForm(this)" required>
+                            </div>
 
-                                <div>Голы <c:out value="${sessionScope.match.team1}"/></div>
-                                <div>
-                                    <input type="text" name="size" value="" size="1"/>
-                                </div>
+                            <div id="div1" class="ExAccVal">Голы <c:out value="${sessionScope.match.team1}"/></div>
+                            <div>
+                                <input id="div3" class="exAccVal" type="text" name="exAccVal1" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
+                            </div>
 
-                                <div> : Голы <c:out value="${sessionScope.match.team2}"/></div>
-                                <div>
-                                    <input type="text" name="size" value="" size="1"/>
-                                </div>
+                            <div id="div2" class="ExAccVal"> : Голы <c:out value="${sessionScope.match.team2}"/></div>
+                            <div>
+                                <input id="div4" class="ExAccVal" type="text" name="exAccVal2" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
                             </div>
                         </div>
                     </div>
@@ -96,13 +124,12 @@
                     <div class="match">
                         <div>Введите размер ставки: </div>
                         <div style="margin-left: 1.5%">
-                            <input type="text" name="size" value="" size="10"/>
+                            <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required/>
                         </div>
                     </div>
 
                     <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
-                        <input type="hidden" name="match" value="${sessionScope.match.id}"/>
-                        <input type="hidden" name="command" value="make_bet"/>
+                        <input type="hidden" name="command" value="MAKE_BET"/>
                         <input type="submit" value="Отправить"/>
                     </div>
 

@@ -30,8 +30,8 @@ public class MainController extends HttpServlet {
 
         ServiceFactory factory = ServiceFactory.getInstance();
         Client client = factory.getClient();
-
-        ICommand command = client.initCommand(request.getParameter("command"));
+        String cmd = request.getParameter("command");
+        ICommand command = client.initCommand(cmd);
         Invoker invoker = new Invoker(command);
 
         invoker.invokeCommand(request, response);

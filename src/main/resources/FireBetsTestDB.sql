@@ -1,1 +1,1 @@
-INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES ('admin', 'admin', 'admin', 'admin', 'admin', 0, 'Skoriy.97@gmail.com')
+INSERT INTO bets (Users_Login, Matches_idMatchs, Size, Type, goalsTeam1, goalsTeam2) VALUES ('admin', 8, 12, 'team1', NULL , NULL )

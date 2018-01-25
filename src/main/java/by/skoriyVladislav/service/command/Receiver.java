@@ -4,6 +4,8 @@ import by.skoriyVladislav.dal.DAOFactory;
 import by.skoriyVladislav.dal.bet_dao.BetDAO;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
+import by.skoriyVladislav.entity.bets.Bet;
+import by.skoriyVladislav.entity.bets.BetType;
 import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.service.ServiceFactory;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -73,14 +76,26 @@ public class Receiver {
                 break;
 
             case MAKE_BET:
-                int matchId = Integer.getInteger(request.getParameter("match"));
+                int matchId = ((Match)request.getSession().getAttribute("match")).getId();
                 String userLogin = ((User)request.getSession().getAttribute("user")).getLogin();
-                int size = Integer.getInteger(request.getParameter("size"));
-                String typeOfBet = request.getParameter("type");
+                BetType typeOfBet = BetType.valueOf(request.getParameter("betType").toUpperCase());
+                Integer size = Integer.valueOf(request.getParameter("betVal"));
+                Integer goalsTeam1 = null;
+                Integer goalsTeam2 = null;
+                if (typeOfBet == BetType.EXACC) {
+                    goalsTeam1 = Integer.valueOf(request.getParameter("exAccVal1"));
+                    goalsTeam2 = Integer.valueOf(request.getParameter("exAccVal2"));
+                }
+                Bet bet = new Bet(userLogin, matchId, size, typeOfBet, goalsTeam1, goalsTeam2);
 
                 DAOFactory factory2 = DAOFactory.getInstance();
                 BetDAO betDAO = factory2.getBetDAO();
-                betDAO.registrationBet(userLogin, matchId, size, typeOfBet);
+                try {
+                    betDAO.registrationBet(bet);
+                } catch (SQLException ex) {
+                    throw new IOException(ex);
+                }
+                response.sendRedirect("index.jsp");
                 break;
 
             case LOGIN:

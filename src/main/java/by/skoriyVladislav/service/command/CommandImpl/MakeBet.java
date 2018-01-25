@@ -18,6 +18,6 @@ public class MakeBet implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        receiver.action(TypeCommand.GO_TO_MAKE_BET, request, response);
+        receiver.action(TypeCommand.MAKE_BET, request, response);
     }
 }
