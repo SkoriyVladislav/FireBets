@@ -1,6 +1,6 @@
 package by.skoriyVladislav.service.command;
 
-import by.skoriyVladislav.service.command.CommandImpl.*;
+import by.skoriyVladislav.service.command.commandImpl.*;
 import by.skoriyVladislav.service.command.command_type.TypeCommand;
 
 public class Client {
@@ -49,6 +49,10 @@ public class Client {
 
             case LOGOUT:
                 command = new Logout(receiver);
+                break;
+
+            case AJAX_CHECK_LOGIN:
+                command = new CheckLoginAjax(receiver);
                 break;
         }
         return command;

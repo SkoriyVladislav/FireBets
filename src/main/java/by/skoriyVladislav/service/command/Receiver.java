@@ -36,6 +36,7 @@ public class Receiver {
                 break;
 
             case GO_TO_REGISTRATION:
+                //response.sendRedirect("/WEB-INF/jsp/registration.jsp");
                 request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
                 break;
 
@@ -44,7 +45,6 @@ public class Receiver {
                 MatchDAO matchDAO3 = daoFactory3.getMatchDAO();
                 Match match = matchDAO3.createMatch(Integer.parseInt(request.getParameter("match")));
                 request.getSession().setAttribute("match", match);
-
                 request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;
 

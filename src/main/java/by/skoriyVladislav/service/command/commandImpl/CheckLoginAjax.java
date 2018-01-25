@@ -1,4 +1,4 @@
-package by.skoriyVladislav.service.command.CommandImpl;
+package by.skoriyVladislav.service.command.commandImpl;
 
 import by.skoriyVladislav.service.command.ICommand;
 import by.skoriyVladislav.service.command.Receiver;
@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToPageLogin implements ICommand {
+public class CheckLoginAjax implements ICommand {
     private Receiver receiver;
 
-    public GoToPageLogin(Receiver reciever) {
+    public CheckLoginAjax(Receiver reciever) {
         this.receiver = reciever;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        receiver.action(TypeCommand.GO_TO_LOGIN, request, response);
+        receiver.action(TypeCommand.AJAX_CHECK_LOGIN, request, response);
     }
 }
