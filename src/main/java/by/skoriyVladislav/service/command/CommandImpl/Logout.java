@@ -1,4 +1,4 @@
-package by.skoriyVladislav.service.command.commandImpl;
+package by.skoriyVladislav.service.command.CommandImpl;
 
 import by.skoriyVladislav.service.command.ICommand;
 import by.skoriyVladislav.service.command.Receiver;

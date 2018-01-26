@@ -10,7 +10,7 @@ public enum TypeCommand {
     GO_TO_PROFILE,
     GO_TO_MAKE_BET,
     GO_TO_MAIN,
-    AJAX_CHECK_LOGIN;
+    CHECK_LOGIN_AJAX;
 
     TypeCommand() {
     }

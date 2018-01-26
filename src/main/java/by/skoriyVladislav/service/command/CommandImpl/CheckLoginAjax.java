@@ -1,4 +1,4 @@
-package by.skoriyVladislav.service.command.commandImpl;
+package by.skoriyVladislav.service.command.CommandImpl;
 
 import by.skoriyVladislav.service.command.ICommand;
 import by.skoriyVladislav.service.command.Receiver;
@@ -18,6 +18,6 @@ public class CheckLoginAjax implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        receiver.action(TypeCommand.AJAX_CHECK_LOGIN, request, response);
+        receiver.action(TypeCommand.CHECK_LOGIN_AJAX, request, response);
     }
 }

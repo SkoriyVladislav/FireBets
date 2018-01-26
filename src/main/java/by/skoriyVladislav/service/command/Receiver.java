@@ -121,6 +121,13 @@ public class Receiver {
                 request.getSession().setAttribute("user", null);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
+
+            case CHECK_LOGIN_AJAX:
+                String item = request.getParameter("login");
+                response.setContentType("application/xml");
+                String str = "false";
+                response.getWriter().write(1);
+                break;
         }
     }
 }

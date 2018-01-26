@@ -1,4 +1,4 @@
-package by.skoriyVladislav.service.command.commandImpl;
+package by.skoriyVladislav.service.command.CommandImpl;
 
 import by.skoriyVladislav.service.command.ICommand;
 import by.skoriyVladislav.service.command.Receiver;
@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class GoToPageMain implements ICommand {
+public class GoToPageLogin implements ICommand {
     private Receiver receiver;
 
-    public GoToPageMain(Receiver reciever) {
+    public GoToPageLogin(Receiver reciever) {
         this.receiver = reciever;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        receiver.action(TypeCommand.GO_TO_MAIN, request, response);
+        receiver.action(TypeCommand.GO_TO_LOGIN, request, response);
     }
 }

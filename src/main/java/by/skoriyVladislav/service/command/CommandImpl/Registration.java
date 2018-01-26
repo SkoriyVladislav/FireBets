@@ -1,4 +1,4 @@
-package by.skoriyVladislav.service.command.commandImpl;
+package by.skoriyVladislav.service.command.CommandImpl;
 
 import by.skoriyVladislav.service.command.ICommand;
 import by.skoriyVladislav.service.command.Receiver;
@@ -9,15 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class Login implements ICommand {
+public class Registration implements ICommand {
     private Receiver receiver;
 
-    public Login(Receiver receiver) {
+    public Registration(Receiver receiver) {
         this.receiver = receiver;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        receiver.action(TypeCommand.LOGIN, request, response);
+        receiver.action(TypeCommand.REGISTRATION, request, response);
     }
 }
