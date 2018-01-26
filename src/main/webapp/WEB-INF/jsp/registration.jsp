@@ -18,6 +18,29 @@
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleRegistr.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script>
+            function ajaxreq() {
+                var data = {};
+                data = {"login":$("#ajLogin").val()};
+
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: 'ajax_controller',
+                    success: [function(serverData)//Если запрос удачен
+                    {
+                        $("#forAjLog").css({"background-color":serverData.backgroundColor});
+                        $("#responseLoginSpan").html(serverData.serverInfo);
+                    }],
+                    error: [function(e)//Если запрос не удачен
+                    {
+                        $("#forAjLog").css({"background-color":"#CC6666", "height": "50px", "color":"white"});
+                        $("#responseLoginSpan").html("Запрос не удался!");
+                    }]
+                });
+            }
+        </script>
     </head>
 
 
@@ -53,9 +76,9 @@
 
             <form onsubmit="return validateForm()" name="reg-form" action="controller" method="get">
                 <div class="label">Логин:</div>
-                <div class="field">
-                    <input type="text" name="login" class="inputPole" value="" placeholder=" " required />
-
+                <div class="field" id="forAjLog">
+                    <input type="text" name="login" class="inputPole" value="" placeholder=" " required id="ajLogin" onchange="ajaxreq()"/>
+                    <span id="responseLoginSpan" style="margin-left: 10px;"></span>
                 </div>
 
                 <div class="label">Имя:</div>
@@ -108,5 +131,8 @@
 
         <%@include file="jspf/footer.jspf"%>
 
+        <script>
+
+        </script>
     </body>
 </html>

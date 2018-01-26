@@ -7,6 +7,7 @@
           <element id="module-output" name="FireBets" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.json:json:20171018" />
           <element id="library" level="project" name="Maven: javaee:javaee-api:5" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.44" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
