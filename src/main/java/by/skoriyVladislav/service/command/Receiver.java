@@ -10,11 +10,13 @@ import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.service.ServiceFactory;
 import by.skoriyVladislav.service.command.command_type.TypeCommand;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.Enumeration;
@@ -28,7 +30,7 @@ public class Receiver {
                 MatchDAO matchDAO = daoFactory.getMatchDAO();
                 List<Match> matches = matchDAO.createMatches();
                 request.getSession().setAttribute("matches", matches);
-                request.getRequestDispatcher("main.jsp").forward(request, response);
+                response.sendRedirect("main.jsp");
                 break;
 
             case GO_TO_PROFILE:
@@ -36,7 +38,6 @@ public class Receiver {
                 break;
 
             case GO_TO_REGISTRATION:
-                //response.sendRedirect("/WEB-INF/jsp/registration.jsp");
                 request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
                 break;
 
@@ -54,9 +55,9 @@ public class Receiver {
                 if (request.getQueryString() != null) {
                     from += "?" + request.getQueryString();
                 }
+
                 from = from.replace("&", "%26");
                 response.sendRedirect("login.jsp?from=" + from);
-                //request.getRequestDispatcher("/WEB-INF/jsp/login.jsp?from=" + from).forward(request, response);
                 break;
 
             case REGISTRATION:
@@ -110,11 +111,9 @@ public class Receiver {
                 try {
                     String from1 = request.getParameter("from");
                     response.sendRedirect(from1);
-                    //String from1 = ServiceFactory.getInstance().getLastCommand();
                 } catch (NullPointerException ex) {
                     response.sendRedirect("index.jsp");
                 }
-                //request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
 
             case LOGOUT:
@@ -123,10 +122,18 @@ public class Receiver {
                 break;
 
             case CHECK_LOGIN_AJAX:
-                String item = request.getParameter("login");
-                response.setContentType("application/xml");
-                String str = "false";
-                response.getWriter().write(1);
+
+                response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
+                response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
+                try (PrintWriter out = response.getWriter()) {
+                    JSONObject jsonEnt = new JSONObject();
+                    if(request.getParameter("login").equals("admin")) {
+                        jsonEnt.put("serverInfo", "Логин свободен");
+                    }else {
+                        jsonEnt.put("serverInfo", "Введен неправильный логин или пароль!");
+                    }
+                    out.print(jsonEnt.toString());
+                }
                 break;
         }
     }

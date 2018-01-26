@@ -19,28 +19,6 @@
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script>
-            function ajaxreq() {
-                var data = {};
-                data = {"login":$("#ajLogin").val()};
-
-                $.ajax({
-                    type: "POST",
-                    data: data,
-                    url: 'ajax_controller',
-                    success: [function(serverData)//Если запрос удачен
-                    {
-                        $("#forAjLog").css({"background-color":serverData.backgroundColor});
-                        $("#responseLoginSpan").html(serverData.serverInfo);
-                    }],
-                    error: [function(e)//Если запрос не удачен
-                    {
-                        $("#forAjLog").css({"background-color":"#CC6666", "height": "50px", "color":"white"});
-                        $("#responseLoginSpan").html("Запрос не удался!");
-                    }]
-                });
-            }
-        </script>
     </head>
 
 
@@ -123,7 +101,7 @@
 
                 <div class="but">
                     <input type="hidden" name="command" value="registration"/>
-                    <input type="submit" value="Зарегистрироваться">
+                    <input id="regButton" type="submit" value="Зарегистрироваться" disabled>
                 </div>
             </form>
 
@@ -131,8 +109,21 @@
 
         <%@include file="jspf/footer.jspf"%>
 
-        <script>
 
+        <script>
+            function ajaxreq() {
+                var data = {"login":$("#ajLogin").val(), "command":"CHECK_LOGIN_AJAX"};
+
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: 'ajax_controller',
+                    success: [function(serverData) { //Если запрос удачен
+                        $("#responseLoginSpan").html(serverData.serverInfo);
+                        $("#regButton").prop('disabled', false);
+                    }]
+                });
+            }
         </script>
     </body>
 </html>

@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import by.skoriyVladislav.service.ServiceFactory;
+import by.skoriyVladislav.service.command.Client;
+import by.skoriyVladislav.service.command.ICommand;
+import by.skoriyVladislav.service.command.Invoker;
 import org.json.JSONObject;
 
 @WebServlet(name = "AjaxController", urlPatterns = {"/ajax_controller"})
@@ -23,21 +28,9 @@ public class AjaxController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /*String val = request.getParameter("login");
-        ICommand command = ServiceFactory.getInstance().getClient().initCommand("CHECK_LOGIN_AJAX");
-        Invoker invoker = new Invoker(command);
-        invoker.invokeCommand(request, response);*/
 
-        response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
-        response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
-        try (PrintWriter out = response.getWriter()) {
-            JSONObject jsonEnt = new JSONObject();
-            if(request.getParameter("login").equals("admin")) {
-                jsonEnt.put("serverInfo", "Логин свободен");
-            }else {
-                jsonEnt.put("serverInfo", "Введен неправильный логин или пароль!");
-            }
-            out.print(jsonEnt.toString());
-        }
+        String cmd = request.getParameter("command");
+        Invoker invoker = new Invoker(ServiceFactory.getInstance().getClient().initCommand(cmd));
+        invoker.invokeCommand(request, response);
     }
 }
