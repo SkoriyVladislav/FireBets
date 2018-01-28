@@ -117,8 +117,12 @@
                     data: data,
                     url: 'ajax_controller',
                     success: [function(serverData) { //Если запрос удачен
-                        $("#responseLoginSpan").html(serverData.serverInfo);
-                        $("#regButton").prop('disabled', false);
+                        if (serverData.serverInfo === "true") {
+                            $("#responseLoginSpan").text("Логин занят");
+                        } else {
+                            $("#responseLoginSpan").text("");
+                            $("#regButton").prop('disabled', false);
+                        }
                     }]
                 });
             }

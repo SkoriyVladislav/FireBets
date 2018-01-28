@@ -4,8 +4,6 @@ import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.entity.user.UserRole;
 
-import javax.management.relation.Role;
-import java.math.BigDecimal;
 import java.sql.*;
 
 public class UserDAOImpl implements UserDAO {
@@ -15,6 +13,7 @@ public class UserDAOImpl implements UserDAO {
     private final static String PASSWORD = "root";
     private final static String FIND_USER = "SELECT * FROM users WHERE Login = ? AND Password = ?";
     private final static String REGISTRATION_USER = "INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final static String CHECK_LOGIN = "SELECT * FROM users WHERE Login = ?";
 
     @Override
     public User createUser(String fLogin, String fPassword) {
@@ -81,5 +80,32 @@ public class UserDAOImpl implements UserDAO {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean loginInDataBase(String login) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return false;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_LOGIN)) {
+            preparedStatement.setString(1, login);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+        return false;
     }
 }

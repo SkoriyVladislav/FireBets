@@ -8,7 +8,6 @@ import by.skoriyVladislav.entity.bets.Bet;
 import by.skoriyVladislav.entity.bets.BetType;
 import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.User;
-import by.skoriyVladislav.service.ServiceFactory;
 import by.skoriyVladislav.service.command.command_type.TypeCommand;
 import org.json.JSONObject;
 
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.List;
 
 public class Receiver {
@@ -122,15 +120,14 @@ public class Receiver {
                 break;
 
             case CHECK_LOGIN_AJAX:
-
                 response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
                 response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
                 try (PrintWriter out = response.getWriter()) {
                     JSONObject jsonEnt = new JSONObject();
-                    if(request.getParameter("login").equals("admin")) {
-                        jsonEnt.put("serverInfo", "Логин свободен");
+                    if(DAOFactory.getInstance().getUserDAO().loginInDataBase(request.getParameter("login"))) {
+                        jsonEnt.put("serverInfo", "true");
                     }else {
-                        jsonEnt.put("serverInfo", "Введен неправильный логин или пароль!");
+                        jsonEnt.put("serverInfo", "false");
                     }
                     out.print(jsonEnt.toString());
                 }
