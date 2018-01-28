@@ -97,6 +97,45 @@ public class Receiver {
                 response.sendRedirect("index.jsp");
                 break;
 
+            case MAKE_MATCH:
+                String team1 = request.getParameter("team1");
+                String team2 = request.getParameter("team2");
+
+                String year = request.getParameter("year");
+                String month = request.getParameter("month");
+                String day = request.getParameter("day");
+                String hour = request.getParameter("hour");
+                String minute = request.getParameter("minute");
+
+                double coefTeam1 = 0;
+                double coefTeam2 = 0;
+                double coefDraw = 0;
+                double coefExAcc = 0;
+
+                if(validateString(team1, team2, year, month, day, hour, minute)) {
+                    try {
+                        coefTeam1 = Double.valueOf(request.getParameter("coefTeam1"));
+                        coefTeam2 = Double.valueOf(request.getParameter("coefTeam2"));
+                        coefDraw = Double.valueOf(request.getParameter("coefDraw"));
+                        coefExAcc = Double.valueOf(request.getParameter("coefExAcc"));
+                    } catch (NullPointerException ex) {
+                        System.out.println(ex.getMessage());
+                        response.sendRedirect("error.jsp");
+                    }
+
+                    String dataTime = year + "-" + month + "-" + day + " " + hour + ":" + minute;
+                    double[] coef = {coefTeam1, coefTeam2, coefDraw, coefExAcc};
+
+                    DAOFactory.getInstance().getMatchDAO().registrMatch(team1, team2, dataTime, coef);
+
+                    request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("error.jsp");
+                }
+
+
+                break;
+
             case LOGIN:
                 String login1 = request.getParameter("login");
                 String password1 = request.getParameter("password");
@@ -133,5 +172,14 @@ public class Receiver {
                 }
                 break;
         }
+    }
+
+    private boolean validateString(String... agrs) {
+        for (String str : agrs) {
+            if (str == null) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -11,9 +11,14 @@ public class MatchDAOImpl implements MatchDAO {
     private final static String URL = "jdbc:mysql://localhost:3306/firebets";
     private final static String USERNAME = "root";
     private final static String PASSWORD = "root";
+
     private final static String FIND_MATCHES = "SELECT * FROM matches";
     private final static String FIND_COEFF = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
-    private final static String FIND_MATCH = "SELECT * FROM matches WHERE idMatchs = ?";
+    private final static String FIND_MATCH_BY_ID = "SELECT * FROM matches WHERE idMatchs = ?";
+    private final static String FIND_MATCH = "SELECT * FROM matches WHERE Team1 = ? AND Team2 = ? AND DateTime = ?";
+
+    private final static String CREATE_MATCH = "INSERT INTO matches (Team1, Team2, DateTime) VALUES (?, ?, ?)";
+    private final static String CREATE_COEFF = "INSERT INTO coefficient (Matches_idMatchs, CoefTEAM1, CoefTEAM2, CoefDRAW, CoefExAcc) VALUES (?, ?, ?, ?, ?)";
 
     @Override
     public List<Match> createMatches() {
@@ -58,7 +63,7 @@ public class MatchDAOImpl implements MatchDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MATCH)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MATCH_BY_ID)) {
             preparedStatement.setInt(1, fId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -70,6 +75,70 @@ public class MatchDAOImpl implements MatchDAO {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
         return match;
+    }
+
+    @Override
+    public boolean registrMatch(String team1, String team2, String dataTime, double[] coef) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return false;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_MATCH)) {
+            preparedStatement.setString(1, team1);
+            preparedStatement.setString(2, team2);
+            preparedStatement.setString(3, dataTime);
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+        Integer matchId = null;
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MATCH)) {
+            preparedStatement.setString(1, team1);
+            preparedStatement.setString(2, team2);
+            preparedStatement.setString(3, dataTime);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                matchId = resultSet.getInt("idMatchs");
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+        return registrCoeff(matchId, coef);
+    }
+
+    @Override
+    public boolean registrCoeff(int id, double[] coef) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return false;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_COEFF)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.setDouble(2, coef[0]);
+            preparedStatement.setDouble(3, coef[1]);
+            preparedStatement.setDouble(4, coef[2]);
+            preparedStatement.setDouble(5, coef[3]);
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+        return true;
     }
 
     private Match createMatch(ResultSet resultSet, Connection connection) throws SQLException {

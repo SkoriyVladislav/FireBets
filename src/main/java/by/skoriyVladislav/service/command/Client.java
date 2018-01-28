@@ -39,6 +39,10 @@ public class Client {
                 command = new MakeBet(receiver);
                 break;
 
+            case MAKE_MATCH:
+                command = new MakeMatch(receiver);
+                break;
+
             case REGISTRATION:
                 command = new Registration(receiver);
                 break;

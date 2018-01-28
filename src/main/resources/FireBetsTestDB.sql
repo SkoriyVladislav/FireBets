@@ -1,1 +1,1 @@
-INSERT INTO bets (Users_Login, Matches_idMatchs, Size, Type, goalsTeam1, goalsTeam2) VALUES ('admin', 8, 12, 'team1', NULL , NULL )
+SELECT * FROM matches WHERE Team1 = 'team1' AND Team2 = 'team2' AND DateTime = '2018-01-28 20:50';

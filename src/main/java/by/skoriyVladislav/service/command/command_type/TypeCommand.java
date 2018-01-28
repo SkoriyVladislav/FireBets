@@ -5,6 +5,7 @@ public enum TypeCommand {
     LOGIN,
     LOGOUT,
     MAKE_BET,
+    MAKE_MATCH,
     GO_TO_LOGIN,
     GO_TO_REGISTRATION,
     GO_TO_PROFILE,
