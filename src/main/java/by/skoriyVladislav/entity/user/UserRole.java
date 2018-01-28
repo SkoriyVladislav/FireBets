@@ -1,9 +1,9 @@
 package by.skoriyVladislav.entity.user;
 
 public enum UserRole {
-    USER("user"),
+    PLAYER("player"),
     ADMIN("admin"),
-    GUEST("guest");
+    BOOKMAKER("bookmaker");
 
     private String role;
 

@@ -49,7 +49,6 @@
             </div>
         </div>
 
-
         <div class="registerSteps">
 
             <form onsubmit="return validateForm()" name="reg-form" action="controller" method="get">
@@ -108,7 +107,6 @@
         </div>
 
         <%@include file="jspf/footer.jspf"%>
-
 
         <script>
             function ajaxreq() {
