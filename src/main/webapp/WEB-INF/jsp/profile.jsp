@@ -74,7 +74,7 @@
                     </c:when>
 
                     <c:when test="${sessionScope.user.role.role == 'admin'}">
-                        <%@include file="jspf/make_match.jspf" %>
+                        <%@include file="jspf/user_management.jspf" %>
                     </c:when>
                 </c:choose>
             </div>
