@@ -1,4 +1,4 @@
-package by.skoriyVladislav.servlet.filter;
+package by.skoriyVladislav.controller.servlet.filter;
 
 public enum BadCommands {
     GO_TO_PROFILE,

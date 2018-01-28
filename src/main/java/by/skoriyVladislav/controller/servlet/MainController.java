@@ -1,4 +1,9 @@
-package by.skoriyVladislav.servlet;
+package by.skoriyVladislav.controller.servlet;
+
+import by.skoriyVladislav.service.ServiceFactory;
+import by.skoriyVladislav.service.command.Client;
+import by.skoriyVladislav.service.command.ICommand;
+import by.skoriyVladislav.service.command.Invoker;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -6,21 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import by.skoriyVladislav.service.ServiceFactory;
-import by.skoriyVladislav.service.command.Client;
-import by.skoriyVladislav.service.command.ICommand;
-import by.skoriyVladislav.service.command.Invoker;
-import org.json.JSONObject;
+@WebServlet(name = "MainController", urlPatterns = {"/controller"})
+public class MainController extends HttpServlet {
 
-@WebServlet(name = "AjaxController", urlPatterns = {"/ajax_controller"})
-public class AjaxController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-}
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,8 +28,12 @@ public class AjaxController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        ServiceFactory factory = ServiceFactory.getInstance();
+        Client client = factory.getClient();
         String cmd = request.getParameter("command");
-        Invoker invoker = new Invoker(ServiceFactory.getInstance().getClient().initCommand(cmd));
+        ICommand command = client.initCommand(cmd);
+        Invoker invoker = new Invoker(command);
+
         invoker.invokeCommand(request, response);
     }
 }
