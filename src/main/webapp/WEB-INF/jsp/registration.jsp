@@ -118,7 +118,7 @@
                     url: 'ajax_controller',
                     success: [function(serverData) { //Если запрос удачен
                         if (serverData.serverInfo === "true") {
-                            $("#responseLoginSpan").text("Логин занят");
+                            $("#responseLoginSpan").text("Login занят");
                         } else {
                             $("#responseLoginSpan").text("");
                             $("#regButton").prop('disabled', false);

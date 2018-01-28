@@ -68,19 +68,19 @@
                     <input type="hidden" name="command" value="MAKE_BET"/>
                     <input type="submit" value="Отправить"/>
                 </div>
+                <c:choose>
+                    <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
+                        <%@include file="jspf/make_match.jspf" %>
+                    </c:when>
 
+                    <c:when test="${sessionScope.user.role.role == 'admin'}">
+                        <%@include file="jspf/make_match.jspf" %>
+                    </c:when>
+                </c:choose>
             </div>
         </div>
 
-        <c:choose>
-            <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
-                <%@include file="jspf/make_match.jspf" %>
-            </c:when>
 
-            <c:otherwise>
-
-            </c:otherwise>
-        </c:choose>
 
         <%@include file="jspf/footer.jspf"%>
 
