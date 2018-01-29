@@ -7,12 +7,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class BetDAOImpl implements BetDAO {
     private final static String URL = "jdbc:mysql://localhost:3306/firebets";
     private final static String USERNAME = "root";
     private final static String PASSWORD = "root";
-    private final static String REGISTRATION_BET = "INSERT INTO bets (Users_Login, Matches_idMatchs, Size, Type, goalsTeam1, goalsTeam2) VALUES (?, ?, ?, ?, ?, ?)";
+    private final static String INSERT_BETS = "INSERT INTO bets (Users_Login, Matches_idMatchs, Size, Type, goalsTeam1, goalsTeam2) VALUES (?, ?, ?, ?, ?, ?)";
 
     @Override
     public boolean registrationBet(Bet bet) throws SQLException {
@@ -25,7 +26,7 @@ public class BetDAOImpl implements BetDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(REGISTRATION_BET)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BETS)) {
             preparedStatement.setString(1, bet.getLoginUser());
             preparedStatement.setInt(2, bet.getIdMatches());
             preparedStatement.setDouble(3, bet.getSize());
@@ -41,5 +42,12 @@ public class BetDAOImpl implements BetDAO {
         }
 
         return true;
+    }
+
+    @Override
+    public List<Bet> createBet(String userLogin, String matchId) {
+
+
+        return null;
     }
 }

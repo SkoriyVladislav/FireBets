@@ -12,13 +12,13 @@ public class MatchDAOImpl implements MatchDAO {
     private final static String USERNAME = "root";
     private final static String PASSWORD = "root";
 
-    private final static String FIND_MATCHES = "SELECT * FROM matches";
-    private final static String FIND_COEFF = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
-    private final static String FIND_MATCH_BY_ID = "SELECT * FROM matches WHERE idMatchs = ?";
-    private final static String FIND_MATCH = "SELECT * FROM matches WHERE Team1 = ? AND Team2 = ? AND DateTime = ?";
+    private final static String SELECT_FROM_MATCHES = "SELECT * FROM matches";
+    private final static String SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
+    private final static String SELECT_FROM_MATCHES_WHERE_ID_MATCHS = "SELECT * FROM matches WHERE idMatchs = ?";
+    private final static String SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME = "SELECT * FROM matches WHERE Team1 = ? AND Team2 = ? AND DateTime = ?";
 
-    private final static String CREATE_MATCH = "INSERT INTO matches (Team1, Team2, DateTime) VALUES (?, ?, ?)";
-    private final static String CREATE_COEFF = "INSERT INTO coefficient (Matches_idMatchs, CoefTEAM1, CoefTEAM2, CoefDRAW, CoefExAcc) VALUES (?, ?, ?, ?, ?)";
+    private final static String INSERT_MATCHES = "INSERT INTO matches (Team1, Team2, DateTime) VALUES (?, ?, ?)";
+    private final static String INSERT_COEFFICIENT = "INSERT INTO coefficient (Matches_idMatchs, CoefTEAM1, CoefTEAM2, CoefDRAW, CoefExAcc) VALUES (?, ?, ?, ?, ?)";
 
     @Override
     public List<Match> createMatches() {
@@ -34,7 +34,7 @@ public class MatchDAOImpl implements MatchDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MATCHES)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -63,7 +63,7 @@ public class MatchDAOImpl implements MatchDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MATCH_BY_ID)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_ID_MATCHS)) {
             preparedStatement.setInt(1, fId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -88,7 +88,7 @@ public class MatchDAOImpl implements MatchDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_MATCH)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_MATCHES)) {
             preparedStatement.setString(1, team1);
             preparedStatement.setString(2, team2);
             preparedStatement.setString(3, dataTime);
@@ -100,7 +100,7 @@ public class MatchDAOImpl implements MatchDAO {
 
         Integer matchId = null;
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_MATCH)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME)) {
             preparedStatement.setString(1, team1);
             preparedStatement.setString(2, team2);
             preparedStatement.setString(3, dataTime);
@@ -127,7 +127,7 @@ public class MatchDAOImpl implements MatchDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_COEFF)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_COEFFICIENT)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setDouble(2, coef[0]);
             preparedStatement.setDouble(3, coef[1]);
@@ -167,7 +167,7 @@ public class MatchDAOImpl implements MatchDAO {
         double coefDraw = 0.0;
         double coefExAcc = 0.0;
 
-        try (PreparedStatement preparedStatement1 = connection.prepareStatement(FIND_COEFF)) {
+        try (PreparedStatement preparedStatement1 = connection.prepareStatement(SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS)) {
             preparedStatement1.setInt(1, id);
             ResultSet resultSet1 = preparedStatement1.executeQuery();
 

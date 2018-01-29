@@ -11,9 +11,9 @@ public class UserDAOImpl implements UserDAO {
     private final static String URL = "jdbc:mysql://localhost:3306/firebets";
     private final static String USERNAME = "root";
     private final static String PASSWORD = "root";
-    private final static String FIND_USER = "SELECT * FROM users WHERE Login = ? AND Password = ?";
-    private final static String REGISTRATION_USER = "INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private final static String CHECK_LOGIN = "SELECT * FROM users WHERE Login = ?";
+    private final static String SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE Login = ? AND Password = ?";
+    private final static String INSERT_USERS = "INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private final static String SELECT_FROM_USERS_WHERE_LOGIN = "SELECT * FROM users WHERE Login = ?";
 
     @Override
     public User createUser(String fLogin, String fPassword) {
@@ -28,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD)) {
             preparedStatement.setString(1, fLogin);
             preparedStatement.setString(2, fPassword);
 
@@ -65,7 +65,7 @@ public class UserDAOImpl implements UserDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(REGISTRATION_USER)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, name);
@@ -93,7 +93,7 @@ public class UserDAOImpl implements UserDAO {
         }
 
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_LOGIN)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN)) {
             preparedStatement.setString(1, login);
 
             ResultSet resultSet = preparedStatement.executeQuery();
