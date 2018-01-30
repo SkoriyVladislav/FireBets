@@ -1,12 +1,12 @@
 package by.skoriyVladislav.dal.bet_dao;
 
-import by.skoriyVladislav.entity.bets.Bet;
+import by.skoriyVladislav.entity.bet.Bet;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface BetDAO {
-    List<Bet> createBet(String userLogin, String matchId);
+    List<Bet> createBet(String userLogin);
 
     boolean registrationBet(Bet bet) throws SQLException;
 }

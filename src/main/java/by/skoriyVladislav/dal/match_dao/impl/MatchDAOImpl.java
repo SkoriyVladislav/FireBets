@@ -14,7 +14,7 @@ public class MatchDAOImpl implements MatchDAO {
 
     private final static String SELECT_FROM_MATCHES = "SELECT * FROM matches";
     private final static String SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
-    private final static String SELECT_FROM_MATCHES_WHERE_ID_MATCHS = "SELECT * FROM matches WHERE idMatchs = ?";
+    private final static String SELECT_FROM_MATCHES_WHERE_ID_MATCHS = "SELECT * FROM matches WHERE idMatches = ?";
     private final static String SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME = "SELECT * FROM matches WHERE Team1 = ? AND Team2 = ? AND DateTime = ?";
 
     private final static String INSERT_MATCHES = "INSERT INTO matches (Team1, Team2, DateTime) VALUES (?, ?, ?)";
@@ -147,7 +147,7 @@ public class MatchDAOImpl implements MatchDAO {
         String team1 = resultSet.getString("team1");
         String team2 = resultSet.getString("team2");
         String[] dateTime = resultSet.getString("datetime").replace(".", " ").split(" ");
-        int id = resultSet.getInt("idMatchs");
+        int id = resultSet.getInt("idMatches");
 
         Integer goalsTeam1;
         try {

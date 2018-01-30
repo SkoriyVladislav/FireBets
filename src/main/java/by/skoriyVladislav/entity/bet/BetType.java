@@ -1,4 +1,4 @@
-package by.skoriyVladislav.entity.bets;
+package by.skoriyVladislav.entity.bet;
 
 public enum BetType {
     TEAM1("team1"),
@@ -12,7 +12,7 @@ public enum BetType {
         this.type = type;
     }
 
-    public String getName() {
+    public String getType() {
         return type;
     }
 }

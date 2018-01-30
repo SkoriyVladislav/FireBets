@@ -4,8 +4,8 @@ import by.skoriyVladislav.dal.DAOFactory;
 import by.skoriyVladislav.dal.bet_dao.BetDAO;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
-import by.skoriyVladislav.entity.bets.Bet;
-import by.skoriyVladislav.entity.bets.BetType;
+import by.skoriyVladislav.entity.bet.Bet;
+import by.skoriyVladislav.entity.bet.BetType;
 import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.service.command.command_type.TypeCommand;
@@ -18,7 +18,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Receiver {
     public void action(TypeCommand cmd, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,6 +50,24 @@ public class Receiver {
                 request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;
 
+            case GO_TO_MY_BETS:
+                User user1 = (User)request.getSession().getAttribute("user");
+                List<Bet> bets = DAOFactory.getInstance().getBetDAO().createBet(user1.getLogin());
+
+                List<Match> matches1 = new ArrayList<>();
+                for (Bet bet : bets) {
+                    matches1.add(DAOFactory.getInstance().getMatchDAO().createMatch(bet.getIdMatches()));
+                }
+
+                Map<Match, Bet> matchBetMap = new HashMap<>();
+                for (int i = 0; i < bets.size(); i++) {
+                    matchBetMap.put(matches1.get(i), bets.get(i));
+                }
+
+                request.getSession().setAttribute("matchBetMap", matchBetMap);
+                request.getRequestDispatcher("/WEB-INF/jsp/my_bets.jsp").forward(request, response);
+                break;
+
             case GO_TO_LOGIN:
                 String nfrom = URLEncoder.encode(request.getRequestURI(), "UTF-8");
                 String from = nfrom.substring(3);
@@ -67,11 +88,11 @@ public class Receiver {
 
                 DAOFactory factory = DAOFactory.getInstance();
                 UserDAO userDAO = factory.getUserDAO();
-                userDAO.registerUser(login, password, name, surname, "user", 0.0, email);
+                userDAO.registerUser(login, password, name, surname, "user", 10, email);
 
                 User user = userDAO.createUser(login, password);
                 request.getSession().setAttribute("user", user);
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("main.jsp");
                 break;
 
             case MAKE_BET:
@@ -85,7 +106,7 @@ public class Receiver {
                     goalsTeam1 = Integer.valueOf(request.getParameter("exAccVal1"));
                     goalsTeam2 = Integer.valueOf(request.getParameter("exAccVal2"));
                 }
-                Bet bet = new Bet(userLogin, matchId, size, typeOfBet, goalsTeam1, goalsTeam2);
+                Bet bet = new Bet(userLogin, matchId, size, typeOfBet, goalsTeam1, goalsTeam2, null);
 
                 DAOFactory factory2 = DAOFactory.getInstance();
                 BetDAO betDAO = factory2.getBetDAO();
@@ -94,7 +115,7 @@ public class Receiver {
                 } catch (SQLException ex) {
                     throw new IOException(ex);
                 }
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("main.jsp");
                 break;
 
             case MAKE_MATCH:
@@ -142,20 +163,20 @@ public class Receiver {
 
                 DAOFactory factory1 = DAOFactory.getInstance();
                 UserDAO userDAO1 = factory1.getUserDAO();
-                User user1 = userDAO1.createUser(login1, password1);
-                request.getSession().setAttribute("user", user1);
+                User user2 = userDAO1.createUser(login1, password1);
+                request.getSession().setAttribute("user", user2);
 
                 try {
                     String from1 = request.getParameter("from");
                     response.sendRedirect(from1);
                 } catch (NullPointerException ex) {
-                    response.sendRedirect("index.jsp");
+                    response.sendRedirect("main.jsp");
                 }
                 break;
 
             case LOGOUT:
                 request.getSession().setAttribute("user", null);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                request.getRequestDispatcher("main.jsp").forward(request, response);
                 break;
 
             case CHECK_LOGIN_AJAX:

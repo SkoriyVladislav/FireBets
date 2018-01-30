@@ -27,6 +27,10 @@ public class Client {
                 command = new GoToPageProfile(receiver);
                 break;
 
+            case GO_TO_MY_BETS:
+                command = new GoToMyBets(receiver);
+                break;
+
             case GO_TO_LOGIN:
                 command = new GoToPageLogin(receiver);
                 break;

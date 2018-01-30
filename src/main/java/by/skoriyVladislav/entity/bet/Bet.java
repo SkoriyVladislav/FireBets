@@ -1,4 +1,4 @@
-package by.skoriyVladislav.entity.bets;
+package by.skoriyVladislav.entity.bet;
 
 public class Bet {
     private String loginUser;
@@ -7,14 +7,16 @@ public class Bet {
     private BetType type;
     private Integer goalsTeam1;
     private Integer goalsTeam2;
+    private String status;
 
-    public Bet(String loginUser, int idMatches, double size, BetType type, Integer goalsTeam1, Integer goalsTeam2) {
+    public Bet(String loginUser, int idMatches, double size, BetType type, Integer goalsTeam1, Integer goalsTeam2, String status) {
         this.loginUser = loginUser;
         this.idMatches = idMatches;
         this.size = size;
         this.type = type;
         this.goalsTeam1 = goalsTeam1;
         this.goalsTeam2 = goalsTeam2;
+        this.status = status;
     }
 
     public Bet() {
@@ -66,5 +68,13 @@ public class Bet {
 
     public void setGoalsTeam2(Integer goalsTeam2) {
         this.goalsTeam2 = goalsTeam2;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
