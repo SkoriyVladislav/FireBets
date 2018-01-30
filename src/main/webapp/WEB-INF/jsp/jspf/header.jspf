@@ -12,7 +12,7 @@
         <li class="has-dropdown">
             <a href="${pageContext.request.contextPath}/controller?command=go_to_profile" class="link-block-menu"><p> <fmt:message key="header.profile"/> </p></a>
             <ul class="dropdown animated-fast fadeInUpMenu" >
-                <li><a href="#">Мои ставки</a></li>
+                <li><a href="${pageContext.request.contextPath}/controller?command=go_to_my_bets">Мои ставки</a></li>
                 <li><a href="#">Кошелёк</a></li>
             </ul>
         </li>

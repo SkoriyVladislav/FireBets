@@ -20,50 +20,52 @@
     </head>
 
     <body>
-        <div class="top">
-            <div class="logo-top">
-                FireBets
+        <div>
+            <div class="top">
+                <div class="logo-top">
+                    FireBets
+                </div>
             </div>
 
-            <%@include file="WEB-INF/jsp/jspf/user_login.jspf" %>
+            <%@include file="WEB-INF/jsp/jspf/header.jspf"%>
 
+            <div class="login">
+                <form action="controller" method="get" >
+                    <div class="login-step">
+                        <h2 class="massageH2">Пожалуйста авторизуйтесь.</h2>
+                    </div>
+
+                    <div class="login-step">
+                        <h3 class="massage">Введите логин: </h3>
+                        <input type="text" name="login" placeholder='Логин' value=""/>
+                    </div>
+
+                    <div class="login-step">
+                        <h3 class="massage">Введите пароль: </h3>
+                        <input type="password" name="password" class="formlogin" placeholder='Пароль' autocomplete="off" value=""/>
+                    </div>
+
+                    <div class="login-step" style="margin-left: 10%">
+                        <input type="hidden" name="command" value="login"/>
+                        <input type="hidden" name="from" value="${fn:escapeXml(param.from)}" />
+                        <input id="enter" type="submit" value="Войти" style="margin-left: 1.5%"/>
+                    </div>
+
+                    <div class="remember-pass" style="margin-left: 7.5%">
+                        <a href="#" class="link-block-remember-pass text-center">Забыли пароль? </a>
+                    </div>
+
+                    <div class="input-left input-registr" style="margin-left: 3%">
+                        <h3 class="massageH2">Ещё не зарегистрировались?</h3>
+                        <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" title="Регистрация в букмекерской конторе Fire Bets" class="link-block-registration">Регистрация </a>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <%@include file="WEB-INF/jsp/jspf/header.jspf"%>
-
-        <div class="login">
-            <form action="controller" method="get" >
-                <div class="login-step">
-                    <h2 class="massageH2">Пожалуйста авторизуйтесь.</h2>
-                </div>
-
-                <div class="login-step">
-                    <h3 class="massage">Введите логин: </h3>
-                    <input type="text" name="login" placeholder='Логин' value=""/>
-                </div>
-
-                <div class="login-step">
-                    <h3 class="massage">Введите пароль: </h3>
-                    <input type="password" name="password" class="formlogin" placeholder='Пароль' autocomplete="off" value=""/>
-                </div>
-
-                <div class="login-step" style="margin-left: 10%">
-                    <input type="hidden" name="command" value="login"/>
-                    <input type="hidden" name="from" value="${fn:escapeXml(param.from)}" />
-                    <input id="enter" type="submit" value="Войти" style="margin-left: 1.5%"/>
-                </div>
-
-                <div class="remember-pass" style="margin-left: 7.5%">
-                    <a href="#" class="link-block-remember-pass text-center">Забыли пароль? </a>
-                </div>
-
-                <div class="input-left input-registr" style="margin-left: 3%">
-                    <h3 class="massageH2">Ещё не зарегистрировались?</h3>
-                    <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" title="Регистрация в букмекерской конторе Fire Bets" class="link-block-registration">Регистрация </a>
-                </div>
-            </form>
+        <div>
+            <%@include file="WEB-INF/jsp/jspf/footer.jspf"%>
         </div>
 
-        <%@include file="WEB-INF/jsp/jspf/footer.jspf"%>
     </body>
 </html>

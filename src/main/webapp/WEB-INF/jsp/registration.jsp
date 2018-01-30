@@ -23,90 +23,94 @@
 
 
     <body>
+        <div>
+            <div class="top">
+                <div class="logo-top">
+                    FireBets
+                </div>
 
-        <div class="top">
-            <div class="logo-top">
-                FireBets
+                <c:choose>
+                    <c:when test="${sessionScope.user != null}">
+                        <%@include file="jspf/user_profile.jspf" %>
+                    </c:when>
+
+                    <c:otherwise>
+                        <%@include file="jspf/user_login.jspf" %>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
-            <c:choose>
-                <c:when test="${sessionScope.user != null}">
-                    <%@include file="jspf/user_profile.jspf" %>
-                </c:when>
+            <%@include file="jspf/header.jspf"%>
 
-                <c:otherwise>
-                    <%@include file="jspf/user_login.jspf" %>
-                </c:otherwise>
-            </c:choose>
-        </div>
-
-        <%@include file="jspf/header.jspf"%>
-
-        <div class="head-title">
-            <div class="middle">
-                <h1>Регистрация: </h1>
-                <span class="regInfoSpan">Все поля формы являются обязательными к заполнению.</span>
+            <div class="head-title">
+                <div class="middle">
+                    <h1>Регистрация: </h1>
+                    <span class="regInfoSpan">Все поля формы являются обязательными к заполнению.</span>
+                </div>
             </div>
+
+            <div class="registerSteps">
+
+                <form onsubmit="return validateForm()" name="reg-form" action="controller" method="get">
+                    <div class="label">Логин:</div>
+                    <div class="field" id="forAjLog">
+                        <input type="text" name="login" class="inputPole" value="" placeholder=" " required id="ajLogin" onchange="ajaxreq()"/>
+                        <span id="responseLoginSpan" style="margin-left: 10px;"></span>
+                    </div>
+
+                    <div class="label">Имя:</div>
+                    <div class="field-fname field">
+                        <input type="text" name="name" class="inputPole" value="" placeholder=" " pattern="^([A-Z])+([a-z])+$" required /> <span></span>
+
+                    </div>
+
+                    <div class="label">Фамилия:</div>
+                    <div class="field field-fname field-sname">
+                        <input type="text" name="surname" class="inputPole" value="" placeholder=" " pattern="^([A-Z])+([a-z])+$" required /> <span></span>
+                    </div>
+
+                    <div class="label">Номер телефона:</div>
+
+                    <div class="field field-fname field-phone">
+                        <input type="text" name="phone" placeholder="+(*) (**) *** ** **" autocomplete="off" value="" pattern="^[\\+][0-9]{11}([0-9]+)?$" class="inputPole" required/> <span></span>
+                        <div class="errorMsg" id="phoneError"></div>
+                    </div>
+
+                    <div class="label">E-mail:</div>
+                    <div class="field field-fname field-email">
+                        <input type="email" name="email" class="inputPole" placeholder=" " value="" maxlength="45" pattern=".+@.+\..+" required/> <span></span>
+                        <div class="errorMsg" id="emailError"></div>
+                    </div>
+
+
+                    <div class="">
+                        <div class="label">Пароль:</div>
+                        <div class="field field-fname field-pass">
+                            <input type="password" name="pwd1" class="inputPole" placeholder=" " required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" id="err-pwd1"> <span></span>
+                        </div>
+                    </div>
+
+                    <div class="overflow">
+                        <div class="label">Подтвердите пароль:</div>
+                        <div class="field">
+                            <input type="password" name="pwd2" class="inputPole" > <span class="err" id="err-pwd2"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="but">
+                        <input type="hidden" name="command" value="registration"/>
+                        <input id="regButton" type="submit" value="Зарегистрироваться" disabled>
+                    </div>
+                </form>
+
+            </div>
+
         </div>
 
-        <div class="registerSteps">
-
-            <form onsubmit="return validateForm()" name="reg-form" action="controller" method="get">
-                <div class="label">Логин:</div>
-                <div class="field" id="forAjLog">
-                    <input type="text" name="login" class="inputPole" value="" placeholder=" " required id="ajLogin" onchange="ajaxreq()"/>
-                    <span id="responseLoginSpan" style="margin-left: 10px;"></span>
-                </div>
-
-                <div class="label">Имя:</div>
-                <div class="field-fname field">
-                    <input type="text" name="name" class="inputPole" value="" placeholder=" " pattern="^([A-Z])+([a-z])+$" required /> <span></span>
-
-                </div>
-
-                <div class="label">Фамилия:</div>
-                <div class="field field-fname field-sname">
-                    <input type="text" name="surname" class="inputPole" value="" placeholder=" " pattern="^([A-Z])+([a-z])+$" required /> <span></span>
-                </div>
-
-                <div class="label">Номер телефона:</div>
-
-                <div class="field field-fname field-phone">
-                    <input type="text" name="phone" placeholder="+(*) (**) *** ** **" autocomplete="off" value="" pattern="^[\\+][0-9]{11}([0-9]+)?$" class="inputPole" required/> <span></span>
-                    <div class="errorMsg" id="phoneError"></div>
-                </div>
-
-                <div class="label">E-mail:</div>
-                <div class="field field-fname field-email">
-                    <input type="email" name="email" class="inputPole" placeholder=" " value="" maxlength="45" pattern=".+@.+\..+" required/> <span></span>
-                    <div class="errorMsg" id="emailError"></div>
-                </div>
-
-
-                <div class="">
-                    <div class="label">Пароль:</div>
-                    <div class="field field-fname field-pass">
-                        <input type="password" name="pwd1" class="inputPole" placeholder=" " required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" id="err-pwd1"> <span></span>
-                    </div>
-                </div>
-
-                <div class="overflow">
-                    <div class="label">Подтвердите пароль:</div>
-                    <div class="field">
-                        <input type="password" name="pwd2" class="inputPole" > <span class="err" id="err-pwd2"></span>
-                    </div>
-                </div>
-
-
-                <div class="but">
-                    <input type="hidden" name="command" value="registration"/>
-                    <input id="regButton" type="submit" value="Зарегистрироваться" disabled>
-                </div>
-            </form>
-
+        <div>
+            <%@include file="jspf/footer.jspf"%>
         </div>
-
-        <%@include file="jspf/footer.jspf"%>
 
         <script>
             function ajaxreq() {

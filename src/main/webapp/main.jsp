@@ -20,71 +20,75 @@
     </head>
 
     <body>
-        <div class="top">
-            <div class="logo-top">
-                FireBets
+        <div>
+            <div class="top">
+                <div class="logo-top">
+                    FireBets
+                </div>
+
+                <c:choose>
+                    <c:when test="${sessionScope.user != null}">
+                        <%@include file="WEB-INF/jsp/jspf/user_profile.jspf" %>
+                    </c:when>
+
+                    <c:otherwise>
+                        <%@include file="WEB-INF/jsp/jspf/user_login.jspf" %>
+                    </c:otherwise>
+                </c:choose>
             </div>
 
-            <c:choose>
-                <c:when test="${sessionScope.user != null}">
-                    <%@include file="WEB-INF/jsp/jspf/user_profile.jspf" %>
-                </c:when>
+            <%@include file="WEB-INF/jsp/jspf/header.jspf"%>
 
-                <c:otherwise>
-                    <%@include file="WEB-INF/jsp/jspf/user_login.jspf" %>
-                </c:otherwise>
-            </c:choose>
-        </div>
-
-        <%@include file="WEB-INF/jsp/jspf/header.jspf"%>
-
-        <div class="matches">
-            <div class="match-info">
-                <div style="margin-left: 1.5%">
-                    Время
-                </div>
-
-                <div>
-                    Событие
-                </div>
-
-                <div class="coeff">
-                    <div style="margin-right: 1.5%;">
-                        Победа 1
+            <div class="matches">
+                <div class="match-info">
+                    <div style="margin-left: 1.5%">
+                        Время
                     </div>
 
-                    <div style="margin-left: 1.5%; margin-right: 1.5%">
-                        Ничья
+                    <div>
+                        Событие
                     </div>
 
-                    <div style="margin-left: 1.5%; margin-right: 1.5%">
-                        Победа 2
+                    <div class="coeff">
+                        <div style="margin-right: 1.5%;">
+                            Победа 1
+                        </div>
+
+                        <div style="margin-left: 1.5%; margin-right: 1.5%">
+                            Ничья
+                        </div>
+
+                        <div style="margin-left: 1.5%; margin-right: 1.5%">
+                            Победа 2
+                        </div>
                     </div>
                 </div>
+
+                <c:forEach var="match" items="${sessionScope.matches}" >
+                    <div style="margin-left: 1.5%; margin-right: 1.5%" >
+                        <div class="match" >
+                            <div style="margin-left: 1.5%">
+                                <div><c:out value="${match.time}"/></div>
+                                <div><c:out value="${match.data}"/></div>
+                            </div>
+
+                            <div style="margin-left: -2.5%">
+                                <a href="${pageContext.request.contextPath}/controller?command=go_to_make_bet&match=${match.id}" class="link-block-match"><c:out value="${match.team1}"/> <c:out value=" ${match.goalsTeam1 != null ? match.goalsTeam1 : ''}"/> - <c:out value="${match.goalsTeam2 != null ? match.goalsTeam2 : ''} "/> <c:out value="${match.team2}"/></a>
+                            </div>
+
+                            <div class="coeff-info">
+                                <div style="margin-right: 1.5%"><c:out value="${match.coefTeam1}"/></div>
+                                <div style="margin-left: 1.5%; margin-right: 1.5%"><c:out value="${match.coefDraw}"/></div>
+                                <div style="margin-right: 1.5%"><c:out value="${match.coefTeam2}"/></div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
-
-            <c:forEach var="match" items="${sessionScope.matches}" >
-                <div style="margin-left: 1.5%; margin-right: 1.5%" >
-                    <div class="match" >
-                        <div style="margin-left: 1.5%">
-                            <div><c:out value="${match.time}"/></div>
-                            <div><c:out value="${match.data}"/></div>
-                        </div>
-
-                        <div style="margin-left: -2.5%">
-                            <a href="${pageContext.request.contextPath}/controller?command=go_to_make_bet&match=${match.id}" class="link-block-match"><c:out value="${match.team1}"/> <c:out value=" ${match.goalsTeam1 != null ? match.goalsTeam1 : ''}"/> - <c:out value="${match.goalsTeam2 != null ? match.goalsTeam2 : ''} "/> <c:out value="${match.team2}"/></a>
-                        </div>
-
-                        <div class="coeff-info">
-                            <div style="margin-right: 1.5%"><c:out value="${match.coefTeam1}"/></div>
-                            <div style="margin-left: 1.5%; margin-right: 1.5%"><c:out value="${match.coefDraw}"/></div>
-                            <div style="margin-right: 1.5%"><c:out value="${match.coefTeam2}"/></div>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
         </div>
 
-        <%@include file="WEB-INF/jsp/jspf/footer.jspf"%>
+        <div>
+            <%@include file="WEB-INF/jsp/jspf/footer.jspf"%>
+        </div>
     </body>
 </html>

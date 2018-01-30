@@ -39,104 +39,108 @@
     </head>
 
     <body>
-        <div class="top">
-            <div class="logo-top">
-                FireBets
+        <div>
+            <div class="top">
+                <div class="logo-top">
+                    FireBets
+                </div>
+
+                    <%@include file="jspf/user_profile.jspf" %>
             </div>
 
-                <%@include file="jspf/user_profile.jspf" %>
+            <%@include file="jspf/header.jspf"%>
+
+            <form action="controller" method="post">
+                <div>
+                    <div class="matches">
+                        <div class="match">
+                            <div>Матч:</div>
+                            <div style="margin-left: 1.5%"><c:out value="${sessionScope.match.team1}"/>  -  <c:out value="${sessionScope.match.team2}"/> </div>
+                        </div>
+
+                        <div class="match" >
+                            <div>Время:</div>
+                            <div style="margin-left: 1.5%">
+                                <div><c:out value="${sessionScope.match.time}"/></div>
+                                <div><c:out value="${sessionScope.match.data}"/></div>
+                            </div>
+                        </div>
+
+                        <div class="match">
+                            <div>Выберите тип ставки:</div>
+
+                            <div class="coeff-info">
+                                <div class="coeff" >
+                                    <div>Победа <c:out value="${sessionScope.match.team1}"/>: </div>
+                                    <div class="coeff-val" >
+                                        Коэфф: <c:out value="${sessionScope.match.coefTeam1}"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="radio" name="betType" value="team1" onclick="agreeForm(document.getElementById('form1'))" required>
+                                </div>
+
+                                <div class="coeff" >
+                                    <div>Ничья: </div>
+                                    <div class="coeff-val" >
+                                        Коэфф: <c:out value="${sessionScope.match.coefDraw}"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="radio" name="betType" value="draw" onclick="agreeForm(document.getElementById('form1'))" required>
+                                </div>
+
+                                <div class="coeff" >
+                                    <div>Победа <c:out value="${sessionScope.match.team2}"/>: </div>
+                                    <div class="coeff-val" >
+                                        Коэфф: <c:out value="${sessionScope.match.coefTeam2}"/>
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="radio" name="betType" value="team2" onclick="agreeForm(document.getElementById('form1'))" required >
+                                </div>
+
+                                <div class="coeff" >
+                                    <div>Точный счёт: </div>
+                                    <div class="coeff-val">
+                                        Коэфф: <c:out value="${sessionScope.match.coefExAcc}"/>
+                                    </div>
+                                </div>
+                                <div class="ExAcc" >
+                                    <input id="form1" type="radio" name="betType" value="exAcc" onclick="agreeForm(this)" required>
+                                </div>
+
+                                <div id="div1" class="ExAccVal">Голы <c:out value="${sessionScope.match.team1}"/></div>
+                                <div>
+                                    <input id="div3" class="exAccVal" type="text" name="exAccVal1" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
+                                </div>
+
+                                <div id="div2" class="ExAccVal"> : Голы <c:out value="${sessionScope.match.team2}"/></div>
+                                <div>
+                                    <input id="div4" class="ExAccVal" type="text" name="exAccVal2" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="match">
+                            <div>Введите размер ставки: </div>
+                            <div style="margin-left: 1.5%">
+                                <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required/>
+                            </div>
+                        </div>
+
+                        <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
+                            <input type="hidden" name="command" value="MAKE_BET"/>
+                            <input type="submit" value="Отправить"/>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
         </div>
 
-        <%@include file="jspf/header.jspf"%>
-
-        <form action="controller" method="post">
-            <div>
-                <div class="matches">
-                    <div class="match">
-                        <div>Матч:</div>
-                        <div style="margin-left: 1.5%"><c:out value="${sessionScope.match.team1}"/>  -  <c:out value="${sessionScope.match.team2}"/> </div>
-                    </div>
-
-                    <div class="match" >
-                        <div>Время:</div>
-                        <div style="margin-left: 1.5%">
-                            <div><c:out value="${sessionScope.match.time}"/></div>
-                            <div><c:out value="${sessionScope.match.data}"/></div>
-                        </div>
-                    </div>
-
-                    <div class="match">
-                        <div>Выберите тип ставки:</div>
-
-                        <div class="coeff-info">
-                            <div class="coeff" >
-                                <div>Победа <c:out value="${sessionScope.match.team1}"/>: </div>
-                                <div class="coeff-val" >
-                                    Коэфф: <c:out value="${sessionScope.match.coefTeam1}"/>
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" name="betType" value="team1" onclick="agreeForm(document.getElementById('form1'))" required>
-                            </div>
-
-                            <div class="coeff" >
-                                <div>Ничья: </div>
-                                <div class="coeff-val" >
-                                    Коэфф: <c:out value="${sessionScope.match.coefDraw}"/>
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" name="betType" value="draw" onclick="agreeForm(document.getElementById('form1'))" required>
-                            </div>
-
-                            <div class="coeff" >
-                                <div>Победа <c:out value="${sessionScope.match.team2}"/>: </div>
-                                <div class="coeff-val" >
-                                    Коэфф: <c:out value="${sessionScope.match.coefTeam2}"/>
-                                </div>
-                            </div>
-                            <div>
-                                <input type="radio" name="betType" value="team2" onclick="agreeForm(document.getElementById('form1'))" required >
-                            </div>
-
-                            <div class="coeff" >
-                                <div>Точный счёт: </div>
-                                <div class="coeff-val">
-                                    Коэфф: <c:out value="${sessionScope.match.coefExAcc}"/>
-                                </div>
-                            </div>
-                            <div class="ExAcc" >
-                                <input id="form1" type="radio" name="betType" value="exAcc" onclick="agreeForm(this)" required>
-                            </div>
-
-                            <div id="div1" class="ExAccVal">Голы <c:out value="${sessionScope.match.team1}"/></div>
-                            <div>
-                                <input id="div3" class="exAccVal" type="text" name="exAccVal1" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
-                            </div>
-
-                            <div id="div2" class="ExAccVal"> : Голы <c:out value="${sessionScope.match.team2}"/></div>
-                            <div>
-                                <input id="div4" class="ExAccVal" type="text" name="exAccVal2" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="match">
-                        <div>Введите размер ставки: </div>
-                        <div style="margin-left: 1.5%">
-                            <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required/>
-                        </div>
-                    </div>
-
-                    <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
-                        <input type="hidden" name="command" value="MAKE_BET"/>
-                        <input type="submit" value="Отправить"/>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
-        <%@include file="jspf/footer.jspf"%>
+        <div>
+            <%@include file="jspf/footer.jspf"%>
+        </div>
     </body>
 </html>

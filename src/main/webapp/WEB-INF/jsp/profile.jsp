@@ -21,68 +21,70 @@
     </head>
 
     <body>
+        <div>
+            <div class="top">
+                <div class="logo-top">
+                    FireBets
+                </div>
+            </div>
 
-        <div class="top">
-            <div class="logo-top">
-                FireBets
+            <%@include file="jspf/header.jspf"%>
+
+            <div>
+                <div class="user-info">
+                    <div class="user-info-step">
+                        <div style="margin-left: 1.5%; font-size: 34px; "><c:out value="${sessionScope.user.name}"/> <c:out value="${sessionScope.user.surname}"/> </div>
+                    </div>
+
+                    <div class="user-info-step" >
+                        <div>Ваш логин:</div>
+                        <div style="margin-left: 1.5%">
+                            <div ><c:out value="${sessionScope.user.login}"/></div>
+                        </div>
+                    </div>
+
+                    <div class="user-info-step" >
+                        <div>Ваш е-мейл:</div>
+                        <div style="margin-left: 1.5%">
+                            <div><c:out value="${sessionScope.user.email}"/></div>
+                        </div>
+                    </div>
+
+                    <div class="user-info-step" >
+                        <div>Ваш баланс:</div>
+                        <div style="margin-left: 1.5%">
+                            <div><c:out value="${sessionScope.user.balance}"/></div>
+                        </div>
+                    </div>
+
+                    <div class="user-info-step" >
+                        <div>Ваш статус:</div>
+                        <div style="margin-left: 1.5%">
+                            <div><c:out value="${sessionScope.user.role}"/></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
+                        <input type="hidden" name="command" value="MAKE_BET"/>
+                        <input type="submit" value="Отправить"/>
+                    </div>
+                    <c:choose>
+                        <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
+                            <%@include file="jspf/make_match.jspf" %>
+                        </c:when>
+
+                        <c:when test="${sessionScope.user.role.role == 'admin'}">
+                            <%@include file="jspf/user_management.jspf" %>
+                        </c:when>
+                    </c:choose>
+                </div>
             </div>
         </div>
 
-        <%@include file="jspf/header.jspf"%>
 
         <div>
-            <div class="user-info">
-                <div class="user-info-step">
-                    <div style="margin-left: 1.5%; font-size: 34px; "><c:out value="${sessionScope.user.name}"/> <c:out value="${sessionScope.user.surname}"/> </div>
-                </div>
-
-                <div class="user-info-step" >
-                    <div>Ваш логин:</div>
-                    <div style="margin-left: 1.5%">
-                        <div ><c:out value="${sessionScope.user.login}"/></div>
-                    </div>
-                </div>
-
-                <div class="user-info-step" >
-                    <div>Ваш е-мейл:</div>
-                    <div style="margin-left: 1.5%">
-                        <div><c:out value="${sessionScope.user.email}"/></div>
-                    </div>
-                </div>
-
-                <div class="user-info-step" >
-                    <div>Ваш баланс:</div>
-                    <div style="margin-left: 1.5%">
-                        <div><c:out value="${sessionScope.user.balance}"/></div>
-                    </div>
-                </div>
-
-                <div class="user-info-step" >
-                    <div>Ваш статус:</div>
-                    <div style="margin-left: 1.5%">
-                        <div><c:out value="${sessionScope.user.role}"/></div>
-                    </div>
-                </div>
-
-                <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
-                    <input type="hidden" name="command" value="MAKE_BET"/>
-                    <input type="submit" value="Отправить"/>
-                </div>
-                <c:choose>
-                    <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
-                        <%@include file="jspf/make_match.jspf" %>
-                    </c:when>
-
-                    <c:when test="${sessionScope.user.role.role == 'admin'}">
-                        <%@include file="jspf/user_management.jspf" %>
-                    </c:when>
-                </c:choose>
-            </div>
+            <%@include file="jspf/footer.jspf"%>
         </div>
-
-
-
-        <%@include file="jspf/footer.jspf"%>
 
 
     </body>

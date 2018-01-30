@@ -4,6 +4,9 @@
 
 body {
     background-image: url(img/back_img.jpg);
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
 }
 
 li {
