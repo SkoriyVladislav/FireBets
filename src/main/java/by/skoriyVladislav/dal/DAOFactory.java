@@ -8,6 +8,8 @@ import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.dal.user_dao.impl.UserDAOImpl;
 import by.skoriyVladislav.entity.match.Match;
 
+import java.util.Properties;
+
 public final class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
 
@@ -19,6 +21,10 @@ public final class DAOFactory {
 
     private DAOFactory() {}
 
+    public static DAOFactory getInstance() {
+        return instance;
+    }
+
     public MatchDAO getMatchDAO() {
         return matchDAO;
     }
@@ -27,11 +33,19 @@ public final class DAOFactory {
         return userDAO;
     }
 
-    public static DAOFactory getInstance() {
-        return instance;
-    }
-
     public BetDAO getBetDAO() {
         return betDAO;
+    }
+
+    private final static Properties properties = new Properties();
+    static {
+        properties.setProperty("user", "root");
+        properties.setProperty("password", "root");
+        properties.setProperty("useSSL", "false");
+        properties.setProperty("autoReconnect", "true");
+    }
+
+    public static Properties getProperties() {
+        return properties;
     }
 }

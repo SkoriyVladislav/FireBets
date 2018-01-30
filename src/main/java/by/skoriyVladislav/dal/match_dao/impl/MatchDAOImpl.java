@@ -1,5 +1,6 @@
 package by.skoriyVladislav.dal.match_dao.impl;
 
+import by.skoriyVladislav.dal.DAOFactory;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.entity.match.Match;
 
@@ -33,7 +34,7 @@ public class MatchDAOImpl implements MatchDAO {
             return matches;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -62,7 +63,7 @@ public class MatchDAOImpl implements MatchDAO {
             return match;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_ID_MATCHS)) {
             preparedStatement.setInt(1, fId);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -87,7 +88,7 @@ public class MatchDAOImpl implements MatchDAO {
             return false;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_MATCHES)) {
             preparedStatement.setString(1, team1);
             preparedStatement.setString(2, team2);
@@ -99,7 +100,7 @@ public class MatchDAOImpl implements MatchDAO {
         }
 
         Integer matchId = null;
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME)) {
             preparedStatement.setString(1, team1);
             preparedStatement.setString(2, team2);
@@ -126,7 +127,7 @@ public class MatchDAOImpl implements MatchDAO {
             return false;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_COEFFICIENT)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setDouble(2, coef[0]);

@@ -119,7 +119,7 @@ public class Receiver {
                     request.getSession().setAttribute("user", user5);
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("error.jsp");
+                    response.sendRedirect("123error.jsp");
                 }
                 break;
 
@@ -146,7 +146,7 @@ public class Receiver {
                         coefExAcc = Double.valueOf(request.getParameter("coefExAcc"));
                     } catch (NullPointerException ex) {
                         System.out.println(ex.getMessage());
-                        response.sendRedirect("error.jsp");
+                        response.sendRedirect("123error.jsp");
                     }
 
                     String dataTime = year + "-" + month + "-" + day + " " + hour + ":" + minute;
@@ -156,7 +156,7 @@ public class Receiver {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("error.jsp");
+                    response.sendRedirect("123error.jsp");
                 }
 
 

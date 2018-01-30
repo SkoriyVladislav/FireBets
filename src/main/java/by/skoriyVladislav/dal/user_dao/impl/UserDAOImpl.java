@@ -1,5 +1,6 @@
 package by.skoriyVladislav.dal.user_dao.impl;
 
+import by.skoriyVladislav.dal.DAOFactory;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.entity.user.UserRole;
@@ -29,7 +30,7 @@ public class UserDAOImpl implements UserDAO {
             return user;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD)) {
             preparedStatement.setString(1, fLogin);
             preparedStatement.setString(2, fPassword);
@@ -66,7 +67,7 @@ public class UserDAOImpl implements UserDAO {
             return false;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
@@ -94,7 +95,7 @@ public class UserDAOImpl implements UserDAO {
             return false;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN)) {
             preparedStatement.setString(1, login);
 
@@ -121,7 +122,7 @@ public class UserDAOImpl implements UserDAO {
             return false;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BALANCE_FROM_USERS_WHERE_LOGIN)) {
             preparedStatement.setString(1, login);
 
@@ -139,7 +140,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean transaktion(User user, double size) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_BALANCE_BALANCE_WHERE_LOGIN)) {
 
             preparedStatement.setDouble(1, size);

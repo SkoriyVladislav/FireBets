@@ -28,7 +28,7 @@ public class BetDAOImpl implements BetDAO {
             return false;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BETS)) {
             preparedStatement.setString(1, bet.getLoginUser());
             preparedStatement.setInt(2, bet.getIdMatches());
@@ -63,7 +63,7 @@ public class BetDAOImpl implements BetDAO {
             return bets;
         }
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_BETS_WHERE_USERS_LOGIN)) {
             preparedStatement.setString(1 , userLogin);
             ResultSet resultSet = preparedStatement.executeQuery();
