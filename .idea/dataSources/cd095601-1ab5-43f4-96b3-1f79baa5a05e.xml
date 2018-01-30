@@ -31,7 +31,7 @@
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="15" parent="10" name="Matches_idMatchs">
+    <column id="15" parent="10" name="Matches_idMatches">
       <Position>2</Position>
       <Comment>ID матча на который стоит ставка</Comment>
       <DataType>int(11)|0</DataType>
@@ -57,149 +57,153 @@
       <Position>6</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <index id="20" parent="10" name="fk_Bets_Matches1_idx">
-      <ColNames>Matches_idMatchs</ColNames>
+    <column id="20" parent="10" name="status">
+      <Position>7</Position>
+      <DataType>varchar(30)|0</DataType>
+    </column>
+    <index id="21" parent="10" name="fk_Bets_Matches1_idx">
+      <ColNames>Matches_idMatches</ColNames>
     </index>
-    <index id="21" parent="10" name="Users_Login_idx">
+    <index id="22" parent="10" name="Users_Login_idx">
       <ColNames>Users_Login</ColNames>
     </index>
-    <key id="22" parent="10" name="PRIMARY">
+    <key id="23" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Users_Login
-Matches_idMatchs</ColNames>
+Matches_idMatches</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="23" parent="10" name="fk_Bets_Users1">
+    <foreign-key id="24" parent="10" name="fk_Bets_Users1">
       <ColNames>Users_Login</ColNames>
       <RefSchemaName>firebets</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>Login</RefColNames>
     </foreign-key>
-    <foreign-key id="24" parent="10" name="fk_Bets_Matches1">
-      <ColNames>Matches_idMatchs</ColNames>
+    <foreign-key id="25" parent="10" name="fk_Bets_Matches1">
+      <ColNames>Matches_idMatches</ColNames>
       <RefSchemaName>firebets</RefSchemaName>
       <RefTableName>matches</RefTableName>
-      <RefColNames>idMatchs</RefColNames>
+      <RefColNames>idMatches</RefColNames>
     </foreign-key>
-    <column id="25" parent="11" name="Matches_idMatchs">
+    <column id="26" parent="11" name="Matches_idMatchs">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="26" parent="11" name="CoefTEAM1">
+    <column id="27" parent="11" name="CoefTEAM1">
       <Position>2</Position>
       <Comment>Коэфициент на пробеду первой команды</Comment>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="27" parent="11" name="CoefTEAM2">
+    <column id="28" parent="11" name="CoefTEAM2">
       <Position>3</Position>
       <Comment>Коэфициент на пробеду второй команды</Comment>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="28" parent="11" name="CoefDRAW">
+    <column id="29" parent="11" name="CoefDRAW">
       <Position>4</Position>
       <Comment>Коэфициент на ничью в матче</Comment>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="29" parent="11" name="CoefExAcc">
+    <column id="30" parent="11" name="CoefExAcc">
       <Position>5</Position>
       <Comment>Коэфициент на предсказание точного счёта</Comment>
       <DataType>double|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="30" parent="11" name="PRIMARY">
+    <key id="31" parent="11" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Matches_idMatchs</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="31" parent="11" name="fk_Coefficient_Matches1">
+    <foreign-key id="32" parent="11" name="fk_Coefficient_Matches1">
       <ColNames>Matches_idMatchs</ColNames>
       <RefSchemaName>firebets</RefSchemaName>
       <RefTableName>matches</RefTableName>
-      <RefColNames>idMatchs</RefColNames>
+      <RefColNames>idMatches</RefColNames>
     </foreign-key>
-    <column id="32" parent="12" name="idMatchs">
+    <column id="33" parent="12" name="idMatches">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="33" parent="12" name="Team1">
+    <column id="34" parent="12" name="Team1">
       <Position>2</Position>
       <Comment>Команда 1</Comment>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="34" parent="12" name="Team2">
+    <column id="35" parent="12" name="Team2">
       <Position>3</Position>
       <Comment>Команда 2</Comment>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="35" parent="12" name="DateTime">
+    <column id="36" parent="12" name="DateTime">
       <Position>4</Position>
       <Comment>Дата и время проведения матча</Comment>
       <DataType>datetime(6)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="36" parent="12" name="goalsTeam1">
+    <column id="37" parent="12" name="goalsTeam1">
       <Position>5</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="37" parent="12" name="goalsTeam2">
+    <column id="38" parent="12" name="goalsTeam2">
       <Position>6</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <index id="38" parent="12" name="Teams_idx">
+    <index id="39" parent="12" name="Teams_idx">
       <ColNames>Team1
 Team2</ColNames>
     </index>
-    <key id="39" parent="12" name="PRIMARY">
+    <key id="40" parent="12" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>idMatchs</ColNames>
+      <ColNames>idMatches</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="40" parent="13" name="Login">
+    <column id="41" parent="13" name="Login">
       <Position>1</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="41" parent="13" name="Password">
+    <column id="42" parent="13" name="Password">
       <Position>2</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="42" parent="13" name="Name">
+    <column id="43" parent="13" name="Name">
       <Position>3</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="43" parent="13" name="SurName">
+    <column id="44" parent="13" name="SurName">
       <Position>4</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="44" parent="13" name="Role">
+    <column id="45" parent="13" name="Role">
       <Position>5</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="45" parent="13" name="Balance">
+    <column id="46" parent="13" name="Balance">
       <Position>6</Position>
       <DataType>double|0</DataType>
     </column>
-    <column id="46" parent="13" name="Email">
+    <column id="47" parent="13" name="Email">
       <Position>7</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="47" parent="13" name="Login_idx">
+    <index id="48" parent="13" name="Login_idx">
       <ColNames>Login</ColNames>
     </index>
-    <key id="48" parent="13" name="PRIMARY">
+    <key id="49" parent="13" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Login</ColNames>
       <Primary>1</Primary>
