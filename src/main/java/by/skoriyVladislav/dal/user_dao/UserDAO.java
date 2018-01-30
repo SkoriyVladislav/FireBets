@@ -8,4 +8,5 @@ public interface UserDAO {
                          String surname, String role, double balance, String email);
     boolean loginInDataBase(String login);
     boolean checkBalanceForBet(String login, double size);
+    boolean transaktion(User user, double size);
 }

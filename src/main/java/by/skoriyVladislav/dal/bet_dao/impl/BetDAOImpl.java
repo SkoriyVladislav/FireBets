@@ -1,8 +1,10 @@
 package by.skoriyVladislav.dal.bet_dao.impl;
 
+import by.skoriyVladislav.dal.DAOFactory;
 import by.skoriyVladislav.dal.bet_dao.BetDAO;
 import by.skoriyVladislav.entity.bet.Bet;
 import by.skoriyVladislav.entity.bet.BetType;
+import by.skoriyVladislav.entity.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class BetDAOImpl implements BetDAO {
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN = "SELECT * FROM bets WHERE Users_Login = ?";
 
     @Override
-    public boolean registrationBet(Bet bet) throws SQLException {
+    public boolean registrationBet(Bet bet, User user) throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         }
@@ -36,8 +38,11 @@ public class BetDAOImpl implements BetDAO {
             preparedStatement.setObject(6, bet.getGoalsTeam2());
             //preparedStatement.setInt(5, bet.getGoalsTeam1());
             //preparedStatement.setInt(6, bet.getGoalsTeam2());
-
-            preparedStatement.execute();
+            if (DAOFactory.getInstance().getUserDAO().transaktion(user, -bet.getSize())) {
+                preparedStatement.execute();
+            } else {
+                throw new SQLException();
+            }
         } catch (SQLException e) {
             throw new SQLException(e);
         }

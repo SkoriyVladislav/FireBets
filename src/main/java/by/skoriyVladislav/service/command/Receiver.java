@@ -31,7 +31,7 @@ public class Receiver {
                 MatchDAO matchDAO = daoFactory.getMatchDAO();
                 List<Match> matches = matchDAO.createMatches();
                 request.getSession().setAttribute("matches", matches);
-                response.sendRedirect("main.jsp");
+                response.sendRedirect("index.jsp");
                 break;
 
             case GO_TO_PROFILE:
@@ -92,30 +92,35 @@ public class Receiver {
 
                 User user = userDAO.createUser(login, password);
                 request.getSession().setAttribute("user", user);
-                response.sendRedirect("main.jsp");
+                response.sendRedirect("index.jsp");
                 break;
 
             case MAKE_BET:
-                int matchId = ((Match)request.getSession().getAttribute("match")).getId();
-                String userLogin = ((User)request.getSession().getAttribute("user")).getLogin();
-                BetType typeOfBet = BetType.valueOf(request.getParameter("betType").toUpperCase());
-                Integer size = Integer.valueOf(request.getParameter("betVal"));
-                Integer goalsTeam1 = null;
-                Integer goalsTeam2 = null;
-                if (typeOfBet == BetType.EXACC) {
-                    goalsTeam1 = Integer.valueOf(request.getParameter("exAccVal1"));
-                    goalsTeam2 = Integer.valueOf(request.getParameter("exAccVal2"));
-                }
-                Bet bet = new Bet(userLogin, matchId, size, typeOfBet, goalsTeam1, goalsTeam2, null);
+                User user5 = (User)request.getSession().getAttribute("user");
+                String userLogin = user5.getLogin();
+                double size = Double.valueOf(request.getParameter("betVal"));
 
-                DAOFactory factory2 = DAOFactory.getInstance();
-                BetDAO betDAO = factory2.getBetDAO();
-                try {
-                    betDAO.registrationBet(bet);
-                } catch (SQLException ex) {
-                    throw new IOException(ex);
+                if (DAOFactory.getInstance().getUserDAO().checkBalanceForBet(userLogin, size)) {
+                    int matchId = ((Match) request.getSession().getAttribute("match")).getId();
+                    BetType typeOfBet = BetType.valueOf(request.getParameter("betType").toUpperCase());
+                    Integer goalsTeam1 = null;
+                    Integer goalsTeam2 = null;
+                    if (typeOfBet == BetType.EXACC) {
+                        goalsTeam1 = Integer.valueOf(request.getParameter("exAccVal1"));
+                        goalsTeam2 = Integer.valueOf(request.getParameter("exAccVal2"));
+                    }
+                    Bet bet = new Bet(userLogin, matchId, size, typeOfBet, goalsTeam1, goalsTeam2, null);
+
+                    try {
+                        DAOFactory.getInstance().getBetDAO().registrationBet(bet, user5);
+                    } catch (SQLException ex) {
+                        throw new IOException(ex);
+                    }
+                    request.getSession().setAttribute("user", user5);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("error.jsp");
                 }
-                response.sendRedirect("main.jsp");
                 break;
 
             case MAKE_MATCH:
@@ -176,7 +181,7 @@ public class Receiver {
 
             case LOGOUT:
                 request.getSession().setAttribute("user", null);
-                request.getRequestDispatcher("main.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
 
             case CHECK_LOGIN_AJAX:
