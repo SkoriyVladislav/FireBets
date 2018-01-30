@@ -62,6 +62,10 @@ public class Client {
             case CHECK_LOGIN_AJAX:
                 command = new CheckLoginAjax(receiver);
                 break;
+
+            case CHECK_SIZE_BETS_AJAX:
+                command = new CheckSizeBetAjax(receiver);
+                break;
         }
         return command;
     }

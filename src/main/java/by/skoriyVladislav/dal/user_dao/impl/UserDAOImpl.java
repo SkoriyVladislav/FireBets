@@ -14,6 +14,7 @@ public class UserDAOImpl implements UserDAO {
     private final static String SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE Login = ? AND Password = ?";
     private final static String INSERT_USERS = "INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private final static String SELECT_FROM_USERS_WHERE_LOGIN = "SELECT * FROM users WHERE Login = ?";
+    private final static String SELECT_BALANCE_FROM_USERS_WHERE_LOGIN = "SELECT Balance FROM users WHERE Login = ?";
 
     @Override
     public User createUser(String fLogin, String fPassword) {
@@ -101,6 +102,33 @@ public class UserDAOImpl implements UserDAO {
 
             if (resultSet.next()) {
                 return true;
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean checkBalanceForBet(String login, double size) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return false;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BALANCE_FROM_USERS_WHERE_LOGIN)) {
+            preparedStatement.setString(1, login);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int balance = resultSet.getInt("Balance");
+                return balance > size;
             }
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);

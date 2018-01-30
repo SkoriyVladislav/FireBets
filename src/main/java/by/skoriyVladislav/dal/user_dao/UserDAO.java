@@ -7,4 +7,5 @@ public interface UserDAO {
     boolean registerUser(String login, String password, String name,
                          String surname, String role, double balance, String email);
     boolean loginInDataBase(String login);
+    boolean checkBalanceForBet(String login, double size);
 }

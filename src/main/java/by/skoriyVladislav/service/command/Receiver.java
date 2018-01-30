@@ -192,6 +192,21 @@ public class Receiver {
                     out.print(jsonEnt.toString());
                 }
                 break;
+
+            case CHECK_SIZE_BETS_AJAX:
+                response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
+                response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
+                User user3 = (User) request.getSession().getAttribute("user");
+                try (PrintWriter out = response.getWriter()) {
+                    JSONObject jsonEnt = new JSONObject();
+                    if(DAOFactory.getInstance().getUserDAO().checkBalanceForBet(user3.getLogin(), Double.valueOf(request.getParameter("betVal")))) {
+                        jsonEnt.put("serverInfo", "true");
+                    }else {
+                        jsonEnt.put("serverInfo", "false");
+                    }
+                    out.print(jsonEnt.toString());
+                }
+                break;
         }
     }
 

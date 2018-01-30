@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleMakeBet.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script>
             function agreeForm(box) {
                 // Если поставлен флажок, снимаем блокирование кнопки
@@ -125,14 +126,36 @@
                         <div class="match">
                             <div>Введите размер ставки: </div>
                             <div style="margin-left: 1.5%">
-                                <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required/>
+                                <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required onchange="ajaxreq()"/>
+                                <span id="responseBetValSpan" style="margin-left: 10px;"></span>
                             </div>
                         </div>
 
                         <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
                             <input type="hidden" name="command" value="MAKE_BET"/>
-                            <input type="submit" value="Отправить"/>
+                            <input id="makeBetButton" type="submit" value="Отправить" disabled/>
                         </div>
+
+                        <script>
+                            function ajaxreq() {
+                                var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
+
+                                $.ajax({
+                                    type: "POST",
+                                    data: data,
+                                    url: 'ajax_controller',
+                                    success: [function(serverData) { //Если запрос удачен
+                                        if (serverData.serverInfo === "true") {
+                                            $("#responseBetValSpan").text("");
+                                            $("#makeBetButton").prop('disabled', false);
+                                        } else {
+                                            $("#responseBetValSpan").text("Недостаточно средств для ставки");
+                                            $("#makeBetButton").prop('disabled', true);
+                                        }
+                                    }]
+                                });
+                            }
+                        </script>
 
                     </div>
                 </div>
