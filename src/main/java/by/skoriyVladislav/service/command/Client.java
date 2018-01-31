@@ -39,6 +39,10 @@ public class Client {
                 command = new GoToPageMakeBet(receiver);
                 break;
 
+            case GO_TO_USER_MANAGEMENT:
+                command = new GoToUserManagement(receiver);
+                break;
+
             case MAKE_BET:
                 command = new MakeBet(receiver);
                 break;
@@ -65,6 +69,10 @@ public class Client {
 
             case CHECK_SIZE_BETS_AJAX:
                 command = new CheckSizeBetAjax(receiver);
+                break;
+
+            case GET_USERS_AJAX:
+                command = new GetUsersAjax(receiver);
                 break;
         }
         return command;

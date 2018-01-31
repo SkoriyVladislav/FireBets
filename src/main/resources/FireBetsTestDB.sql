@@ -1,1 +1,1 @@
-SELECT * FROM matches WHERE Team1 = 'team1' AND Team2 = 'team2' AND DateTime = '2018-01-28 20:50';
+SELECT * FROM users WHERE Login Like '%dmi%'

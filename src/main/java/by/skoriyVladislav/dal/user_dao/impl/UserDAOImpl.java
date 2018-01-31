@@ -6,6 +6,9 @@ import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.entity.user.UserRole;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
@@ -22,6 +25,41 @@ public class UserDAOImpl implements UserDAO {
     private final static String SELECT_FROM_USERS_WHERE_LOGIN = "SELECT * FROM users WHERE Login = ?";
     private final static String SELECT_BALANCE_FROM_USERS_WHERE_LOGIN = "SELECT Balance FROM users WHERE Login = ?";
     private final static String UPDATE_USERS_SET_BALANCE_BALANCE_WHERE_LOGIN = "UPDATE users SET Balance = Balance + ? WHERE Login = ?";
+    private final static String SELECT_FROM_USERS_WHERE_CRITERIA_IS_LOGIN = "SELECT * FROM users WHERE Login LIKE ?";
+    private final static String SELECT_FROM_USERS_WHERE_CRITERIA_IS_NAME = "SELECT * FROM users WHERE Name LIKE ?";
+    private final static String SELECT_FROM_USERS_WHERE_CRITERIA_IS_SURNAME = "SELECT * FROM users WHERE SurName LIKE ?";
+
+    @Override
+    public List<User> createUsers(String criteria) {
+        List<User> setUsers = new ArrayList<>();
+        HashSet<User> hashSetUsers = new HashSet<>();
+
+        hashSetUsers.addAll(createUsersByCriteria(SELECT_FROM_USERS_WHERE_CRITERIA_IS_LOGIN,'%' + criteria + '%'));
+
+        hashSetUsers.addAll(createUsersByCriteria(SELECT_FROM_USERS_WHERE_CRITERIA_IS_NAME,'%' + criteria + '%'));
+
+        hashSetUsers.addAll(createUsersByCriteria(SELECT_FROM_USERS_WHERE_CRITERIA_IS_SURNAME,'%' + criteria + '%'));
+
+        setUsers.addAll(hashSetUsers);
+        return setUsers;
+    }
+
+    private HashSet<User> createUsersByCriteria(String statement, String criteria) {
+        HashSet<User> setUsers = new HashSet<>();
+        User user = null;
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
+             PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
+            preparedStatement.setString(1, criteria);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                user = createUser(resultSet);
+                setUsers.add(user);
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+        return setUsers;
+    }
 
     @Override
     public User createUser(String fLogin, String fPassword) {
@@ -44,13 +82,7 @@ public class UserDAOImpl implements UserDAO {
 
 
             while (resultSet.next()) {
-                String login = resultSet.getString("Login");
-                String name = resultSet.getString("Name");
-                String surname = resultSet.getString("SurName");
-                double money = resultSet.getDouble("Balance");
-                String email = resultSet.getString("Email");
-                UserRole role = UserRole.valueOf(resultSet.getString("Role").toUpperCase());
-                user = new User(login, name, surname, money, email, role);
+                user = createUser(resultSet);
             }
 
         } catch (SQLException e) {
@@ -158,5 +190,19 @@ public class UserDAOImpl implements UserDAO {
         }
 
         return true;
+    }
+
+    private User createUser(ResultSet resultSet) throws SQLException {
+        User user = null;
+        if (resultSet != null) {
+            String login = resultSet.getString("Login");
+            String name = resultSet.getString("Name");
+            String surname = resultSet.getString("SurName");
+            double money = resultSet.getDouble("Balance");
+            String email = resultSet.getString("Email");
+            UserRole role = UserRole.valueOf(resultSet.getString("Role").toUpperCase());
+            user = new User(login, name, surname, money, email, role);
+        }
+        return user;
     }
 }

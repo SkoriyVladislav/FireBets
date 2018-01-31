@@ -1,7 +1,6 @@
 package by.skoriyVladislav.service.command;
 
 import by.skoriyVladislav.dal.DAOFactory;
-import by.skoriyVladislav.dal.bet_dao.BetDAO;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.bet.Bet;
@@ -9,6 +8,7 @@ import by.skoriyVladislav.entity.bet.BetType;
 import by.skoriyVladislav.entity.match.Match;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.service.command.command_type.TypeCommand;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -41,6 +41,10 @@ public class Receiver {
 
             case GO_TO_REGISTRATION:
                 request.getRequestDispatcher("/WEB-INF/jsp/registration.jsp").forward(request, response);
+                break;
+
+            case GO_TO_USER_MANAGEMENT:
+                request.getRequestDispatcher("/WEB-INF/jsp/user_management.jsp").forward(request, response);
                 break;
 
             case GO_TO_MAKE_BET:
@@ -213,6 +217,14 @@ public class Receiver {
                     }
                     out.print(jsonEnt.toString());
                 }
+                break;
+
+            case GET_USERS_AJAX:
+                response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
+                response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
+                List<User> products = DAOFactory.getInstance().getUserDAO().createUsers(request.getParameter("criteria"));
+                String json = new Gson().toJson(products);
+                response.getWriter().write(json);
                 break;
         }
     }
