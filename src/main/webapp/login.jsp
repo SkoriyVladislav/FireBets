@@ -30,7 +30,7 @@
             <%@include file="WEB-INF/jsp/jspf/header.jspf"%>
 
             <div class="login">
-                <form action="controller" method="get" >
+                <form action="controller" method="post" >
                     <div class="login-step">
                         <h2 class="massageH2">Пожалуйста авторизуйтесь.</h2>
                     </div>

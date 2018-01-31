@@ -51,7 +51,7 @@
 
             <div class="registerSteps">
 
-                <form onsubmit="return validateForm()" name="reg-form" action="controller" method="get">
+                <form onsubmit="return validateForm()" name="reg-form" action="controller" method="post">
                     <div class="label">Логин:</div>
                     <div class="field" id="forAjLog">
                         <input type="text" name="login" class="inputPole" value="" placeholder=" " required id="ajLogin" onchange="ajaxreq()"/>

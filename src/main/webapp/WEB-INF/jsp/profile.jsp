@@ -63,18 +63,15 @@
                             <div><c:out value="${sessionScope.user.role}"/></div>
                         </div>
                     </div>
-
-                    <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
-                        <input type="hidden" name="command" value="MAKE_BET"/>
-                        <input type="submit" value="Отправить"/>
-                    </div>
                     <c:choose>
                         <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
                             <%@include file="jspf/make_match.jspf" %>
                         </c:when>
 
                         <c:when test="${sessionScope.user.role.role == 'admin'}">
-                            <%@include file="jspf/user_management.jspf" %>
+                            <div >
+                                <a href="${pageContext.request.contextPath}/controller?command=go_to_user_management" class="link-block-registration">Управление пользователями</a>
+                            </div>
                         </c:when>
                     </c:choose>
                 </div>

@@ -14,6 +14,11 @@
             <ul class="dropdown animated-fast fadeInUpMenu" >
                 <li><a href="${pageContext.request.contextPath}/controller?command=go_to_my_bets">Мои ставки</a></li>
                 <li><a href="#">Кошелёк</a></li>
+                <c:choose>
+                    <c:when test="${sessionScope.user.role.role == 'admin'}">
+                        <li><a href="${pageContext.request.contextPath}/controller?command=go_to_user_management">Управление пользователями</a></li>
+                    </c:when>
+                </c:choose>
             </ul>
         </li>
         <li><a href="#" class="link-block-menu"><p>Новости</p></a></li>
