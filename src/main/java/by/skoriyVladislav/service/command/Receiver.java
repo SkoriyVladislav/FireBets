@@ -27,11 +27,12 @@ public class Receiver {
     public void action(TypeCommand cmd, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         switch(cmd){
             case GO_TO_MAIN:
+                request.setCharacterEncoding("utf-8");
                 DAOFactory daoFactory = DAOFactory.getInstance();
                 MatchDAO matchDAO = daoFactory.getMatchDAO();
                 List<Match> matches = matchDAO.createMatches();
                 request.getSession().setAttribute("matches", matches);
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("main.jsp");
                 break;
 
             case GO_TO_PROFILE:
@@ -88,7 +89,7 @@ public class Receiver {
 
                 DAOFactory factory = DAOFactory.getInstance();
                 UserDAO userDAO = factory.getUserDAO();
-                userDAO.registerUser(login, password, name, surname, "user", 10, email);
+                userDAO.registerUser(login, password, name, surname, "player", 10, email);
 
                 User user = userDAO.createUser(login, password);
                 request.getSession().setAttribute("user", user);
@@ -146,7 +147,7 @@ public class Receiver {
                         coefExAcc = Double.valueOf(request.getParameter("coefExAcc"));
                     } catch (NullPointerException ex) {
                         System.out.println(ex.getMessage());
-                        response.sendRedirect("123error.jsp");
+                        response.sendRedirect("error.jsp");
                     }
 
                     String dataTime = year + "-" + month + "-" + day + " " + hour + ":" + minute;
@@ -156,7 +157,7 @@ public class Receiver {
 
                     request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("123error.jsp");
+                    response.sendRedirect("error.jsp");
                 }
 
 
@@ -175,11 +176,12 @@ public class Receiver {
                     String from1 = request.getParameter("from");
                     response.sendRedirect(from1);
                 } catch (NullPointerException ex) {
-                    response.sendRedirect("main.jsp");
+                    response.sendRedirect("index.jsp");
                 }
                 break;
 
             case LOGOUT:
+                request.setCharacterEncoding("utf-8");
                 request.getSession().setAttribute("user", null);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 break;
