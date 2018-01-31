@@ -41,8 +41,6 @@ public final class DAOFactory {
     static {
         properties.setProperty("user", "root");
         properties.setProperty("password", "root");
-        properties.setProperty("useSSL", "false");
-        properties.setProperty("autoReconnect", "true");
     }
 
     public static Properties getProperties() {

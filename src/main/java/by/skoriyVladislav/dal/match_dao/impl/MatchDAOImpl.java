@@ -9,9 +9,13 @@ import java.util.*;
 
 public class MatchDAOImpl implements MatchDAO {
 
-    private final static String URL = "jdbc:mysql://localhost:3306/firebets";
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "root";
+    private final static String URL = "jdbc:mysql://localhost:3306/firebets"+
+            "?verifyServerCertificate=false"+
+            "&useSSL=false"+
+            "&requireSSL=false"+
+            "&useLegacyDatetimeCode=false"+
+            "&amp"+
+            "&serverTimezone=UTC";
 
     private final static String SELECT_FROM_MATCHES = "SELECT * FROM matches";
     private final static String SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
@@ -27,7 +31,7 @@ public class MatchDAOImpl implements MatchDAO {
         Match match = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         }
         catch (ClassNotFoundException e) {
             System.out.println("No have database");

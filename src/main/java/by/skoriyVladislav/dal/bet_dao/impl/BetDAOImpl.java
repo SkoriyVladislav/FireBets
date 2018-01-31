@@ -12,9 +12,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class BetDAOImpl implements BetDAO {
-    private final static String URL = "jdbc:mysql://localhost:3306/firebets";
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "root";
+    private final static String URL = "jdbc:mysql://localhost:3306/firebets"+
+            "?verifyServerCertificate=false"+
+            "&useSSL=false"+
+            "&requireSSL=false"+
+            "&useLegacyDatetimeCode=false"+
+            "&amp"+
+            "&serverTimezone=UTC";
+
     private final static String INSERT_BETS = "INSERT INTO bets (Users_Login, Matches_idMatches, Size, Type, goalsTeam1, goalsTeam2) VALUES (?, ?, ?, ?, ?, ?)";
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN = "SELECT * FROM bets WHERE Users_Login = ?";
 

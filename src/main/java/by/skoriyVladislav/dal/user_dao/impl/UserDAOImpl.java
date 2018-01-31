@@ -9,9 +9,14 @@ import java.sql.*;
 
 public class UserDAOImpl implements UserDAO {
 
-    private final static String URL = "jdbc:mysql://localhost:3306/firebets";
-    private final static String USERNAME = "root";
-    private final static String PASSWORD = "root";
+    private final static String URL = "jdbc:mysql://localhost:3306/firebets"+
+            "?verifyServerCertificate=false"+
+            "&useSSL=false"+
+            "&requireSSL=false"+
+            "&useLegacyDatetimeCode=false"+
+            "&amp"+
+            "&serverTimezone=UTC";
+
     private final static String SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE Login = ? AND Password = ?";
     private final static String INSERT_USERS = "INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private final static String SELECT_FROM_USERS_WHERE_LOGIN = "SELECT * FROM users WHERE Login = ?";
