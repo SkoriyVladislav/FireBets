@@ -12,8 +12,8 @@ import java.io.IOException;
 public class GoToPageRegistration implements ICommand {
     private Receiver receiver;
 
-    public GoToPageRegistration(Receiver reciever) {
-        this.receiver = reciever;
+    public GoToPageRegistration(Receiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override

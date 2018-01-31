@@ -12,8 +12,8 @@ import java.io.IOException;
 public class CheckLoginAjax implements ICommand {
     private Receiver receiver;
 
-    public CheckLoginAjax(Receiver reciever) {
-        this.receiver = reciever;
+    public CheckLoginAjax(Receiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override

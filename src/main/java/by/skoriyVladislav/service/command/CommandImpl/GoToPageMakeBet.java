@@ -12,8 +12,8 @@ import java.io.IOException;
 public class GoToPageMakeBet implements ICommand {
     private Receiver receiver;
 
-    public GoToPageMakeBet(Receiver reciever) {
-        this.receiver = reciever;
+    public GoToPageMakeBet(Receiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override

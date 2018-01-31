@@ -12,8 +12,8 @@ import java.io.IOException;
 public class GoToMyBets implements ICommand {
     private Receiver receiver;
 
-    public GoToMyBets(Receiver reciever) {
-        this.receiver = reciever;
+    public GoToMyBets(Receiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override

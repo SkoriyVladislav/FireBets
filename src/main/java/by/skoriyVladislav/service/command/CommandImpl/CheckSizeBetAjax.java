@@ -12,8 +12,8 @@ import java.io.IOException;
 public class CheckSizeBetAjax implements ICommand {
     private Receiver receiver;
 
-    public CheckSizeBetAjax(Receiver reciever) {
-        this.receiver = reciever;
+    public CheckSizeBetAjax(Receiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override

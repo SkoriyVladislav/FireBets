@@ -12,8 +12,8 @@ import java.io.IOException;
 public class MakeMatch implements ICommand {
     private Receiver receiver;
 
-    public MakeMatch(Receiver reciever) {
-        this.receiver = reciever;
+    public MakeMatch(Receiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override

@@ -12,8 +12,8 @@ import java.io.IOException;
 public class GoToPageMain implements ICommand {
     private Receiver receiver;
 
-    public GoToPageMain(Receiver reciever) {
-        this.receiver = reciever;
+    public GoToPageMain(Receiver receiver) {
+        this.receiver = receiver;
     }
 
     @Override
