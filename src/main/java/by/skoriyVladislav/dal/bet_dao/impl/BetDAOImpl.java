@@ -22,6 +22,7 @@ public class BetDAOImpl implements BetDAO {
 
     private final static String INSERT_BETS = "INSERT INTO bets (Users_Login, Matches_idMatches, Size, Type, goalsTeam1, goalsTeam2) VALUES (?, ?, ?, ?, ?, ?)";
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN = "SELECT * FROM bets WHERE Users_Login = ?";
+    private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES = "SELECT * FROM bets WHERE Users_Login = ? AND Matches_idMatches = ?";
 
     @Override
     public boolean registrationBet(Bet bet, User user) throws SQLException {
@@ -110,6 +111,35 @@ public class BetDAOImpl implements BetDAO {
 
         bet = new Bet(loginUser, idMatches, size, betType, goalsTeam1, goalsTeam2, status);
 
+        return bet;
+    }
+
+
+    @Override
+    public Bet createBet(String userLogin, int idMatch) {
+        Bet bet = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return bet;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES)) {
+            preparedStatement.setString(1 , userLogin);
+            preparedStatement.setInt(2 , idMatch);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                bet = createBet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
         return bet;
     }
 }

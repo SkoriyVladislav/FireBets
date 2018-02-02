@@ -1,10 +1,10 @@
 package by.skoriyVladislav.entity.bet;
 
 public enum BetType {
-    TEAM1("team1"),
-    TEAM2("team2"),
+    TEAM1("team 1"),
+    TEAM2("team 2"),
     DRAW("draw"),
-    EXACC("exAcc");
+    EXACC("exact score");
 
     private String type;
 

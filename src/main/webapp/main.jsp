@@ -50,17 +50,17 @@
                     </div>
 
                     <div class="coeff">
-                        <div style="margin-right: 1.5%;">
+                        <span style="margin-right: 1.5%;">
                             Победа 1
-                        </div>
+                        </span>
 
-                        <div style="margin-left: 1.5%; margin-right: 1.5%">
+                        <span style="margin-left: 1.5%; margin-right: 1.5%; ">
                             Ничья
-                        </div>
+                        </span>
 
-                        <div style="margin-left: 1.5%; margin-right: 1.5%">
+                        <span style="margin-left: 1.5%; margin-right: 1.5%; ">
                             Победа 2
-                        </div>
+                        </span>
                     </div>
                 </div>
 

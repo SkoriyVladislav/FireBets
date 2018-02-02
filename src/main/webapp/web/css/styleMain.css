@@ -386,14 +386,13 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
 }
 
 .coeff {
-    width: 20%;
-    margin-right: 1.5%;
+    width: 30%;
     display: flex;
     justify-content: space-between;
 }
 
 .coeff-info {
-    width: 17%;
+    width: 25%;
     margin-right: 1.5%;
     display: flex;
     justify-content: space-between;

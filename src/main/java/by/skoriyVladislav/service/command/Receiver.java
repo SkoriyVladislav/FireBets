@@ -48,9 +48,10 @@ public class Receiver {
                 break;
 
             case GO_TO_MAKE_BET:
-                DAOFactory daoFactory3 = DAOFactory.getInstance();
-                MatchDAO matchDAO3 = daoFactory3.getMatchDAO();
-                Match match = matchDAO3.createMatch(Integer.parseInt(request.getParameter("match")));
+                Match match = DAOFactory.getInstance().getMatchDAO().createMatch(Integer.parseInt(request.getParameter("match")));
+                User user6 = (User)request.getSession().getAttribute("user");
+                Bet bet1 = DAOFactory.getInstance().getBetDAO().createBet(user6.getLogin(), match.getId());
+                request.setAttribute("bet", bet1);
                 request.getSession().setAttribute("match", match);
                 request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;

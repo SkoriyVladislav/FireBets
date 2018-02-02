@@ -39,15 +39,15 @@
                             </div>
 
                             <div >
-                                <div style="margin-right: 1.5%"><c:out value="${matchBetMap.value.status}"/></div>
+                                <div style="margin-right: 1.5%; width: 75px"><c:out value="${matchBetMap.value.status}"/></div>
                             </div>
 
                             <div >
-                                <div style="margin-right: 1.5%"><c:out value="${matchBetMap.value.type.type}"/></div>
+                                <span style="margin-right: 1.5%; width: 75px"><c:out value="${matchBetMap.value.type.type}"/></span>
                             </div>
 
                             <div >
-                                <div style="margin-right: 1.5%"><c:out value="${matchBetMap.value.size}"/></div>
+                                <div style="margin-right: 1.5%; width: 75px"><c:out value="${matchBetMap.value.size}"/></div>
                             </div>
                         </div>
                     </div>

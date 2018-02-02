@@ -67,95 +67,16 @@
                             </div>
                         </div>
 
-                        <div class="match">
-                            <div>Выберите тип ставки:</div>
+                        <c:choose>
+                            <c:when test="${requestScope.bet == null}">
+                                <%@include file="jspf/make_bets.jspf" %>
+                            </c:when>
 
-                            <div class="coeff-info">
-                                <div class="coeff" >
-                                    <div>Победа <c:out value="${sessionScope.match.team1}"/>: </div>
-                                    <div class="coeff-val" >
-                                        Коэфф: <c:out value="${sessionScope.match.coefTeam1}"/>
-                                    </div>
-                                </div>
-                                <div>
-                                    <input type="radio" name="betType" value="team1" onclick="agreeForm(document.getElementById('form1'))" required>
-                                </div>
+                            <c:otherwise>
+                                <%@include file="jspf/my_bet.jsp" %>
+                            </c:otherwise>
+                        </c:choose>
 
-                                <div class="coeff" >
-                                    <div>Ничья: </div>
-                                    <div class="coeff-val" >
-                                        Коэфф: <c:out value="${sessionScope.match.coefDraw}"/>
-                                    </div>
-                                </div>
-                                <div>
-                                    <input type="radio" name="betType" value="draw" onclick="agreeForm(document.getElementById('form1'))" required>
-                                </div>
-
-                                <div class="coeff" >
-                                    <div>Победа <c:out value="${sessionScope.match.team2}"/>: </div>
-                                    <div class="coeff-val" >
-                                        Коэфф: <c:out value="${sessionScope.match.coefTeam2}"/>
-                                    </div>
-                                </div>
-                                <div>
-                                    <input type="radio" name="betType" value="team2" onclick="agreeForm(document.getElementById('form1'))" required >
-                                </div>
-
-                                <div class="coeff" >
-                                    <div>Точный счёт: </div>
-                                    <div class="coeff-val">
-                                        Коэфф: <c:out value="${sessionScope.match.coefExAcc}"/>
-                                    </div>
-                                </div>
-                                <div class="ExAcc" >
-                                    <input id="form1" type="radio" name="betType" value="exAcc" onclick="agreeForm(this)" required>
-                                </div>
-
-                                <div id="div1" class="ExAccVal">Голы <c:out value="${sessionScope.match.team1}"/></div>
-                                <div>
-                                    <input id="div3" class="exAccVal" type="text" name="exAccVal1" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
-                                </div>
-
-                                <div id="div2" class="ExAccVal"> : Голы <c:out value="${sessionScope.match.team2}"/></div>
-                                <div>
-                                    <input id="div4" class="ExAccVal" type="text" name="exAccVal2" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="match">
-                            <div>Введите размер ставки: </div>
-                            <div style="margin-left: 1.5%">
-                                <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required onchange="ajaxreq()"/>
-                                <span id="responseBetValSpan" style="margin-left: 10px;"></span>
-                            </div>
-                        </div>
-
-                        <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
-                            <input type="hidden" name="command" value="MAKE_BET"/>
-                            <input id="makeBetButton" type="submit" value="Отправить" disabled/>
-                        </div>
-
-                        <script>
-                            function ajaxreq() {
-                                var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
-
-                                $.ajax({
-                                    type: "POST",
-                                    data: data,
-                                    url: 'ajax_controller',
-                                    success: [function(serverData) { //Если запрос удачен
-                                        if (serverData.serverInfo === "true") {
-                                            $("#responseBetValSpan").text("");
-                                            $("#makeBetButton").prop('disabled', false);
-                                        } else {
-                                            $("#responseBetValSpan").text("Недостаточно средств для ставки");
-                                            $("#makeBetButton").prop('disabled', true);
-                                        }
-                                    }]
-                                });
-                            }
-                        </script>
 
                     </div>
                 </div>
@@ -165,5 +86,28 @@
         <div>
             <%@include file="jspf/footer.jspf"%>
         </div>
+
+
+
+        <script>
+            function ajaxreq() {
+                var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
+
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: 'ajax_controller',
+                    success: [function(serverData) { //Если запрос удачен
+                        if (serverData.serverInfo === "true") {
+                            $("#responseBetValSpan").text("");
+                            $("#makeBetButton").prop('disabled', false);
+                        } else {
+                            $("#responseBetValSpan").text("Недостаточно средств для ставки");
+                            $("#makeBetButton").prop('disabled', true);
+                        }
+                    }]
+                });
+            }
+        </script>
     </body>
 </html>
