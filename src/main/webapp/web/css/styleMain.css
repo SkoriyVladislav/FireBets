@@ -419,3 +419,7 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
     justify-content: flex-start;
     align-items: center;
 }
+
+.link-block-in-table {
+    padding: 0 30px;
+}

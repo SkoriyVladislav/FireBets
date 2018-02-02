@@ -93,6 +93,34 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User createUser(String fLogin) {
+        User user = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return user;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN)) {
+            preparedStatement.setString(1, fLogin);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user = createUser(resultSet);
+            }
+
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+        return user;
+    }
+
+    @Override
     public boolean registerUser(String login, String password, String name, String surname,
                                 String role, double balance, String email) {
 

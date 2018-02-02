@@ -7,6 +7,7 @@ import java.util.List;
 public interface UserDAO {
     List<User> createUsers(String criteria);
     User createUser(String login, String pass);
+    User createUser(String login);
     boolean registerUser(String login, String password, String name,
                          String surname, String role, double balance, String email);
     boolean loginInDataBase(String login);

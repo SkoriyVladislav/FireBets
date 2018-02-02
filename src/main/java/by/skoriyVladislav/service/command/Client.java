@@ -39,6 +39,10 @@ public class Client {
                 command = new GoToPageMakeBet(receiver);
                 break;
 
+            case GO_TO_USER_PROFILE:
+                command = new GoToUserProfile(receiver);
+                break;
+
             case GO_TO_USER_MANAGEMENT:
                 command = new GoToUserManagement(receiver);
                 break;

@@ -84,6 +84,13 @@ public class Receiver {
                 response.sendRedirect("login.jsp?from=" + from);
                 break;
 
+            case GO_TO_USER_PROFILE:
+                String login4 = request.getParameter("login");
+                User user4 = DAOFactory.getInstance().getUserDAO().createUser(login4);
+                request.setAttribute("user", user4);
+                request.getRequestDispatcher("/WEB-INF/jsp/user_profile.jsp").forward(request, response);
+                break;
+
             case REGISTRATION:
                 String login = request.getParameter("login");
                 String password = request.getParameter("pwd1");
@@ -124,7 +131,7 @@ public class Receiver {
                     request.getSession().setAttribute("user", user5);
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("123error.jsp");
+                    response.sendRedirect("error.jsp");
                 }
                 break;
 
@@ -221,8 +228,10 @@ public class Receiver {
 
             case GET_USERS_AJAX:
                 response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
-                response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
-                List<User> products = DAOFactory.getInstance().getUserDAO().createUsers(request.getParameter("criteria"));
+                response.setCharacterEncoding("UTF-8");//Кодировка отправляемых данных
+
+                String criteria = request.getParameter("criteria");
+                List<User> products = DAOFactory.getInstance().getUserDAO().createUsers(criteria);
                 String json = new Gson().toJson(products);
                 response.getWriter().write(json);
                 break;

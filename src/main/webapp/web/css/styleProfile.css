@@ -375,6 +375,7 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
 .user-info-step {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     margin-top: 1.5%;
     margin-left: 1.5%;
     width: 97%;

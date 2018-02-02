@@ -7,7 +7,7 @@ import java.io.IOException;
 
 @WebFilter(
         filterName = "CharsetFilter",
-        servletNames = {"MainController"},
+        servletNames = {"MainController", "AjaxController"},
         initParams = {@WebInitParam(name = "encoding", value = "UTF-8", description = "Encoding param")}
 )
 public class CharsetFilter implements Filter {

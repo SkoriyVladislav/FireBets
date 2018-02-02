@@ -63,13 +63,14 @@
                             <div><c:out value="${sessionScope.user.role}"/></div>
                         </div>
                     </div>
+
                     <c:choose>
                         <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
                             <%@include file="jspf/make_match.jspf" %>
                         </c:when>
 
                         <c:when test="${sessionScope.user.role.role == 'admin'}">
-                            <div >
+                            <div style="margin-left: 1.5%">
                                 <a href="${pageContext.request.contextPath}/controller?command=go_to_user_management" class="link-block-registration">Управление пользователями</a>
                             </div>
                         </c:when>
