@@ -146,7 +146,10 @@ public class Receiver {
 
                 try {
                     if (DAOFactory.getInstance().getBetDAO().deleteBet(user7, bet)){
-                        request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
+                        request.getSession().setAttribute("user", user7);
+                        request.setAttribute("bet", null);
+                        request.getSession().setAttribute("bet", null);
+                        request.getRequestDispatcher("/controller?command=go_to_make_bet&match=" + bet.getIdMatches()).forward(request, response);
                     } else {
                         request.getRequestDispatcher("error.jsp").forward(request, response);
                     }
@@ -154,10 +157,6 @@ public class Receiver {
                 } catch (IllegalArgumentException ex) {
                     throw new IOException(ex);
                 }
-                request.getSession().setAttribute("user", user7);
-                request.setAttribute("bet", null);
-                request.getSession().setAttribute("bet", null);
-                request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;
 
             case CHANGE_USERS_ROLE:

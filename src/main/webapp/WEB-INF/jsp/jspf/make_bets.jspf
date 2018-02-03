@@ -74,3 +74,47 @@
     <input type="hidden" name="command" value="MAKE_BET"/>
     <input id="makeBetButton" type="submit" value="Создать ставку" disabled/>
 </div>
+
+<script>
+    function ajaxreq() {
+        var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
+
+        $.ajax({
+            type: "POST",
+            data: data,
+            url: 'ajax_controller',
+            success: [function(serverData) { //Если запрос удачен
+                if (serverData.serverInfo === "true") {
+                    $("#responseBetValSpan").text("");
+                    $("#makeBetButton").prop('disabled', false);
+                } else {
+                    $("#responseBetValSpan").text("Недостаточно средств для ставки");
+                    $("#makeBetButton").prop('disabled', true);
+                }
+            }]
+        });
+    }
+</script>
+
+
+
+<script>
+    function agreeForm(box) {
+        // Если поставлен флажок, снимаем блокирование кнопки
+        var vis = (box.checked) ? "block" : "none";
+        var req = (box.checked) ? "true" : "false";
+        // В противном случае вновь блокируем кнопку
+        document.getElementById('div1').style.display = vis;
+        document.getElementById('div2').style.display = vis;
+        document.getElementById('div3').style.display = vis;
+        document.getElementById('div4').style.display = vis;
+
+        if (req == "true") {
+            document.getElementById('div3').setAttribute('required', "true");
+            document.getElementById('div4').setAttribute('required', "true");
+        } else {
+            document.getElementById('div3').removeAttribute('required');
+            document.getElementById('div3').removeAttribute('required');
+        }
+    }
+</script>

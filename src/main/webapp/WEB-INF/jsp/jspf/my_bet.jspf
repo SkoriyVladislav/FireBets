@@ -42,9 +42,13 @@
             </div>
         </div>
     </div>
+    <%@include file="change_bet.jspf" %>
+    <%--<jsp:include page="jspf/change_bet.jspf"/> --%>
 </div>
 
-<div class="but">
-    <input type="hidden" name="command" value="DELETE_BET"/>
-    <input id="delBetButt" type="submit" value="Удалить ставку">
-</div>
+<form>
+    <div class="but" style="margin-left: 2.5%">
+        <input type="hidden" name="command" value="delete_bet"/>
+        <input id="delBetButt" type="submit" value="Удалить ставку">
+    </div>
+</form>

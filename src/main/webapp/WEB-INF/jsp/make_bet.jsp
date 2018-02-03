@@ -31,9 +31,10 @@
 
             <%@include file="jspf/header.jspf"%>
 
-            <form action="controller" method="post">
-                <div>
-                    <div class="matches">
+
+            <div class="matches">
+                <form action="controller" method="post" style="width: 100%">
+                    <div>
                         <div class="match">
                             <div>Матч:</div>
                             <div style="margin-left: 1.5%"><c:out value="${sessionScope.match.team1}"/>  -  <c:out value="${sessionScope.match.team2}"/> </div>
@@ -53,63 +54,24 @@
                             </c:when>
 
                             <c:otherwise>
-                                <%@include file="jspf/my_bet.jsp" %>
+                                <%@include file="jspf/my_bet.jspf" %>
                             </c:otherwise>
                         </c:choose>
 
 
                     </div>
-                </div>
-            </form>
+                </form>
+
+                <c:choose>
+                    <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
+                        <%@include file="jspf/change_coeff.jspf" %>
+                    </c:when>
+                </c:choose>
+            </div>
         </div>
 
         <div>
             <%@include file="jspf/footer.jspf"%>
         </div>
-
-
-
-        <script>
-            function ajaxreq() {
-                var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
-
-                $.ajax({
-                    type: "POST",
-                    data: data,
-                    url: 'ajax_controller',
-                    success: [function(serverData) { //Если запрос удачен
-                        if (serverData.serverInfo === "true") {
-                            $("#responseBetValSpan").text("");
-                            $("#makeBetButton").prop('disabled', false);
-                        } else {
-                            $("#responseBetValSpan").text("Недостаточно средств для ставки");
-                            $("#makeBetButton").prop('disabled', true);
-                        }
-                    }]
-                });
-            }
-        </script>
-
-
-        <script>
-            function agreeForm(box) {
-                // Если поставлен флажок, снимаем блокирование кнопки
-                var vis = (box.checked) ? "block" : "none";
-                var req = (box.checked) ? "true" : "false";
-                // В противном случае вновь блокируем кнопку
-                document.getElementById('div1').style.display = vis;
-                document.getElementById('div2').style.display = vis;
-                document.getElementById('div3').style.display = vis;
-                document.getElementById('div4').style.display = vis;
-
-                if (req == "true") {
-                    document.getElementById('div3').setAttribute('required', "true");
-                    document.getElementById('div4').setAttribute('required', "true");
-                } else {
-                    document.getElementById('div3').removeAttribute('required');
-                    document.getElementById('div3').removeAttribute('required');
-                }
-            }
-        </script>
     </body>
 </html>
