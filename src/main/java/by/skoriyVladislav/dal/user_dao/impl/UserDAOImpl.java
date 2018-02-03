@@ -29,6 +29,7 @@ public class UserDAOImpl implements UserDAO {
     private final static String SELECT_FROM_USERS_WHERE_CRITERIA_IS_LOGIN = "SELECT * FROM users WHERE Login LIKE ?";
     private final static String SELECT_FROM_USERS_WHERE_CRITERIA_IS_NAME = "SELECT * FROM users WHERE Name LIKE ?";
     private final static String SELECT_FROM_USERS_WHERE_CRITERIA_IS_SURNAME = "SELECT * FROM users WHERE SurName LIKE ?";
+    private final static String UPDATE_USERS_SET_ROLE_WHERE_LOGIN = "UPDATE users SET Role = ? WHERE Login = ?";
 
     @Override
     public List<User> createUsers(String criteria) {
@@ -214,6 +215,30 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.execute();
 
             user.setBalance(user.getBalance().add(size));
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean changeRole(String login, String role) {
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return false;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_ROLE_WHERE_LOGIN)) {
+            preparedStatement.setString(1, role);
+            preparedStatement.setString(2, login);
+
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }

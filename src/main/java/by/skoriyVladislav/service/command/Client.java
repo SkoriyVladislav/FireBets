@@ -55,6 +55,10 @@ public class Client {
                 command = new DeleteBet(receiver);
                 break;
 
+            case CHANGE_USERS_ROLE:
+                command = new ChangeUsersRole(receiver);
+                break;
+
             case MAKE_MATCH:
                 command = new MakeMatch(receiver);
                 break;

@@ -14,4 +14,5 @@ public interface UserDAO {
     boolean loginInDataBase(String login);
     boolean checkBalanceForBet(String login, BigDecimal size);
     boolean transaktion(User user, BigDecimal size);
+    boolean changeRole(String login, String role);
 }

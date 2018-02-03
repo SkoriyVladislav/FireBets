@@ -160,6 +160,16 @@ public class Receiver {
                 request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;
 
+            case CHANGE_USERS_ROLE:
+                String login2 = request.getParameter("login");
+                String role = request.getParameter("status");
+                if (DAOFactory.getInstance().getUserDAO().changeRole(login2, role)) {
+                    response.sendRedirect("controller?command=go_to_user_profile&login=" + login2);
+                } else {
+                    response.sendRedirect("error.jsp");
+                }
+                break;
+
             case MAKE_MATCH:
                 String team1 = request.getParameter("team1");
                 String team2 = request.getParameter("team2");

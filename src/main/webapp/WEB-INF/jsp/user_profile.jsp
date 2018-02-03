@@ -20,22 +20,13 @@
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script>
-            function agreeForm(box) {
-                // Если поставлен флажок, снимаем блокирование кнопки
-                var vis = (box.checked) ? "block" : "none";
-                var req = (box.checked) ? "true" : "false";
-                // В противном случае вновь блокируем кнопку
-                document.getElementById('div1').style.display = vis;
-                document.getElementById('div2').style.display = vis;
-                document.getElementById('div3').style.display = vis;
-                document.getElementById('div4').style.display = vis;
-
-                if (req == "true") {
-                    document.getElementById('div3').setAttribute('required', "true");
-                    document.getElementById('div4').setAttribute('required', "true");
+            function disp(form, form2) {
+                if (form.style.display == "none") {
+                    form.style.display = "flex";
+                    form2.style.display = "none";
                 } else {
-                    document.getElementById('div3').removeAttribute('required');
-                    document.getElementById('div3').removeAttribute('required');
+                    form.style.display = "none";
+                    form2.style.display = "block";
                 }
             }
         </script>
@@ -83,22 +74,35 @@
                         <div>Статус:</div>
                         <div style="margin-left: 1.5%">
                             <div style="display: block" id="playerStatus"><c:out value="${requestScope.user.role}"/></div>
-                            <div id="newPlayerStatus" style="display: none">
-                                <span>
-                                    <select name="status" class="select" >
-                                        <option value="player">player</option>
+                        </div>
 
-                                        <option value="banned">banned</option>
+                        <form id="newPlayerStatus" style="display: none; margin-left: 0.5%; margin-top: 1px" >
+                             <div>
+                                 <select name="status" class="select" >
+                                     <option value="player">player</option>
 
-                                        <option value="bookmaker">bookmaker</option>
+                                     <option value="banned">banned</option>
 
-                                        <option value="admin">admin</option>
-                                    </select>
-                                </span>
-                                <div >
-                                    <input type="button" name="Изменить">
-                                </div>
-                            </div>
+                                     <option value="bookmaker">bookmaker</option>
+
+                                     <option value="admin">admin</option>
+                                 </select>
+                             </div>
+
+                             <div style="margin-left: 1.5%">
+                                 <input type="hidden" name="login" value="${requestScope.user.login}"/>
+                                 <input type="hidden" name="command" value="change_users_role"/>
+                                 <input type="submit" value="Подтвердить" >
+                             </div>
+
+                             <div style="margin-left: 1.5%">
+                                 <input type="button" value="Отменить" onclick="disp(document.getElementById('changeBut'), document.getElementById('newPlayerStatus'))">
+                             </div>
+
+                        </form>
+
+                        <div style="margin-left: 1.5%">
+                            <input id="changeBut" type="button" value="Изменить" onclick="disp(document.getElementById('newPlayerStatus'), this)">
                         </div>
                     </div>
                 </div>
