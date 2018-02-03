@@ -388,6 +388,7 @@ ul.menu > li.has-dropdown > ul.dropdown > li > a:hover{
 }
 
 .coeff-info {
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;

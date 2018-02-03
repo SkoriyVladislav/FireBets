@@ -72,5 +72,5 @@
 
 <div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
     <input type="hidden" name="command" value="MAKE_BET"/>
-    <input id="makeBetButton" type="submit" value="Отправить" disabled/>
+    <input id="makeBetButton" type="submit" value="Создать ставку" disabled/>
 </div>

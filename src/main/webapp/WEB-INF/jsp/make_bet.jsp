@@ -17,26 +17,6 @@
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script>
-            function agreeForm(box) {
-                // Если поставлен флажок, снимаем блокирование кнопки
-                var vis = (box.checked) ? "block" : "none";
-                var req = (box.checked) ? "true" : "false";
-                // В противном случае вновь блокируем кнопку
-                document.getElementById('div1').style.display = vis;
-                document.getElementById('div2').style.display = vis;
-                document.getElementById('div3').style.display = vis;
-                document.getElementById('div4').style.display = vis;
-
-                if (req == "true") {
-                    document.getElementById('div3').setAttribute('required', "true");
-                    document.getElementById('div4').setAttribute('required', "true");
-                } else {
-                    document.getElementById('div3').removeAttribute('required');
-                    document.getElementById('div3').removeAttribute('required');
-                }
-            }
-        </script>
     </head>
 
     <body>
@@ -46,7 +26,7 @@
                     FireBets
                 </div>
 
-                    <%@include file="jspf/user_profile.jspf" %>
+                <%@include file="jspf/user_profile.jspf" %>
             </div>
 
             <%@include file="jspf/header.jspf"%>
@@ -107,6 +87,28 @@
                         }
                     }]
                 });
+            }
+        </script>
+
+
+        <script>
+            function agreeForm(box) {
+                // Если поставлен флажок, снимаем блокирование кнопки
+                var vis = (box.checked) ? "block" : "none";
+                var req = (box.checked) ? "true" : "false";
+                // В противном случае вновь блокируем кнопку
+                document.getElementById('div1').style.display = vis;
+                document.getElementById('div2').style.display = vis;
+                document.getElementById('div3').style.display = vis;
+                document.getElementById('div4').style.display = vis;
+
+                if (req == "true") {
+                    document.getElementById('div3').setAttribute('required', "true");
+                    document.getElementById('div4').setAttribute('required', "true");
+                } else {
+                    document.getElementById('div3').removeAttribute('required');
+                    document.getElementById('div3').removeAttribute('required');
+                }
             }
         </script>
     </body>
