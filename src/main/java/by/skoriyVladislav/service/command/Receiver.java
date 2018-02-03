@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 public class Receiver {
     public void action(TypeCommand cmd, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        switch(cmd){
+        switch(cmd) {
             case GO_TO_MAIN:
                 request.setCharacterEncoding("utf-8");
                 DAOFactory daoFactory = DAOFactory.getInstance();
@@ -49,15 +50,16 @@ public class Receiver {
 
             case GO_TO_MAKE_BET:
                 Match match = DAOFactory.getInstance().getMatchDAO().createMatch(Integer.parseInt(request.getParameter("match")));
-                User user6 = (User)request.getSession().getAttribute("user");
+                User user6 = (User) request.getSession().getAttribute("user");
                 Bet bet1 = DAOFactory.getInstance().getBetDAO().createBet(user6.getLogin(), match.getId());
+                request.getSession().setAttribute("bet", bet1);
                 request.setAttribute("bet", bet1);
                 request.getSession().setAttribute("match", match);
                 request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;
 
             case GO_TO_MY_BETS:
-                User user1 = (User)request.getSession().getAttribute("user");
+                User user1 = (User) request.getSession().getAttribute("user");
                 List<Bet> bets = DAOFactory.getInstance().getBetDAO().createBet(user1.getLogin());
 
                 List<Match> matches1 = new ArrayList<>();
@@ -101,7 +103,7 @@ public class Receiver {
 
                 DAOFactory factory = DAOFactory.getInstance();
                 UserDAO userDAO = factory.getUserDAO();
-                userDAO.registerUser(login, password, name, surname, "player", 10, email);
+                userDAO.registerUser(login, password, name, surname, "player", BigDecimal.TEN, email);
 
                 User user = userDAO.createUser(login, password);
                 request.getSession().setAttribute("user", user);
@@ -109,16 +111,16 @@ public class Receiver {
                 break;
 
             case MAKE_BET:
-                User user5 = (User)request.getSession().getAttribute("user");
+                User user5 = (User) request.getSession().getAttribute("user");
                 String userLogin = user5.getLogin();
-                double size = Double.valueOf(request.getParameter("betVal"));
+                BigDecimal size = BigDecimal.valueOf(Double.valueOf(request.getParameter("betVal")));
 
                 if (DAOFactory.getInstance().getUserDAO().checkBalanceForBet(userLogin, size)) {
                     int matchId = ((Match) request.getSession().getAttribute("match")).getId();
                     BetType typeOfBet = BetType.valueOf(request.getParameter("betType").toUpperCase());
                     Integer goalsTeam1 = null;
                     Integer goalsTeam2 = null;
-                    if (typeOfBet == BetType.EXACC) {
+                    if (typeOfBet == BetType.EXACTSCORE) {
                         goalsTeam1 = Integer.valueOf(request.getParameter("exAccVal1"));
                         goalsTeam2 = Integer.valueOf(request.getParameter("exAccVal2"));
                     }
@@ -130,10 +132,32 @@ public class Receiver {
                         throw new IOException(ex);
                     }
                     request.getSession().setAttribute("user", user5);
-                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    request.getSession().setAttribute("bet", bet);
+                    request.setAttribute("bet", bet);
+                    request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("error.jsp");
                 }
+                break;
+
+            case DELETE_BET:
+                User user7 = (User) request.getSession().getAttribute("user");
+                Bet bet = (Bet) request.getSession().getAttribute("bet");
+
+                try {
+                    if (DAOFactory.getInstance().getBetDAO().deleteBet(user7, bet)){
+                        request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("error.jsp").forward(request, response);
+                    }
+
+                } catch (IllegalArgumentException ex) {
+                    throw new IOException(ex);
+                }
+                request.getSession().setAttribute("user", user7);
+                request.setAttribute("bet", null);
+                request.getSession().setAttribute("bet", null);
+                request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
                 break;
 
             case MAKE_MATCH:
@@ -151,7 +175,7 @@ public class Receiver {
                 double coefDraw = 0;
                 double coefExAcc = 0;
 
-                if(validateString(team1, team2, year, month, day, hour, minute)) {
+                if (validateString(team1, team2, year, month, day, hour, minute)) {
                     try {
                         coefTeam1 = Double.valueOf(request.getParameter("coefTeam1"));
                         coefTeam2 = Double.valueOf(request.getParameter("coefTeam2"));
@@ -203,9 +227,9 @@ public class Receiver {
                 response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
                 try (PrintWriter out = response.getWriter()) {
                     JSONObject jsonEnt = new JSONObject();
-                    if(DAOFactory.getInstance().getUserDAO().loginInDataBase(request.getParameter("login"))) {
+                    if (DAOFactory.getInstance().getUserDAO().loginInDataBase(request.getParameter("login"))) {
                         jsonEnt.put("serverInfo", "true");
-                    }else {
+                    } else {
                         jsonEnt.put("serverInfo", "false");
                     }
                     out.print(jsonEnt.toString());
@@ -216,11 +240,12 @@ public class Receiver {
                 response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
                 response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
                 User user3 = (User) request.getSession().getAttribute("user");
+                BigDecimal betValue = BigDecimal.valueOf(Double.valueOf(request.getParameter("betVal")));
                 try (PrintWriter out = response.getWriter()) {
                     JSONObject jsonEnt = new JSONObject();
-                    if(DAOFactory.getInstance().getUserDAO().checkBalanceForBet(user3.getLogin(), Double.valueOf(request.getParameter("betVal")))) {
+                    if (DAOFactory.getInstance().getUserDAO().checkBalanceForBet(user3.getLogin(), betValue)) {
                         jsonEnt.put("serverInfo", "true");
-                    }else {
+                    } else {
                         jsonEnt.put("serverInfo", "false");
                     }
                     out.print(jsonEnt.toString());

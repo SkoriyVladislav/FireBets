@@ -6,6 +6,7 @@ import by.skoriyVladislav.entity.bet.Bet;
 import by.skoriyVladislav.entity.bet.BetType;
 import by.skoriyVladislav.entity.user.User;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,6 +24,7 @@ public class BetDAOImpl implements BetDAO {
     private final static String INSERT_BETS = "INSERT INTO bets (Users_Login, Matches_idMatches, Size, Type, goalsTeam1, goalsTeam2) VALUES (?, ?, ?, ?, ?, ?)";
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN = "SELECT * FROM bets WHERE Users_Login = ?";
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES = "SELECT * FROM bets WHERE Users_Login = ? AND Matches_idMatches = ?";
+    private final static String DELETE_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES = "DELETE FROM bets WHERE Users_login = ? AND Matches_idMatches = ?";
 
     @Override
     public boolean registrationBet(Bet bet, User user) throws SQLException {
@@ -38,13 +40,12 @@ public class BetDAOImpl implements BetDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BETS)) {
             preparedStatement.setString(1, bet.getLoginUser());
             preparedStatement.setInt(2, bet.getIdMatches());
-            preparedStatement.setDouble(3, bet.getSize());
+            preparedStatement.setBigDecimal(3, bet.getSize());
             preparedStatement.setString(4, bet.getType().getType());
             preparedStatement.setObject(5, bet.getGoalsTeam1());
             preparedStatement.setObject(6, bet.getGoalsTeam2());
-            //preparedStatement.setInt(5, bet.getGoalsTeam1());
-            //preparedStatement.setInt(6, bet.getGoalsTeam2());
-            if (DAOFactory.getInstance().getUserDAO().transaktion(user, -bet.getSize())) {
+
+            if (DAOFactory.getInstance().getUserDAO().transaktion(user, bet.getSize().negate())) {
                 preparedStatement.execute();
             } else {
                 throw new SQLException();
@@ -91,7 +92,7 @@ public class BetDAOImpl implements BetDAO {
 
         String loginUser = resultSet.getString("Users_Login");
         int idMatches = resultSet.getInt("Matches_idMatches");
-        int size = resultSet.getInt("Size");
+        BigDecimal size = resultSet.getBigDecimal("Size");
         BetType betType = BetType.valueOf(resultSet.getString("Type").toUpperCase());
         String status = resultSet.getString("status");
 
@@ -141,5 +142,32 @@ public class BetDAOImpl implements BetDAO {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
         return bet;
+    }
+
+    @Override
+    public boolean deleteBet(User user, Bet bet) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return false;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES)) {
+            preparedStatement.setString(1 , user.getLogin());
+            preparedStatement.setInt(2 , bet.getIdMatches());
+
+            if (DAOFactory.getInstance().getUserDAO().transaktion(user, bet.getSize())) {
+                preparedStatement.execute();
+            } else {
+                throw new SQLException();
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+        return true;
     }
 }

@@ -1,15 +1,17 @@
 package by.skoriyVladislav.entity.user;
 
+import java.math.BigDecimal;
+
 public class User {
     private String login;
     private String name;
     private String surname;
-    private double balance;
+    private BigDecimal balance;
     private String email;
     private UserRole role;
 
 
-    public User(String login, String name, String surname, double balance, String email, UserRole role) {
+    public User(String login, String name, String surname, BigDecimal balance, String email, UserRole role) {
         this.login = login;
         this.name = name;
         this.surname = surname;
@@ -42,11 +44,11 @@ public class User {
         this.surname = surname;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -73,23 +75,20 @@ public class User {
 
         User user = (User) o;
 
-        if (Double.compare(user.balance, balance) != 0) return false;
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        if (balance != null ? !balance.equals(user.balance) : user.balance != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         return role == user.role;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = login != null ? login.hashCode() : 0;
+        int result = login != null ? login.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
-        temp = Double.doubleToLongBits(balance);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (balance != null ? balance.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;

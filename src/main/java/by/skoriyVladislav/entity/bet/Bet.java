@@ -1,15 +1,17 @@
 package by.skoriyVladislav.entity.bet;
 
+import java.math.BigDecimal;
+
 public class Bet {
     private String loginUser;
     private int idMatches;
-    private double size;
+    private BigDecimal size;
     private BetType type;
     private Integer goalsTeam1;
     private Integer goalsTeam2;
     private String status;
 
-    public Bet(String loginUser, int idMatches, double size, BetType type, Integer goalsTeam1, Integer goalsTeam2, String status) {
+    public Bet(String loginUser, int idMatches, BigDecimal size, BetType type, Integer goalsTeam1, Integer goalsTeam2, String status) {
         this.loginUser = loginUser;
         this.idMatches = idMatches;
         this.size = size;
@@ -38,11 +40,11 @@ public class Bet {
         this.idMatches = idMatches;
     }
 
-    public double getSize() {
+    public BigDecimal getSize() {
         return size;
     }
 
-    public void setSize(double size) {
+    public void setSize(BigDecimal size) {
         this.size = size;
     }
 
@@ -76,5 +78,33 @@ public class Bet {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bet bet = (Bet) o;
+
+        if (idMatches != bet.idMatches) return false;
+        if (loginUser != null ? !loginUser.equals(bet.loginUser) : bet.loginUser != null) return false;
+        if (size != null ? !size.equals(bet.size) : bet.size != null) return false;
+        if (type != bet.type) return false;
+        if (goalsTeam1 != null ? !goalsTeam1.equals(bet.goalsTeam1) : bet.goalsTeam1 != null) return false;
+        if (goalsTeam2 != null ? !goalsTeam2.equals(bet.goalsTeam2) : bet.goalsTeam2 != null) return false;
+        return status != null ? status.equals(bet.status) : bet.status == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = loginUser != null ? loginUser.hashCode() : 0;
+        result = 31 * result + idMatches;
+        result = 31 * result + (size != null ? size.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (goalsTeam1 != null ? goalsTeam1.hashCode() : 0);
+        result = 31 * result + (goalsTeam2 != null ? goalsTeam2.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 }

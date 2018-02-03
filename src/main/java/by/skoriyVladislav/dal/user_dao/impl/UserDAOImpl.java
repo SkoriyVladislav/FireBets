@@ -5,6 +5,7 @@ import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.entity.user.UserRole;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -122,7 +123,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean registerUser(String login, String password, String name, String surname,
-                                String role, double balance, String email) {
+                                String role, BigDecimal balance, String email) {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -139,7 +140,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(3, name);
             preparedStatement.setString(4, surname);
             preparedStatement.setString(5, role);
-            preparedStatement.setDouble(6, balance);
+            preparedStatement.setBigDecimal(6, balance);
             preparedStatement.setString(7, email);
 
             preparedStatement.execute();
@@ -178,7 +179,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean checkBalanceForBet(String login, double size) {
+    public boolean checkBalanceForBet(String login, BigDecimal size) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         }
@@ -194,8 +195,8 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                int balance = resultSet.getInt("Balance");
-                return balance > size;
+                BigDecimal balance = resultSet.getBigDecimal("Balance");
+                return balance.compareTo(size) == 1 || balance.compareTo(size) == 0;
             }
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
@@ -204,15 +205,15 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean transaktion(User user, double size) {
+    public boolean transaktion(User user, BigDecimal size) {
         try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_BALANCE_BALANCE_WHERE_LOGIN)) {
 
-            preparedStatement.setDouble(1, size);
+            preparedStatement.setBigDecimal(1, size);
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.execute();
 
-            user.setBalance(user.getBalance() + size);
+            user.setBalance(user.getBalance().add(size));
         } catch (SQLException e) {
             throw new IllegalStateException("Cannot connect the database!", e);
         }
@@ -226,7 +227,7 @@ public class UserDAOImpl implements UserDAO {
             String login = resultSet.getString("Login");
             String name = resultSet.getString("Name");
             String surname = resultSet.getString("SurName");
-            double money = resultSet.getDouble("Balance");
+            BigDecimal money = resultSet.getBigDecimal("Balance");
             String email = resultSet.getString("Email");
             UserRole role = UserRole.valueOf(resultSet.getString("Role").toUpperCase());
             user = new User(login, name, surname, money, email, role);

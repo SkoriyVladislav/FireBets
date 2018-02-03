@@ -10,4 +10,5 @@ public interface BetDAO {
     List<Bet> createBet(String userLogin);
     Bet createBet(String userLogin, int idMatch);
     boolean registrationBet(Bet bet, User user) throws SQLException;
+    boolean deleteBet(User user, Bet bet );
 }
