@@ -7,6 +7,7 @@ import java.util.List;
 public interface MatchDAO {
     List<Match> createMatches();
     Match createMatch(int id);
-    boolean registrMatch(String team1, String team2, String dataTime, double[] coef);
-    boolean registrCoeff(int id, double[] coef);
+    boolean registrMatch(String team1, String team2, String dataTime, double[] coeff);
+    boolean registrCoeff(int id, double[] coeff);
+    boolean changeCoeff(int id, double[] coeff);
 }

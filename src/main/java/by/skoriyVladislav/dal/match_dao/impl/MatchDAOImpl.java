@@ -24,6 +24,8 @@ public class MatchDAOImpl implements MatchDAO {
 
     private final static String INSERT_MATCHES = "INSERT INTO matches (Team1, Team2, DateTime) VALUES (?, ?, ?)";
     private final static String INSERT_COEFFICIENT = "INSERT INTO coefficient (Matches_idMatchs, CoefTEAM1, CoefTEAM2, CoefDRAW, CoefExAcc) VALUES (?, ?, ?, ?, ?)";
+    private final static String UPDATE_COEFFICIENT = "UPDATE coefficient SET CoefTEAM1 = ?, CoefTEAM2 = ?, CoefDRAW = ?, CoefExAcc = ? WHERE Matches_idMatchs = ?";
+
 
     @Override
     public List<Match> createMatches() {
@@ -138,6 +140,31 @@ public class MatchDAOImpl implements MatchDAO {
             preparedStatement.setDouble(3, coef[1]);
             preparedStatement.setDouble(4, coef[2]);
             preparedStatement.setDouble(5, coef[3]);
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean changeCoeff(int id, double[] coeff) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("No have database");
+            return false;
+        }
+
+        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COEFFICIENT)) {
+            preparedStatement.setDouble(1, coeff[0]);
+            preparedStatement.setDouble(2, coeff[1]);
+            preparedStatement.setDouble(3, coeff[2]);
+            preparedStatement.setDouble(4, coeff[3]);
+            preparedStatement.setInt(5, id);
 
             preparedStatement.execute();
         } catch (SQLException e) {

@@ -6,6 +6,8 @@ public enum TypeCommand {
     MAKE_BET,
     MAKE_MATCH,
     DELETE_BET,
+    CHANGE_BET,
+    CHANGE_COEFF,
     REGISTRATION,
     CHANGE_USERS_ROLE,
     GO_TO_MAIN,

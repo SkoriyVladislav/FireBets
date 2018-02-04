@@ -59,6 +59,14 @@ public class Client {
                 command = new ChangeUsersRole(receiver);
                 break;
 
+            case CHANGE_BET:
+                command = new ChangeBet(receiver);
+                break;
+
+            case CHANGE_COEFF:
+                command = new ChangeCoeff(receiver);
+                break;
+
             case MAKE_MATCH:
                 command = new MakeMatch(receiver);
                 break;

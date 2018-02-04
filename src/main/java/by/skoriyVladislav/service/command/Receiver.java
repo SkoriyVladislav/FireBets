@@ -169,6 +169,24 @@ public class Receiver {
                 }
                 break;
 
+            case CHANGE_COEFF:
+                double coefTeam11 = 0;
+                double coefTeam21 = 0;
+                double coefDraw1 = 0;
+                double coefExAcc1 = 0;
+                try {
+                    coefTeam11 = Double.valueOf(request.getParameter("coefTeam1"));
+                    coefTeam21 = Double.valueOf(request.getParameter("coefTeam2"));
+                    coefDraw1 = Double.valueOf(request.getParameter("coefDraw"));
+                    coefExAcc1 = Double.valueOf(request.getParameter("coefExAcc"));
+                } catch (NullPointerException ex) {
+                    System.out.println(ex.getMessage());
+                    response.sendRedirect("error.jsp");
+                }
+                double[] coeff = {coefTeam11, coefTeam21, coefDraw1, coefExAcc1};
+                DAOFactory.getInstance().getMatchDAO().changeCoeff(((Match)request.getSession().getAttribute("match")).getId(), coeff);
+                break;
+
             case MAKE_MATCH:
                 String team1 = request.getParameter("team1");
                 String team2 = request.getParameter("team2");
@@ -190,9 +208,10 @@ public class Receiver {
                         coefTeam2 = Double.valueOf(request.getParameter("coefTeam2"));
                         coefDraw = Double.valueOf(request.getParameter("coefDraw"));
                         coefExAcc = Double.valueOf(request.getParameter("coefExAcc"));
+
                     } catch (NullPointerException ex) {
                         System.out.println(ex.getMessage());
-                        response.sendRedirect("error.jsp");
+                        response.sendRedirect("error2.jsp");
                     }
 
                     String dataTime = year + "-" + month + "-" + day + " " + hour + ":" + minute;
