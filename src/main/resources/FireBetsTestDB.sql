@@ -1,1 +1,1 @@
-SELECT * FROM users WHERE Login Like '%dmi%'
+SELECT * FROM matches LEFT JOIN bets ON matches.idMatches = bets.Matches_idMatches LEFT JOIN coefficient ON matches.idMatches = coefficient.Matches_idMatchs WHERE idMatches = 6;

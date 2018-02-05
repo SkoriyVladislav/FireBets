@@ -1,6 +1,7 @@
 package by.skoriyVladislav.dal.user_dao.impl;
 
 import by.skoriyVladislav.dal.DAOFactory;
+import by.skoriyVladislav.dal.exception.DAOException;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.entity.user.UserRole;
@@ -32,91 +33,94 @@ public class UserDAOImpl implements UserDAO {
     private final static String UPDATE_USERS_SET_ROLE_WHERE_LOGIN = "UPDATE users SET Role = ? WHERE Login = ?";
 
     @Override
-    public List<User> createUsers(String criteria) {
+    public List<User> getUsers(String criteria) throws DAOException {
         List<User> setUsers = new ArrayList<>();
         HashSet<User> hashSetUsers = new HashSet<>();
 
         hashSetUsers.addAll(createUsersByCriteria(SELECT_FROM_USERS_WHERE_CRITERIA_IS_LOGIN,'%' + criteria + '%'));
-
         hashSetUsers.addAll(createUsersByCriteria(SELECT_FROM_USERS_WHERE_CRITERIA_IS_NAME,'%' + criteria + '%'));
-
         hashSetUsers.addAll(createUsersByCriteria(SELECT_FROM_USERS_WHERE_CRITERIA_IS_SURNAME,'%' + criteria + '%'));
 
         setUsers.addAll(hashSetUsers);
         return setUsers;
     }
 
-    private HashSet<User> createUsersByCriteria(String statement, String criteria) {
+    private HashSet<User> createUsersByCriteria(String statement, String criteria) throws DAOException{
         HashSet<User> setUsers = new HashSet<>();
         User user = null;
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(statement)) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(statement);
             preparedStatement.setString(1, criteria);
-            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                user = createUser(resultSet);
+                user = getUser(resultSet);
                 setUsers.add(user);
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         return setUsers;
     }
 
     @Override
-    public User createUser(String fLogin, String fPassword) {
+    public User getUser(String fLogin, String fPassword) throws DAOException {
         User user = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return user;
-        }
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD);
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD)) {
             preparedStatement.setString(1, fLogin);
             preparedStatement.setString(2, fPassword);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
 
             while (resultSet.next()) {
-                user = createUser(resultSet);
+                user = getUser(resultSet);
             }
 
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return user;
     }
 
     @Override
-    public User createUser(String fLogin) {
+    public User getUser(String fLogin) throws DAOException{
         User user = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return user;
-        }
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN);
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN)) {
             preparedStatement.setString(1, fLogin);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                user = createUser(resultSet);
+                user = getUser(resultSet);
             }
 
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return user;
@@ -124,18 +128,15 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean registerUser(String login, String password, String name, String surname,
-                                String role, BigDecimal balance, String email) {
+                                String role, BigDecimal balance, String email) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_USERS);
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             preparedStatement.setString(3, name);
@@ -146,69 +147,75 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return true;
     }
 
     @Override
-    public boolean loginInDataBase(String login) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+    public boolean loginInDataBase(String login) throws DAOException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN)) {
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_USERS_WHERE_LOGIN);
+
             preparedStatement.setString(1, login);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
 
             if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return false;
     }
 
     @Override
-    public boolean checkBalanceForBet(String login, BigDecimal size) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+    public boolean checkBalanceForBet(String login, BigDecimal size) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BALANCE_FROM_USERS_WHERE_LOGIN)) {
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_BALANCE_FROM_USERS_WHERE_LOGIN);
+
             preparedStatement.setString(1, login);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 BigDecimal balance = resultSet.getBigDecimal("Balance");
                 return balance.compareTo(size) == 1 || balance.compareTo(size) == 0;
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         return false;
     }
 
     @Override
-    public boolean transaktion(User user, BigDecimal size) {
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_BALANCE_BALANCE_WHERE_LOGIN)) {
+    public boolean transaktion(User user, BigDecimal size) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_BALANCE_BALANCE_WHERE_LOGIN);
 
             preparedStatement.setBigDecimal(1, size);
             preparedStatement.setString(2, user.getLogin());
@@ -216,37 +223,58 @@ public class UserDAOImpl implements UserDAO {
 
             user.setBalance(user.getBalance().add(size));
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return true;
     }
 
     @Override
-    public boolean changeRole(String login, String role) {
-
+    public boolean transaktion(String login, BigDecimal size) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_BALANCE_BALANCE_WHERE_LOGIN);
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_ROLE_WHERE_LOGIN)) {
-            preparedStatement.setString(1, role);
+            preparedStatement.setBigDecimal(1, size);
             preparedStatement.setString(2, login);
-
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return true;
     }
 
-    private User createUser(ResultSet resultSet) throws SQLException {
+    @Override
+    public boolean changeRole(String login, String role) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_USERS_SET_ROLE_WHERE_LOGIN);
+
+            preparedStatement.setString(1, role);
+            preparedStatement.setString(2, login);
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
+        }
+
+        return true;
+    }
+
+    private User getUser(ResultSet resultSet) throws SQLException {
         User user = null;
         if (resultSet != null) {
             String login = resultSet.getString("Login");

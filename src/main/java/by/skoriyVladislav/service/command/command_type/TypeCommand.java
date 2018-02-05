@@ -7,6 +7,7 @@ public enum TypeCommand {
     MAKE_MATCH,
     DELETE_BET,
     CHANGE_BET,
+    SET_RESULT,
     CHANGE_COEFF,
     REGISTRATION,
     CHANGE_USERS_ROLE,
@@ -19,6 +20,7 @@ public enum TypeCommand {
     GO_TO_USER_PROFILE,
     GO_TO_USER_MANAGEMENT,
     GET_USERS_AJAX,
+    CHECK_TIME_AJAX,
     CHECK_LOGIN_AJAX,
     CHECK_SIZE_BETS_AJAX;
 

@@ -1,11 +1,14 @@
 package by.skoriyVladislav.dal.match_dao.impl;
 
 import by.skoriyVladislav.dal.DAOFactory;
+import by.skoriyVladislav.dal.exception.DAOException;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.entity.match.Match;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 public class MatchDAOImpl implements MatchDAO {
 
@@ -21,29 +24,25 @@ public class MatchDAOImpl implements MatchDAO {
     private final static String SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
     private final static String SELECT_FROM_MATCHES_WHERE_ID_MATCHS = "SELECT * FROM matches WHERE idMatches = ?";
     private final static String SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME = "SELECT * FROM matches WHERE Team1 = ? AND Team2 = ? AND DateTime = ?";
+    private final static String str = "SELECT DateTime FROM matches WHERE idMatches = ?";
 
     private final static String INSERT_MATCHES = "INSERT INTO matches (Team1, Team2, DateTime) VALUES (?, ?, ?)";
     private final static String INSERT_COEFFICIENT = "INSERT INTO coefficient (Matches_idMatchs, CoefTEAM1, CoefTEAM2, CoefDRAW, CoefExAcc) VALUES (?, ?, ?, ?, ?)";
     private final static String UPDATE_COEFFICIENT = "UPDATE coefficient SET CoefTEAM1 = ?, CoefTEAM2 = ?, CoefDRAW = ?, CoefExAcc = ? WHERE Matches_idMatchs = ?";
-
+    private final static String UPDATE_MATCHES_SET_GOALS_TEAM1_GOALS_TEAM2_WHERE_ID_MATCHES = "UPDATE matches SET goalsTeam1 = ?, goalsTeam2 = ? WHERE idMatches = ?";
 
     @Override
-    public List<Match> createMatches() {
+    public List<Match> getMatches() throws DAOException {
         List<Match> matches = new ArrayList<>();
         Match match = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return matches;
-        }
-
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES);
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 match = createMatch(resultSet, connection);
@@ -51,90 +50,115 @@ public class MatchDAOImpl implements MatchDAO {
             }
 
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         matches.sort(Comparator.comparing(Match::getData).thenComparing(Match::getTime).reversed());
         return matches;
     }
 
     @Override
-    public Match createMatch(int fId) {
+    public Match getMatch(int fId) throws DAOException {
         Match match = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return match;
-        }
-
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_ID_MATCHS)) {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_ID_MATCHS);
             preparedStatement.setInt(1, fId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 match = createMatch(resultSet, connection);
             }
 
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         return match;
     }
 
     @Override
-    public boolean registrMatch(String team1, String team2, String dataTime, double[] coef) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+    public boolean setResult(int idMatches, int goalsTeam1, int goalsTeam2) throws DAOException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_MATCHES)) {
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_MATCHES_SET_GOALS_TEAM1_GOALS_TEAM2_WHERE_ID_MATCHES);
+            preparedStatement.setInt(1, goalsTeam1);
+            preparedStatement.setInt(2, goalsTeam2);
+            preparedStatement.setInt(3, idMatches);
+            preparedStatement.execute();
+
+            DAOFactory.getInstance().getBetDAO().setResult(idMatches, goalsTeam1, goalsTeam2);
+        } catch (SQLException e) {
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean registrationMatch(String team1, String team2, String dataTime, double[] coef) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_MATCHES);
+
             preparedStatement.setString(1, team1);
             preparedStatement.setString(2, team2);
             preparedStatement.setString(3, dataTime);
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         Integer matchId = null;
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME)) {
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME);
+
             preparedStatement.setString(1, team1);
             preparedStatement.setString(2, team2);
             preparedStatement.setString(3, dataTime);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 matchId = resultSet.getInt("idMatchs");
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
-        return registrCoeff(matchId, coef);
+        return registrationCoefficients(matchId, coef);
     }
 
     @Override
-    public boolean registrCoeff(int id, double[] coef) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+    public boolean registrationCoefficients(int id, double[] coef) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_COEFFICIENT)) {
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_COEFFICIENT);
+
             preparedStatement.setInt(1, id);
             preparedStatement.setDouble(2, coef[0]);
             preparedStatement.setDouble(3, coef[1]);
@@ -143,23 +167,23 @@ public class MatchDAOImpl implements MatchDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         return true;
     }
 
     @Override
-    public boolean changeCoeff(int id, double[] coeff) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+    public boolean changeCoefficients(int id, double[] coeff) throws DAOException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COEFFICIENT)) {
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_COEFFICIENT);
+
             preparedStatement.setDouble(1, coeff[0]);
             preparedStatement.setDouble(2, coeff[1]);
             preparedStatement.setDouble(3, coeff[2]);
@@ -168,7 +192,9 @@ public class MatchDAOImpl implements MatchDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         return true;
     }
@@ -213,5 +239,45 @@ public class MatchDAOImpl implements MatchDAO {
         match = new Match(id, team1, team2, dateTime[0], dateTime[1], coefTeam1, coefTeam2, coefDraw, coefExAcc, goalsTeam1, goalsTeam2);
 
         return match;
+    }
+
+    @Override
+    public boolean checkTimeForBet(int id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String[] dateTime = {null, null};
+        String dateNow;
+        String timeNow;
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(str);
+            preparedStatement.setInt(1, id);
+
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                 dateTime = resultSet.getString("datetime").replace(".", " ").split(" ");
+
+            }
+            Date date = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("kk.mm.ss");
+
+            dateNow = dateFormat.format(date);
+            timeNow = timeFormat.format(date);
+
+            if (dateTime[0].compareTo(dateNow) > 0) {
+                return true;
+            } else if (dateTime[0].compareTo(dateNow) == 0) {
+                if (dateTime[1].compareTo(timeNow) > 0) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException e) {
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
+        }
     }
 }

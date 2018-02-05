@@ -1,14 +1,13 @@
 package by.skoriyVladislav.dal;
 
+import by.skoriyVladislav.dal.connection_pool.ConnectionPool;
+import by.skoriyVladislav.dal.connection_pool.impl.ConnectionPoolImpl;
 import by.skoriyVladislav.dal.bet_dao.BetDAO;
 import by.skoriyVladislav.dal.bet_dao.impl.BetDAOImpl;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.dal.match_dao.impl.MatchDAOImpl;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.dal.user_dao.impl.UserDAOImpl;
-import by.skoriyVladislav.entity.match.Match;
-
-import java.util.Properties;
 
 public final class DAOFactory {
     private static final DAOFactory instance = new DAOFactory();
@@ -18,6 +17,8 @@ public final class DAOFactory {
     private final MatchDAO matchDAO = new MatchDAOImpl();
 
     private final BetDAO betDAO = new BetDAOImpl();
+
+    private final ConnectionPool connectionPool = new ConnectionPoolImpl();
 
     private DAOFactory() {}
 
@@ -37,13 +38,7 @@ public final class DAOFactory {
         return betDAO;
     }
 
-    private final static Properties properties = new Properties();
-    static {
-        properties.setProperty("user", "root");
-        properties.setProperty("password", "root");
-    }
-
-    public static Properties getProperties() {
-        return properties;
+    public ConnectionPool getConnectionPool() {
+        return connectionPool;
     }
 }

@@ -67,6 +67,10 @@ public class Client {
                 command = new ChangeCoeff(receiver);
                 break;
 
+            case SET_RESULT:
+                command = new SetResult(receiver);
+                break;
+
             case MAKE_MATCH:
                 command = new MakeMatch(receiver);
                 break;
@@ -81,6 +85,10 @@ public class Client {
 
             case LOGOUT:
                 command = new Logout(receiver);
+                break;
+
+            case CHECK_TIME_AJAX:
+                command = new CheckTimeAjax(receiver);
                 break;
 
             case CHECK_LOGIN_AJAX:

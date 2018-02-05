@@ -2,6 +2,7 @@ package by.skoriyVladislav.dal.bet_dao.impl;
 
 import by.skoriyVladislav.dal.DAOFactory;
 import by.skoriyVladislav.dal.bet_dao.BetDAO;
+import by.skoriyVladislav.dal.exception.DAOException;
 import by.skoriyVladislav.entity.bet.Bet;
 import by.skoriyVladislav.entity.bet.BetType;
 import by.skoriyVladislav.entity.user.User;
@@ -25,19 +26,20 @@ public class BetDAOImpl implements BetDAO {
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN = "SELECT * FROM bets WHERE Users_Login = ?";
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES = "SELECT * FROM bets WHERE Users_Login = ? AND Matches_idMatches = ?";
     private final static String DELETE_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES = "DELETE FROM bets WHERE Users_login = ? AND Matches_idMatches = ?";
+    private final static String UPDATE_BETS_SET_STATUS_WHERE_MATCHES_ID_MATCHES = "UPDATE bets SET status = ? WHERE Matches_idMatches = ?";
+    private final static String SELECT_FROM_BETS_WHERE_MATCHES_ID_MATCHES = "SELECT * FROM matches LEFT JOIN bets ON matches.idMatches = bets.Matches_idMatches LEFT JOIN coefficient ON matches.idMatches = coefficient.Matches_idMatchs WHERE idMatches = ?";
 
     @Override
-    public boolean registrationBet(Bet bet, User user) throws SQLException {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+    public boolean registrationBet(Bet bet, User user) throws DAOException {
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BETS)) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_BETS);
+
             preparedStatement.setString(1, bet.getLoginUser());
             preparedStatement.setInt(2, bet.getIdMatches());
             preparedStatement.setBigDecimal(3, bet.getSize());
@@ -48,46 +50,115 @@ public class BetDAOImpl implements BetDAO {
             if (DAOFactory.getInstance().getUserDAO().transaktion(user, bet.getSize().negate())) {
                 preparedStatement.execute();
             } else {
-                throw new SQLException();
+                throw new DAOException();
             }
         } catch (SQLException e) {
-            throw new SQLException(e);
+            throw new DAOException(e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return true;
     }
 
     @Override
-    public List<Bet> createBet(String userLogin) {
-        List<Bet> bets = new ArrayList<>();
-        Bet bet = null;
+    public boolean setResult(int idMatches, int goalsTeam1, int goalsTeam2) throws DAOException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return bets;
-        }
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_BETS_WHERE_MATCHES_ID_MATCHES);
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_BETS_WHERE_USERS_LOGIN)) {
-            preparedStatement.setString(1 , userLogin);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement.setInt(1, idMatches);
+
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                bet = createBet(resultSet);
+                Connection connection2 = null;
+                PreparedStatement preparedStatement2 = null;
+                String status = null;
+                BetType betType = BetType.valueOf(resultSet.getString("Type").toUpperCase());
+                BigDecimal sizeTranz = BigDecimal.ZERO;
+
+                if (betType == BetType.TEAM1) {
+                    status = (goalsTeam1 - goalsTeam2) > 0 ? "win" : "lose";
+                    sizeTranz = resultSet.getBigDecimal("Size").multiply(new BigDecimal(resultSet.getDouble("CoefTEAM1")));
+                } else if (betType == BetType.TEAM2) {
+                    status = (goalsTeam1 - goalsTeam2) < 0 ? "win" : "lose";
+                    sizeTranz = resultSet.getBigDecimal("Size").multiply(new BigDecimal(resultSet.getDouble("CoefTEAM2")));
+                } else if (betType == BetType.DRAW) {
+                    status = (goalsTeam1 - goalsTeam2) == 0 ? "win" : "lose";
+                    sizeTranz = resultSet.getBigDecimal("Size").multiply(new BigDecimal(resultSet.getDouble("CoefDRAW")));
+                } else {
+                    if (resultSet.getString("bets.goalsTeam1").equals(resultSet.getString("matches.goalsTeam1")) && resultSet.getString("bets.goalsTeam2").equals(resultSet.getString("matches.goalsTeam2"))) {
+                        status = "win";
+                        sizeTranz = resultSet.getBigDecimal("Size").multiply(new BigDecimal(resultSet.getDouble("CoefExAcc")));
+                    } else {
+                        status = "lose";
+                    }
+                }
+
+                try {
+                    connection2 = DAOFactory.getInstance().getConnectionPool().getConnection();
+                    preparedStatement2 = connection2.prepareStatement(UPDATE_BETS_SET_STATUS_WHERE_MATCHES_ID_MATCHES);
+
+                    if (DAOFactory.getInstance().getUserDAO().transaktion(resultSet.getString("Users_Login"), sizeTranz)) {
+
+                        preparedStatement2.setString(1, status);
+                        preparedStatement2.setInt(2, idMatches);
+                        preparedStatement2.execute();
+                    } else {
+                        throw new DAOException();
+                    }
+                } catch (SQLException e) {
+                    throw new DAOException("Cannot connect the database!", e);
+                } finally {
+                    DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement);
+                }
+
+
+
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
+        }
+        return false;
+    }
+
+    @Override
+    public List<Bet> getBet(String userLogin) throws DAOException{
+        List<Bet> bets = new ArrayList<>();
+        Bet bet = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_BETS_WHERE_USERS_LOGIN);
+            preparedStatement.setString(1 , userLogin);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                bet = getBet(resultSet);
                 bets.add(bet);
             }
 
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         bets.sort(Comparator.comparing(Bet::getIdMatches).reversed());
         return bets;
     }
 
-    private Bet createBet(ResultSet resultSet) throws SQLException {
+    private Bet getBet(ResultSet resultSet) throws SQLException {
         Bet bet = null;
 
         String loginUser = resultSet.getString("Users_Login");
@@ -117,45 +188,41 @@ public class BetDAOImpl implements BetDAO {
 
 
     @Override
-    public Bet createBet(String userLogin, int idMatch) {
+    public Bet getBet(String userLogin, int idMatch) throws DAOException{
         Bet bet = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return bet;
-        }
-
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES)) {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(SELECT_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES);
             preparedStatement.setString(1 , userLogin);
             preparedStatement.setInt(2 , idMatch);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                bet = createBet(resultSet);
+                bet = getBet(resultSet);
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
+
         return bet;
     }
 
     @Override
-    public boolean deleteBet(User user, Bet bet) {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("No have database");
-            return false;
-        }
+    public boolean deleteBet(User user, Bet bet) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = DriverManager.getConnection(URL, DAOFactory.getProperties());
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES)) {
+        try {
+            connection = DAOFactory.getInstance().getConnectionPool().getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES);
             preparedStatement.setString(1 , user.getLogin());
             preparedStatement.setInt(2 , bet.getIdMatches());
 
@@ -165,7 +232,9 @@ public class BetDAOImpl implements BetDAO {
                 throw new SQLException();
             }
         } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
+            throw new DAOException("Cannot connect the database!", e);
+        } finally {
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
         return true;
