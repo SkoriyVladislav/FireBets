@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleMakeBet.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+        <script src="${pageContext.servletContext.contextPath}/web/lib/jquery-3.2.1.min.js"></script>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     </head>
 
@@ -33,7 +34,7 @@
 
 
             <div class="matches">
-                <form action="controller" method="post" style="width: 100%">
+                <form action="controller" method="post" style="width: 100%" class="form0">
                     <div>
                         <div class="match">
                             <div>Матч:</div>
@@ -48,16 +49,16 @@
                             </div>
                         </div>
 
-                        <c:choose>
-                            <c:when test="${requestScope.bet == null}">
-                                <%@include file="jspf/make_bets.jspf" %>
-                            </c:when>
 
-                            <c:otherwise>
-                                <%@include file="jspf/my_bet.jspf" %>
-                            </c:otherwise>
-                        </c:choose>
+                            <c:choose>
+                                <c:when test="${requestScope.bet == null}">
+                                    <%@include file="jspf/make_bets.jspf" %>
+                                </c:when>
 
+                                <c:otherwise>
+                                    <%@include file="jspf/my_bet.jspf" %>
+                                </c:otherwise>
+                            </c:choose>
 
                     </div>
                 </form>
@@ -65,13 +66,47 @@
                 <c:choose>
                     <c:when test="${sessionScope.user.role.role == 'bookmaker'}">
                         <%@include file="jspf/change_coeff.jspf" %>
+                        <%@include file="jspf/set_results.jspf" %>
                     </c:when>
                 </c:choose>
+
+                <div >
+                    <span id="resultCheckTime"></span>
+                </div>
             </div>
         </div>
 
         <div>
             <%@include file="jspf/footer.jspf"%>
         </div>
+
+
+
+        <script>
+            function ajaxreqqwerty(form) {
+                var data = {"matchId":"${sessionScope.match.id}", "command":"CHECK_TIME_AJAX"};
+
+                $.ajax({
+                    type: "POST",
+                    data: data,
+                    url: 'ajax_controller',
+                    success: [function(serverData) { //Если запрос удачен
+                        if (serverData.serverInfo === "true") {
+                            form.submit();
+                        } else {
+                            $("#resultCheckTime").text("Время ставок истекло");
+                        }
+                    }]
+                });
+            }
+
+            function confirmSubm(form) {
+                if (confirm("Подтвердите действие")) {
+                    ajaxreqqwerty(form);
+                }
+                else
+                    return false;
+            }
+        </script>
     </body>
 </html>

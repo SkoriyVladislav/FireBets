@@ -46,9 +46,10 @@
     <%--<jsp:include page="jspf/change_bet.jspf"/> --%>
 </div>
 
-<form>
+<form class="delForm">
     <div class="but" style="margin-left: 2.5%">
         <input type="hidden" name="command" value="delete_bet"/>
-        <input id="delBetButt" type="submit" value="Удалить ставку">
+        <input id="delBetButt" type="button" value="Удалить ставку" onclick="return confirmSubm($('.delForm'))">
+        <span id="delBetButtSpan"></span>
     </div>
 </form>
