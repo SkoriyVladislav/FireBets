@@ -38,7 +38,7 @@
                     <div>
                         <div class="match">
                             <div>Матч:</div>
-                            <div style="margin-left: 1.5%"><c:out value="${sessionScope.match.team1}"/>  -  <c:out value="${sessionScope.match.team2}"/> </div>
+                            <div style="margin-left: 1.5%"><c:out value="${sessionScope.match.team1}"/> <c:out value=" ${sessionScope.match.goalsTeam1 != null ? sessionScope.match.goalsTeam1 : ''}"/>  - <c:out value=" ${sessionScope.match.goalsTeam2 != null ? sessionScope.match.goalsTeam2 : ''}"/>  <c:out value="${sessionScope.match.team2}"/> </div>
                         </div>
 
                         <div class="match" >
