@@ -79,7 +79,12 @@ public class BetDAOImpl implements BetDAO {
                 Connection connection2 = null;
                 PreparedStatement preparedStatement2 = null;
                 String status = null;
-                BetType betType = BetType.valueOf(resultSet.getString("Type").toUpperCase());
+                BetType betType = null;
+                try {
+                     betType = BetType.valueOf(resultSet.getString("Type").toUpperCase());
+                } catch (NullPointerException ex) {
+                    break;
+                }
                 BigDecimal sizeTranz = BigDecimal.ZERO;
 
                 if (betType == BetType.TEAM1) {

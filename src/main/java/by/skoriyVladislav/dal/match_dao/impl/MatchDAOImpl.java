@@ -149,8 +149,7 @@ public class MatchDAOImpl implements MatchDAO {
         return registrationCoefficients(matchId, coef);
     }
 
-    @Override
-    public boolean registrationCoefficients(int id, double[] coef) throws DAOException {
+    private boolean registrationCoefficients(int id, double[] coef) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;

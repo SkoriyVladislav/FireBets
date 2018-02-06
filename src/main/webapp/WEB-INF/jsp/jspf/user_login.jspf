@@ -1,3 +1,4 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: Skori
@@ -33,6 +34,7 @@
 
         <div class="input-left" style="margin-left: 100%">
             <form action="controller" method="get">
+                <input type="hidden" name="from" value="${fn:escapeXml(param.from)}" />
                 <input type="hidden" name="command" value="CHANGE_LOCALE"/>
                 <input type="submit" value="<fmt:message key="header.icon"/>"/>
             </form>

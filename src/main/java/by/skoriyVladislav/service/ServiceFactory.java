@@ -1,14 +1,14 @@
 package by.skoriyVladislav.service;
 
-import by.skoriyVladislav.service.command.Client;
-import by.skoriyVladislav.service.command.Receiver;
+import by.skoriyVladislav.service.bet_service.BetService;
+import by.skoriyVladislav.service.bet_service.impl.BetServiceImpl;
+import by.skoriyVladislav.service.match_service.MatchService;
+import by.skoriyVladislav.service.match_service.impl.MatchServiceImpl;
+import by.skoriyVladislav.service.user_service.UserService;
+import by.skoriyVladislav.service.user_service.impl.UserServiceImpl;
 
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
-
-    private final Receiver receiver = new Receiver();
-
-    private final Client client = new Client(receiver);
 
     private ServiceFactory() {
 
@@ -18,7 +18,21 @@ public class ServiceFactory {
         return instance;
     }
 
-    public Client getClient() {
-        return client;
+    private final UserService userService = new UserServiceImpl();
+
+    private final MatchService matchService = new MatchServiceImpl();
+
+    private final BetService betService = new BetServiceImpl();
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public MatchService getMatchService() {
+        return matchService;
+    }
+
+    public BetService getBetService() {
+        return betService;
     }
 }

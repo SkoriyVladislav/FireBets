@@ -1,6 +1,6 @@
 package by.skoriyVladislav;
 
-import by.skoriyVladislav.service.command.command_type.TypeCommand;
+import by.skoriyVladislav.controller.command.command_type.TypeCommand;
 
 public class main {
     public static void main(String... agr) {

@@ -1,9 +1,8 @@
 package by.skoriyVladislav.controller.servlet;
 
+import by.skoriyVladislav.controller.command.CommandFactory;
 import by.skoriyVladislav.service.ServiceFactory;
-import by.skoriyVladislav.service.command.Client;
-import by.skoriyVladislav.service.command.ICommand;
-import by.skoriyVladislav.service.command.Invoker;
+import by.skoriyVladislav.controller.command.ICommand;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,13 +26,7 @@ public class MainController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        ServiceFactory factory = ServiceFactory.getInstance();
-        Client client = factory.getClient();
-        String cmd = request.getParameter("command");
-        ICommand command = client.initCommand(cmd);
-        Invoker invoker = new Invoker(command);
-
-        invoker.invokeCommand(request, response);
+        ICommand command = CommandFactory.getCommand(request);
+        command.execute(request, response);
     }
 }
