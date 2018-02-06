@@ -19,5 +19,12 @@
                 <input id="enter" type="submit" value="Выход"/>
             </form>
         </div>
+
+        <div class="input-left" style="margin-left: 2px">
+            <form action="controller" method="get">
+                <input type="hidden" name="command" value="CHANGE_LOCALE"/>
+                <input type="submit" value="<fmt:message key="header.icon"/>"/>
+            </form>
+        </div>
     </div>
 </div>

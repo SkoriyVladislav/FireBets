@@ -10,6 +10,7 @@ public enum TypeCommand {
     SET_RESULT,
     CHANGE_COEFF,
     REGISTRATION,
+    CHANGE_LOCALE,
     CHANGE_USERS_ROLE,
     GO_TO_MAIN,
     GO_TO_LOGIN,

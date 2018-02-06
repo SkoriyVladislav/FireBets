@@ -91,6 +91,10 @@ public class Client {
                 command = new CheckTimeAjax(receiver);
                 break;
 
+            case CHANGE_LOCALE:
+                command = new ChangeLocale(receiver);
+                break;
+
             case CHECK_LOGIN_AJAX:
                 command = new CheckLoginAjax(receiver);
                 break;

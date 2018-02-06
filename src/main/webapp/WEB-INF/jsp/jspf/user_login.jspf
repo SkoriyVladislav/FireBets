@@ -30,5 +30,12 @@
                 <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" title="Регистрация в букмекерской конторе Fire Bets" class="link-block-registration">Регистрация </a>
             </div>
         </form>
+
+        <div class="input-left" style="margin-left: 100%">
+            <form action="controller" method="get">
+                <input type="hidden" name="command" value="CHANGE_LOCALE"/>
+                <input type="submit" value="<fmt:message key="header.icon"/>"/>
+            </form>
+        </div>
     </div>
 </div>

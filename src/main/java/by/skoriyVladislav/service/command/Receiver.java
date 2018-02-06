@@ -302,6 +302,18 @@ public class Receiver {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                     break;
 
+                case CHANGE_LOCALE:
+                    String locale = (String)request.getSession().getAttribute("locale");
+                    if (locale == null || locale.equals("ru_RU")) {
+                        locale = "en_US";
+                    } else {
+                        locale = "ru_RU";
+                    }
+                    String str = request.getQueryString();
+                    request.getSession().setAttribute("locale", locale);
+                    response.sendRedirect("index.jsp");
+                    break;
+
                 case CHECK_LOGIN_AJAX:
                     response.setContentType("application/json");//Отправляем от сервера данные в JSON -формате
                     response.setCharacterEncoding("utf-8");//Кодировка отправляемых данных
