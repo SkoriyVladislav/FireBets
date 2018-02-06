@@ -47,8 +47,9 @@
 
                     <div class="login-step" style="margin-left: 10%">
                         <input type="hidden" name="command" value="login"/>
-                        <input type="hidden" name="from" value="${fn:escapeXml(param.from)}" />
+                        <input type="hidden" name="from" value="${fn:escapeXml(param.from) != null ? fn:escapeXml(param.from) : ''}" />
                         <input id="enter" type="submit" value="Войти" style="margin-left: 1.5%"/>
+                        <span>${requestScope.errorMsg}</span>
                     </div>
 
                     <div class="remember-pass" style="margin-left: 7.5%">
