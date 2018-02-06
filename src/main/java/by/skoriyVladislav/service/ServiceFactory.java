@@ -35,4 +35,22 @@ public class ServiceFactory {
     public BetService getBetService() {
         return betService;
     }
+
+
+
+    public static boolean isValidObj(Object obj) {
+        return obj != null;
+    }
+
+    public static boolean isValidSting(String str) {
+        return str != null && !str.isEmpty();
+    }
+
+    public static boolean isValidInteger(int number) {
+        return number >= 0;
+    }
+
+    public static boolean isValidDouble(double number) {
+        return number >= 0;
+    }
 }
