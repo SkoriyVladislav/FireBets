@@ -21,10 +21,14 @@ public class MakeBet implements ICommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
         String userLogin = user.getLogin();
-        BigDecimal size = BigDecimal.valueOf(Double.valueOf(request.getParameter("betVal")));
+        double tempDouble = -1;
+        ;
 
         try {
+            tempDouble = Double.valueOf(request.getParameter("betVal"));
+            BigDecimal size = BigDecimal.valueOf(tempDouble);
             if (ServiceFactory.getInstance().getUserService().checkBalanceForBet(userLogin, size)) {
+
                 int matchId = ((Match) request.getSession().getAttribute("match")).getId();
                 BetType typeOfBet = BetType.valueOf(request.getParameter("betType").toUpperCase());
                 Integer goalsTeam1 = null;
@@ -45,6 +49,9 @@ public class MakeBet implements ICommand {
                 response.sendRedirect("error.jsp");
             }
         } catch (ServiceException ex) {
+
+            response.sendRedirect("error.jsp");
+        } catch (NullPointerException ex) {
 
             response.sendRedirect("error.jsp");
         }

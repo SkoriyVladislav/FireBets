@@ -17,12 +17,16 @@ public class GoToPageMakeBet implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int matchId = Integer.parseInt(request.getParameter("match"));
+        int matchId = -1;
         Match match = null;
 
         try {
+            matchId = Integer.parseInt(request.getParameter("match"));
             match = ServiceFactory.getInstance().getMatchService().getMatch(matchId);
         } catch (ServiceException ex) {
+            response.sendRedirect("error.jsp");
+        } catch (NullPointerException ex) {
+
             response.sendRedirect("error.jsp");
         }
 

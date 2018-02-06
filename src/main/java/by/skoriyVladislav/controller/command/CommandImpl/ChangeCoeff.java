@@ -18,17 +18,19 @@ public class ChangeCoeff implements ICommand {
         double coefTeam21 = 0;
         double coefDraw1 = 0;
         double coefExAcc1 = 0;
+        int idMatch = -1;
         try {
             coefTeam11 = Double.valueOf(request.getParameter("coefTeam1"));
             coefTeam21 = Double.valueOf(request.getParameter("coefTeam2"));
             coefDraw1 = Double.valueOf(request.getParameter("coefDraw"));
             coefExAcc1 = Double.valueOf(request.getParameter("coefExAcc"));
+            idMatch = Integer.valueOf(request.getParameter("matchId"));
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());
             response.sendRedirect("error.jsp");
         }
         double[] coeff = {coefTeam11, coefTeam21, coefDraw1, coefExAcc1};
-        int idMatch = Integer.valueOf(request.getParameter("matchId"));
+
 
         try {
             ServiceFactory.getInstance().getMatchService().changeCoefficients(idMatch, coeff);

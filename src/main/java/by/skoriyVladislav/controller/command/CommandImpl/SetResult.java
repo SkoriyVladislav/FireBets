@@ -14,13 +14,18 @@ public class SetResult implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int matchId1 = Integer.valueOf(request.getParameter("matchId"));
-        int goalsTeam1 = Integer.valueOf(request.getParameter("goalsTeam1"));
-        int goalsTeam2 = Integer.valueOf(request.getParameter("goalsTeam2"));
+        int matchId1 = -1;
 
         try {
+            matchId1 = Integer.valueOf(request.getParameter("matchId"));
+            int goalsTeam1 = Integer.valueOf(request.getParameter("goalsTeam1"));
+            int goalsTeam2 = Integer.valueOf(request.getParameter("goalsTeam2"));
+
             ServiceFactory.getInstance().getMatchService().setResult(matchId1, goalsTeam1, goalsTeam2);
         } catch (ServiceException ex) {
+
+            response.sendRedirect("error.jsp");
+        } catch (NullPointerException ex) {
 
             response.sendRedirect("error.jsp");
         }

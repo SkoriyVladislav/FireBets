@@ -23,12 +23,18 @@ public class MakeMatch implements ICommand {
         String hour = request.getParameter("hour");
         String minute = request.getParameter("minute");
 
-        double coefTeam1 = 0;
-        double coefTeam2 = 0;
-        double coefDraw = 0;
-        double coefExAcc = 0;
+        double coefTeam1 = -1;
+        double coefTeam2 = -1;
+        double coefDraw = -1;
+        double coefExAcc = -1;
 
         try {
+            Integer yearValidation = Integer.valueOf(request.getParameter("year"));
+            Integer monthValidation = Integer.valueOf(request.getParameter("month"));
+            Integer dayValidation = Integer.valueOf(request.getParameter("day"));
+            Integer hourValidation = Integer.valueOf(request.getParameter("hour"));
+            Integer minuteValidation = Integer.valueOf(request.getParameter("minute"));
+
             coefTeam1 = Double.valueOf(request.getParameter("coefTeam1"));
             coefTeam2 = Double.valueOf(request.getParameter("coefTeam2"));
             coefDraw = Double.valueOf(request.getParameter("coefDraw"));
@@ -36,7 +42,7 @@ public class MakeMatch implements ICommand {
 
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());
-            response.sendRedirect("error2.jsp");
+            response.sendRedirect("error.jsp");
         }
 
         String dataTime = year + "-" + month + "-" + day + " " + hour + ":" + minute;

@@ -21,6 +21,9 @@ public class Login implements ICommand {
         User user = null;
         try {
             user = ServiceFactory.getInstance().getUserService().getUser(login, password);
+            if (user == null) {
+
+            }
         } catch (ServiceException ex) {
 
             response.sendRedirect("error.jsp");

@@ -62,6 +62,9 @@ public class ChangeBet implements ICommand {
         } catch (ServiceException ex) {
 
             response.sendRedirect("error.jsp");
+        } catch (NullPointerException ex) {
+
+            response.sendRedirect("error.jsp");
         }
     }
 }
