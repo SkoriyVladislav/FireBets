@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean registerUser(String login, String password, String name, String surname, String role, BigDecimal balance, String email) throws ServiceException {
-        if (ServiceFactory.isValidSting(login) && ServiceFactory.isValidSting(password) && ServiceFactory.isValidSting(name) &&
-                ServiceFactory.isValidSting(surname) && ServiceFactory.isValidSting(role) && ServiceFactory.isValidSting(email) &&
+        if (ServiceFactory.isValidSting(login) && ServiceFactory.isValidSting(password) && ServiceFactory.isValidName(name) &&
+                ServiceFactory.isValidName(surname) && ServiceFactory.isValidSting(role) && ServiceFactory.isValidSting(email) &&
                     balance.compareTo(BigDecimal.ZERO) >= 0) {
 
             try {
@@ -103,4 +103,5 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Invalid entered parameters.");
         }
     }
+
 }

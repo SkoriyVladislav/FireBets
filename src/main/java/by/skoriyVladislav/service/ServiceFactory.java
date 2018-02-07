@@ -7,6 +7,9 @@ import by.skoriyVladislav.service.match_service.impl.MatchServiceImpl;
 import by.skoriyVladislav.service.user_service.UserService;
 import by.skoriyVladislav.service.user_service.impl.UserServiceImpl;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
 
@@ -36,8 +39,6 @@ public class ServiceFactory {
         return betService;
     }
 
-
-
     public static boolean isValidObj(Object obj) {
         return obj != null;
     }
@@ -52,5 +53,15 @@ public class ServiceFactory {
 
     public static boolean isValidDouble(double number) {
         return number >= 0;
+    }
+
+    public static boolean isValidName(String userNameString){
+        if (userNameString != null) {
+            Pattern p = Pattern.compile("^([A-Z]|[А-я])+([a-z]|[а-я])+$");
+            Matcher m = p.matcher(userNameString);
+            return m.matches();
+        } else {
+            return false;
+        }
     }
 }

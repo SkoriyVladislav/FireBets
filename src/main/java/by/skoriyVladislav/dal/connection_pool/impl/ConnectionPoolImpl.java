@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class ConnectionPoolImpl implements ConnectionPool {
     private Logger logger = Logger.getLogger(ConnectionPool.class);
 
-    private static final String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
 
 
     private String url;

@@ -60,13 +60,13 @@
 
                     <div class="label">Имя:</div>
                     <div class="field-fname field">
-                        <input type="text" name="name" class="inputPole" value="" placeholder=" " pattern="^([A-Z])+([a-z])+$" required /> <span></span>
+                        <input type="text" name="name" class="inputPole" value="" placeholder=" " pattern="^([A-Z]|[А-я])+([a-z]|[а-я])+$" required /> <span></span>
 
                     </div>
 
                     <div class="label">Фамилия:</div>
                     <div class="field field-fname field-sname">
-                        <input type="text" name="surname" class="inputPole" value="" placeholder=" " pattern="^([A-Z])+([a-z])+$" required /> <span></span>
+                        <input type="text" name="surname" class="inputPole" value="" placeholder=" " pattern="^([A-Z]|[А-я])+([a-z]|[а-я])+$" required /> <span></span>
                     </div>
 
                     <div class="label">Номер телефона:</div>
