@@ -20,8 +20,8 @@ public class GoToPageUserProfile implements ICommand {
         try {
             user = ServiceFactory.getInstance().getUserService().getUser(login);
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         request.setAttribute("user", user);
         request.getRequestDispatcher("/WEB-INF/jsp/user_profile.jsp").forward(request, response);

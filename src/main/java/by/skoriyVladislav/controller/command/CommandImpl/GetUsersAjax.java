@@ -26,8 +26,8 @@ public class GetUsersAjax implements ICommand {
             String json = new Gson().toJson(products);
             response.getWriter().write(json);
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 }

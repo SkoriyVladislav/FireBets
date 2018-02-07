@@ -23,11 +23,11 @@ public class SetResult implements ICommand {
 
             ServiceFactory.getInstance().getMatchService().setResult(matchId1, goalsTeam1, goalsTeam2);
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (NullPointerException ex) {
             request.setAttribute("error", ex);
-            response.sendRedirect("error.jsp");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
     }

@@ -35,8 +35,8 @@ public class ChangeCoeff implements ICommand {
         try {
             ServiceFactory.getInstance().getMatchService().changeCoefficients(idMatch, coeff);
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         request.getRequestDispatcher("/controller?command=go_to_make_bet&match=" + idMatch).forward(request, response);

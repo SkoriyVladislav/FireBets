@@ -49,8 +49,8 @@ public class MakeBet implements ICommand {
                 response.sendRedirect("error.jsp");
             }
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (NullPointerException ex) {
 
             response.sendRedirect("error.jsp");

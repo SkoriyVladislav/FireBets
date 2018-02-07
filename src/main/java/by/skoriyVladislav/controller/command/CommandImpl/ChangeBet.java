@@ -31,8 +31,8 @@ public class ChangeBet implements ICommand {
                 request.getRequestDispatcher("error.jsp").forward(request, response);
             }
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         String userLogin = user.getLogin();

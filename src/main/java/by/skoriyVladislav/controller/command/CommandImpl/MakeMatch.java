@@ -41,8 +41,8 @@ public class MakeMatch implements ICommand {
             coefExAcc = Double.valueOf(request.getParameter("coefExAcc"));
 
         } catch (NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         String dataTime = year + "-" + month + "-" + day + " " + hour + ":" + minute;
@@ -51,8 +51,8 @@ public class MakeMatch implements ICommand {
         try {
             ServiceFactory.getInstance().getMatchService().registrationMatch(team1, team2, dataTime, coef);
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);

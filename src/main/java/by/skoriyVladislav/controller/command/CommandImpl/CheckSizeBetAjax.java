@@ -32,8 +32,8 @@ public class CheckSizeBetAjax implements ICommand {
             }
             out.print(jsonEnt.toString());
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 }

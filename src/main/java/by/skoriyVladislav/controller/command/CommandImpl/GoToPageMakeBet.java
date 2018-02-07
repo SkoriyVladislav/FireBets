@@ -24,10 +24,11 @@ public class GoToPageMakeBet implements ICommand {
             matchId = Integer.parseInt(request.getParameter("match"));
             match = ServiceFactory.getInstance().getMatchService().getMatch(matchId);
         } catch (ServiceException ex) {
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (NullPointerException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         User user = (User) request.getSession().getAttribute("user");
@@ -36,7 +37,8 @@ public class GoToPageMakeBet implements ICommand {
         try {
             bet = ServiceFactory.getInstance().getBetService().getBet(user.getLogin(), matchId);
         }  catch (ServiceException ex) {
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         request.getSession().setAttribute("bet", bet);

@@ -22,8 +22,8 @@ public class GoToPageMain implements ICommand {
             request.getSession().setAttribute("matches", matches);
             response.sendRedirect("main.jsp");
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 }

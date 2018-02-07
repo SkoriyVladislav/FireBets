@@ -28,8 +28,8 @@ public class GoToPageMyBets implements ICommand {
         try {
             bets = ServiceFactory.getInstance().getBetService().getBets(user1.getLogin());
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         List<Match> matches1 = new ArrayList<>();
@@ -38,8 +38,8 @@ public class GoToPageMyBets implements ICommand {
                 matches1.add(ServiceFactory.getInstance().getMatchService().getMatch(bet.getIdMatches()));
             }
         } catch (ServiceException ex) {
-
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
         Map<Match, Bet> matchBetMap = new HashMap<>();

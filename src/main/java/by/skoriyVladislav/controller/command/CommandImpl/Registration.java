@@ -26,7 +26,8 @@ public class Registration implements ICommand {
             ServiceFactory.getInstance().getUserService().registerUser(login, password, name, surname, Constants.INITIALROLE, BigDecimal.valueOf((Constants.INITIALBALANCE)), email);
             user = ServiceFactory.getInstance().getUserService().getUser(login, password);
         }catch (ServiceException ex) {
-            response.sendRedirect("error.jsp");
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
         request.getSession().setAttribute("user", user);
         response.sendRedirect("index.jsp");
