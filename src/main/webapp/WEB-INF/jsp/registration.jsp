@@ -19,6 +19,7 @@
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/web/lib/jquery-3.2.1.min.js"></script>
     </head>
 
 
