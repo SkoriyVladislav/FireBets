@@ -113,7 +113,7 @@
         </div>
 
         <script>
-            $(document).ready(function ajaxreq() {
+            function ajaxreq() {
                 var data = {"login":$("#ajLogin").val(), "command":"CHECK_LOGIN_AJAX"};
 
                 $.ajax({
@@ -130,7 +130,7 @@
                         }
                     }
                 });
-            });
+            }
         </script>
     </body>
 </html>

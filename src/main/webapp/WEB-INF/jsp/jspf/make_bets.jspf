@@ -65,18 +65,17 @@
 <div class="match">
     <div>Введите размер ставки: </div>
     <div style="margin-left: 1.5%">
-        <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required onchange="ajaxreq()"/>
+        <input id="div5" class="betVal" type="text" name="betVal" value="" size="4" pattern="^[0-9]([0-9]+)?$" required onchange="ajaxreq()"/>
         <span id="responseBetValSpan" style="margin-left: 10px;"></span>
+    </div>
+    <div style="margin-left: 1%; margin-top: 0.5%; margin-bottom: 0.5%">
+        <input type="hidden" name="command" value="MAKE_BET"/>
+        <input id="makeBetButton" type="button" value="Создать ставку" onclick="return confirmSubm($('.form0'))"/>
     </div>
 </div>
 
-<div style="margin-left: 4.5%; margin-top: 0.5%; margin-bottom: 0.5%">
-    <input type="hidden" name="command" value="MAKE_BET"/>
-    <input id="makeBetButton" type="button" value="Создать ставку" onclick="return confirmSubm($('.form0'))"/>
-</div>
-
 <script>
-    $(document).ready(function ajaxreq() {
+    function ajaxreq() {
         var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
 
         $.ajax({
@@ -93,9 +92,9 @@
                 }
             }
         });
-    });
+    }
 
-    $(document).ready(function agreeForm(box) {
+    function agreeForm(box) {
         // Если поставлен флажок, снимаем блокирование кнопки
         var vis = (box.checked) ? "block" : "none";
         var req = (box.checked) ? "true" : "false";
@@ -112,5 +111,5 @@
             document.getElementById('div3').removeAttribute('required');
             document.getElementById('div3').removeAttribute('required');
         }
-    });
+    }
 </script>

@@ -83,7 +83,7 @@
 
 
         <script>
-            $(document).ready(function ajaxreqqwerty(form) {
+            function ajaxreqReq(form) {
                 var data = {"matchId":"${sessionScope.match.id}", "command":"CHECK_TIME_AJAX"};
 
                 $.ajax({
@@ -98,15 +98,15 @@
                         }
                     }
                 });
-            });
+            }
 
-            $(document).ready(function confirmSubm(form) {
+            function confirmSubm(form) {
                 if (confirm("Подтвердите действие")) {
                     ajaxreqqwerty(form);
                 }
                 else
                     return false;
-            });
+            }
         </script>
     </body>
 </html>

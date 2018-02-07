@@ -20,9 +20,6 @@
             <c:when test="${sessionScope.user.role.role == 'admin'}">
                 <li><a href="${pageContext.request.contextPath}/controller?command=go_to_user_management" class="link-block-menu"><p>Управление пользователями</p></a></li>
             </c:when>
-            <c:otherwise>
-
-            </c:otherwise>
         </c:choose>
 
         <li class="has-dropdown">
