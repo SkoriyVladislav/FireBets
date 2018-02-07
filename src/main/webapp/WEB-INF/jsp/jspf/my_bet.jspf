@@ -7,35 +7,35 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div style="margin-left: 1.5%">
-    Ваша ставка: <c:out value="${requestScope.bet.size}"/>
+    <fmt:message key="yourBet"/> <c:out value="${requestScope.bet.size}"/>
 </div>
 
 <div class="match" style="margin-bottom: 5px; margin-top: 0">
-    <div style="margin-left: 1.5%">Тип ставки: <c:out value="${requestScope.bet.type}"/></div>
+    <div style="margin-left: 1.5%"><fmt:message key="typeBet"/> <c:out value="${requestScope.bet.type}"/></div>
 
     <div class="coeff-info">
         <div class="coeff">
             <div>
                 <c:choose>
                     <c:when test="${requestScope.bet.type.type == 'Team1'}">
-                        Коэфф: <c:out value="${sessionScope.match.coefTeam1}"/>
+                        <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefTeam1}"/>
                     </c:when>
 
                     <c:when test="${requestScope.bet.type.type == 'Team2'}">
-                        Коэфф: <c:out value="${sessionScope.match.coefTeam2}"/>
+                        <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefTeam2}"/>
                     </c:when>
 
                     <c:when test="${requestScope.bet.type.type == 'Draw'}">
-                        Коэфф: <c:out value="${sessionScope.match.coefDraw}"/>
+                        <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefDraw}"/>
                     </c:when>
 
                     <c:when test="${requestScope.bet.type.type == 'ExactScore'}">
                         <span>
-                            Счёт: <c:out value="${requestScope.bet.goalsTeam1}"/> -  <c:out value="${requestScope.bet.goalsTeam2}"/>
+                            <fmt:message key="send"/> <c:out value="${requestScope.bet.goalsTeam1}"/> -  <c:out value="${requestScope.bet.goalsTeam2}"/>
                         </span><br/>
 
                         <span>
-                            Коэфф: <c:out value="${sessionScope.match.coefExAcc}"/>
+                            <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefExAcc}"/>
                         </span>
                     </c:when>
                 </c:choose>

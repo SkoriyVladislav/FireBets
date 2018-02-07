@@ -36,29 +36,29 @@
                     </div>
 
                     <div class="login-step">
-                        <h3 class="massage">Введите логин: </h3>
-                        <input type="text" name="login" placeholder='Логин' value="" required/>
+                        <h3 class="massage"><fmt:message key="yLogin"/> : </h3>
+                        <input type="text" name="login" placeholder=' <fmt:message key="login"/>' value="" required/>
                     </div>
 
                     <div class="login-step">
-                        <h3 class="massage">Введите пароль: </h3>
-                        <input type="password" name="password" class="formlogin" placeholder='Пароль' autocomplete="off" value="" required/>
+                        <h3 class="massage"><fmt:message key="password"/> : </h3>
+                        <input type="password" name="password" class="formlogin" placeholder='<fmt:message key="password"/>' autocomplete="off" value="" required/>
                     </div>
 
                     <div class="login-step" style="margin-left: 10%">
                         <input type="hidden" name="command" value="login"/>
-                        <input type="hidden" name="from" value="${fn:escapeXml(param.from) != null ? fn:escapeXml(param.from) : ''}" />
-                        <input id="enter" type="submit" value="Войти" style="margin-left: 1.5%"/>
+                        <input type="hidden" name="from" value="${param.from != null ? fn:escapeXml(param.from) : null}" />
+                        <input id="enter" type="submit" value="<fmt:message key="enter"/>" style="margin-left: 1.5%"/>
                         <span>${requestScope.errorMsg}</span>
                     </div>
 
                     <div class="remember-pass" style="margin-left: 7.5%">
-                        <a href="#" class="link-block-remember-pass text-center">Забыли пароль? </a>
+                        <a href="#" class="link-block-remember-pass text-center"> <fmt:message key="fPassword"/> </a>
                     </div>
 
                     <div class="input-left input-registr" style="margin-left: 3%">
-                        <h3 class="massageH2">Ещё не зарегистрировались?</h3>
-                        <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" title="Регистрация в букмекерской конторе Fire Bets" class="link-block-registration">Регистрация </a>
+                        <h3 class="massageH2"><fmt:message key="account"/> </h3>
+                        <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" class="link-block-registration"><fmt:message key="registration"/> </a>
                     </div>
                 </form>
             </div>

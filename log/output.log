@@ -1,0 +1,116 @@
+2018-02-07 17:52:05,171 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 1 was created.
+2018-02-07 17:52:05,171 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 2 was created.
+2018-02-07 17:52:05,187 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 3 was created.
+2018-02-07 17:52:05,187 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 4 was created.
+2018-02-07 17:52:05,187 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 5 was created.
+2018-02-07 17:52:05,203 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 6 was created.
+2018-02-07 17:52:05,203 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 7 was created.
+2018-02-07 17:52:05,203 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 8 was created.
+2018-02-07 17:52:05,218 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 9 was created.
+2018-02-07 17:52:05,218 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 10 was created.
+2018-02-07 17:52:05,218  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:69 - Connection pool has been successfully initialized.
+2018-02-07 17:52:05,218 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:82 - Connection was given to caller.
+2018-02-07 17:52:05,234  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:181 - Check login in database.
+2018-02-07 17:52:05,234  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:129 - Connection was returned into connection pool successfully.
+2018-02-07 17:54:35,573 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 1 was created.
+2018-02-07 17:54:35,573 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 2 was created.
+2018-02-07 17:54:35,588 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 3 was created.
+2018-02-07 17:54:35,588 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 4 was created.
+2018-02-07 17:54:35,588 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 5 was created.
+2018-02-07 17:54:35,604 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 6 was created.
+2018-02-07 17:54:35,604 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 7 was created.
+2018-02-07 17:54:35,604 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 8 was created.
+2018-02-07 17:54:35,620 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 9 was created.
+2018-02-07 17:54:35,620 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 10 was created.
+2018-02-07 17:54:35,620  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:69 - Connection pool has been successfully initialized.
+2018-02-07 17:54:35,620 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:82 - Connection was given to caller.
+2018-02-07 17:54:35,620  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:129 - Connection was returned into connection pool successfully.
+2018-02-07 17:54:35,635  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:191 - Check login in database.
+2018-02-07 17:57:40,594 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 1 was created.
+2018-02-07 17:57:40,594 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 2 was created.
+2018-02-07 17:57:40,610 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 3 was created.
+2018-02-07 17:57:40,610 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 4 was created.
+2018-02-07 17:57:40,610 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 5 was created.
+2018-02-07 17:57:40,610 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 6 was created.
+2018-02-07 17:57:40,625 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 7 was created.
+2018-02-07 17:57:40,625 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 8 was created.
+2018-02-07 17:57:40,625 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 9 was created.
+2018-02-07 17:57:40,641 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 10 was created.
+2018-02-07 17:57:40,641  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:69 - Connection pool has been successfully initialized.
+2018-02-07 17:57:40,641 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:82 - Connection was given to caller.
+2018-02-07 17:57:40,641  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:211 - Check valance for bet in database.
+2018-02-07 17:57:40,641  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:129 - Connection was returned into connection pool successfully.
+2018-02-07 17:58:37,751 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 1 was created.
+2018-02-07 17:58:37,751 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 2 was created.
+2018-02-07 17:58:37,767 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 3 was created.
+2018-02-07 17:58:37,767 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 4 was created.
+2018-02-07 17:58:37,767 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 5 was created.
+2018-02-07 17:58:37,782 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 6 was created.
+2018-02-07 17:58:37,782 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 7 was created.
+2018-02-07 17:58:37,782 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 8 was created.
+2018-02-07 17:58:37,798 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 9 was created.
+2018-02-07 17:58:37,798 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:66 - Connection 10 was created.
+2018-02-07 17:58:37,798  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:69 - Connection pool has been successfully initialized.
+2018-02-07 17:58:37,798 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:82 - Connection was given to caller.
+2018-02-07 17:58:37,798  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:211 - Check valance for bet in database.
+2018-02-07 17:58:37,798  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:129 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:19,650 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 1 was created.
+2018-02-07 19:20:19,658 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 2 was created.
+2018-02-07 19:20:19,665 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 3 was created.
+2018-02-07 19:20:19,670 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 4 was created.
+2018-02-07 19:20:19,676 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 5 was created.
+2018-02-07 19:20:19,681 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 6 was created.
+2018-02-07 19:20:19,685 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 7 was created.
+2018-02-07 19:20:19,689 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 8 was created.
+2018-02-07 19:20:19,694 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 9 was created.
+2018-02-07 19:20:19,698 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 10 was created.
+2018-02-07 19:20:19,699  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:55 - Connection pool has been successfully initialized.
+2018-02-07 19:20:19,699 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:19,710  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:211 - Check valance for bet in database.
+2018-02-07 19:20:19,710  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:32,711 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 1 was created.
+2018-02-07 19:20:32,726 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 2 was created.
+2018-02-07 19:20:32,733 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 3 was created.
+2018-02-07 19:20:32,740 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 4 was created.
+2018-02-07 19:20:32,749 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 5 was created.
+2018-02-07 19:20:32,757 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 6 was created.
+2018-02-07 19:20:32,763 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 7 was created.
+2018-02-07 19:20:32,771 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 8 was created.
+2018-02-07 19:20:32,779 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 9 was created.
+2018-02-07 19:20:32,786 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 10 was created.
+2018-02-07 19:20:32,787  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:55 - Connection pool has been successfully initialized.
+2018-02-07 19:20:32,787 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:32,804  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:181 - Check login in database.
+2018-02-07 19:20:32,805  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:32,807 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:32,812  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:211 - Check valance for bet in database.
+2018-02-07 19:20:32,814  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:32,815 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:32,816  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:32,816  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:191 - Check login in database.
+2018-02-07 19:20:32,817 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:32,820  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:211 - Check valance for bet in database.
+2018-02-07 19:20:32,821  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:46,831 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 1 was created.
+2018-02-07 19:20:46,838 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 2 was created.
+2018-02-07 19:20:46,845 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 3 was created.
+2018-02-07 19:20:46,850 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 4 was created.
+2018-02-07 19:20:46,855 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 5 was created.
+2018-02-07 19:20:46,859 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 6 was created.
+2018-02-07 19:20:46,863 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 7 was created.
+2018-02-07 19:20:46,868 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 8 was created.
+2018-02-07 19:20:46,872 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 9 was created.
+2018-02-07 19:20:46,877 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:52 - Connection 10 was created.
+2018-02-07 19:20:46,878  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:55 - Connection pool has been successfully initialized.
+2018-02-07 19:20:46,878 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:46,888  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:181 - Check login in database.
+2018-02-07 19:20:46,888  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:46,890 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:46,893  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:211 - Check valance for bet in database.
+2018-02-07 19:20:46,895  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:46,895 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:46,896  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.
+2018-02-07 19:20:46,896  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:191 - Check login in database.
+2018-02-07 19:20:46,897 DEBUG by.skoriyVladislav.dal.connection_pool.ConnectionPool:68 - Connection was given to caller.
+2018-02-07 19:20:46,899  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:211 - Check valance for bet in database.
+2018-02-07 19:20:46,900  INFO by.skoriyVladislav.dal.connection_pool.ConnectionPool:115 - Connection was returned into connection pool successfully.

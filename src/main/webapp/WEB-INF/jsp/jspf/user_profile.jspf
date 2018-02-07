@@ -9,14 +9,14 @@
 <div class = "authorization">
     <div class="auth-form">
         <div class="input-left input-registr">
-            <a href="${pageContext.request.contextPath}/controller?command=go_to_profile"  class="link-block-registration">Привет, ${sessionScope.user.name}!</a>
+            <a href="${pageContext.request.contextPath}/controller?command=go_to_profile"  class="link-block-registration"><fmt:message key="hi"/> ${sessionScope.user.name}!</a>
         </div>
 
 
         <div class="input-left input-enter">
             <form method="get" action="controller">
                 <input type="hidden" name="command" value="logout"/>
-                <input id="enter" type="submit" value="Выход"/>
+                <input id="enter" type="submit" value='<fmt:message key="exit"/>'/>
             </form>
         </div>
 

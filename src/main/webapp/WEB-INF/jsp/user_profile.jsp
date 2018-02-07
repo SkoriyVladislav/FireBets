@@ -46,32 +46,32 @@
             <div>
                 <div class="user-info">
                     <div class="user-info-step">
-                        <div style=" margin-left: -0.5%; font-size: 18px; ">Информаця о пользователе: <c:out value="${requestScope.user.name}"/> <c:out value="${requestScope.user.surname}"/> </div>
+                        <div style=" margin-left: -0.5%; font-size: 18px; "><fmt:message key="iUser"/> <c:out value="${requestScope.user.name}"/> <c:out value="${requestScope.user.surname}"/> </div>
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Логин:</div>
+                        <div><fmt:message key="login"/></div>
                         <div style="margin-left: 1.5%">
                             <div ><c:out value="${requestScope.user.login}"/></div>
                         </div>
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Е-мейл:</div>
+                        <div>E-mail:</div>
                         <div style="margin-left: 1.5%">
                             <div><c:out value="${requestScope.user.email}"/></div>
                         </div>
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Баланс:</div>
+                        <div><fmt:message key="balance"/></div>
                         <div style="margin-left: 1.5%">
                             <div><c:out value="${requestScope.user.balance}"/></div>
                         </div>
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Статус:</div>
+                        <div><fmt:message key="status"/></div>
                         <div style="margin-left: 1.5%">
                             <div style="display: block" id="playerStatus"><c:out value="${requestScope.user.role}"/></div>
                         </div>
@@ -92,17 +92,17 @@
                              <div style="margin-left: 1.5%">
                                  <input type="hidden" name="login" value="${requestScope.user.login}"/>
                                  <input type="hidden" name="command" value="change_users_role"/>
-                                 <input type="submit" value="Подтвердить" >
+                                 <input type="submit" value=<fmt:message key="change_bet.confirm"/>' >
                              </div>
 
                              <div style="margin-left: 1.5%">
-                                 <input type="button" value="Отменить" onclick="disp(document.getElementById('changeBut'), document.getElementById('newPlayerStatus'))">
+                                 <input type="button" value='<fmt:message key="cancel"/>' onclick="disp(document.getElementById('changeBut'), document.getElementById('newPlayerStatus'))">
                              </div>
 
                         </form>
 
                         <div style="margin-left: 1.5%">
-                            <input id="changeBut" type="button" value="Изменить" onclick="disp(document.getElementById('newPlayerStatus'), this)">
+                            <input id="changeBut" type="button" value='<fmt:message key="change"/>' onclick="disp(document.getElementById('newPlayerStatus'), this)">
                         </div>
                     </div>
                 </div>

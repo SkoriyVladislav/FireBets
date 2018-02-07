@@ -6,19 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<input style="margin: 1%;" id="go_res" type="button" value="Установить результаты "/>
+<input style="margin: 1%;" id="go_res" type="button" value='<fmt:message key="sResults"/>'/>
 
 <div id="modal_form_res">
     <span id="modal_close_res">X</span>
     <form action="controller" method="post">
-        <h3>Введите результыты матча</h3>
-        <p>Все поля обязательны для заполнения.</p>
+        <h3><fmt:message key="eResults"/></h3>
+        <p><fmt:message key="change_bet.rItems"/></p>
 
         <div>
-            <p>Голы <c:out value="${sessionScope.match.team1}"/>:
+            <p><fmt:message key="change_bet.goals"/> <c:out value="${sessionScope.match.team1}"/>:
                 <input type="text" name="goalsTeam1" value="" size="4" required />
             </p>
-            <p>Голы <c:out value="${sessionScope.match.team2}"/>:
+            <p><fmt:message key="change_bet.goals"/>  <c:out value="${sessionScope.match.team2}"/>:
                 <input type="text" name="goalsTeam2" value="" size="4" required />
             </p>
         </div>
@@ -26,7 +26,7 @@
         <p style="text-align: center; padding-bottom: 10px;">
             <input type="hidden" name="matchId" value="${sessionScope.match.id}"/>
             <input type="hidden" name="command" value="SET_RESULT"/>
-            <input type="submit" value="Подтвердить" />
+            <input type="submit" value='<fmt:message key="change_bet.confirm"/> ' />
         </p>
     </form>
 </div>

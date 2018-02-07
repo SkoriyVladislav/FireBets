@@ -6,25 +6,24 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<input style="margin: 1%;" id="go" type="button" value="Изменить коеффициенты"/>
-
+<input style="margin: 1%;" id="go" type="button" value='<fmt:message key="change_coeff.cCoeff"/>'/>
 <div id="modal_form">
     <span id="modal_close">X</span>
     <form action="controller" method="post" class="changeCoef">
-        <h3>Изменение коэффициентов</h3>
-        <p>Все поля обязательны для заполнения.</p>
+        <h3><fmt:message key="change_coeff.cCoeff"/></h3>
+        <p><fmt:message key="change_bet.rItems"/></p>
 
         <div>
-            <p>Победа первой команды:
+            <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team1}"/>
                 <input type="text" name="coefTeam1" value="" size="4" required />
             </p>
-            <p>Победа второй команды:
+            <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team2}"/>
                 <input type="text" name="coefTeam2" value="" size="4" required />
             </p>
-            <p>Ничья:
+            <p><fmt:message key="change_bet.draw"/>
                 <input type="text" name="coefDraw" value="" size="4" required />
             </p>
-            <p>Точный счёт:
+            <p><fmt:message key="change_bet.eScore"/>
                 <input type="text" name="coefExAcc" value="" size="4" required />
             </p>
         </div>
@@ -32,7 +31,7 @@
         <p style="text-align: center; padding-bottom: 10px;">
             <input type="hidden" name="matchId" value="${sessionScope.match.id}"/>
             <input type="hidden" name="command" value="change_coeff"/>
-            <input type="button" value="Подтвердить" onclick="confirmSubm($('.changeCoef'))"/>
+            <input type="button" value='<fmt:message key="change_bet.confirm"/>' onclick="confirmSubm($('.changeCoef'))"/>
         </p>
     </form>
 </div>

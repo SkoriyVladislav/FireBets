@@ -40,8 +40,8 @@
 
     <%@include file="WEB-INF/jsp/jspf/header.jspf"%>
 
-    <div class="matches">
-        <span>${requestScope.error.message != null ? requestScope.error.message : "Что-то пошло не так, попробуйте позже"}</span>
+    <div class="matches" style="margin-left: 1.5%">
+        <span>${requestScope.error.message != null ? "Error " + requestScope.error.message : '<fmt:message key="error"/>'}</span>
     </div>
 </div>
 

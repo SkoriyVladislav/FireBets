@@ -6,22 +6,23 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<input style="margin-left: 1%;" id="go_bet" type="button" value="Изменить ставку"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<input style="margin-left: 1%;" id="go_bet" type="button" value="<fmt:message key="change_bet.cBets"/>"/>
 
 <div id="modal_form_bet">
     <span id="modal_close_bet">X</span>
     <form action="controller" method="post" class="changeBet">
-        <h3>Изменение ставки</h3>
-        <p>Все поля обязательны для заполнения.</p>
+        <h3><fmt:message key="change_bet.cBets"/></h3>
+        <p><fmt:message key="change_bet.rItems"/></p>
 
         <div class="match">
-            <div>Выберите тип ставки:</div>
+            <div><fmt:message key="change_bet.cType"/></div>
 
             <div class="coeff-info-change-bet">
                 <div class="coeff-change-bet" >
-                    <div>Победа <c:out value="${sessionScope.match.team1}"/>, </div>
+                    <div><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team1}"/>, </div>
                     <div class="coeff-val" >
-                        коэфф: <c:out value="${sessionScope.match.coefTeam1}"/>
+                        <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefTeam1}"/>
                     </div>
 
                     <div>
@@ -30,9 +31,9 @@
                 </div>
 
                 <div class="coeff-change-bet" >
-                    <div>Ничья, </div>
+                    <div><fmt:message key="change_bet.draw"/> </div>
                     <div class="coeff-val" >
-                        коэфф: <c:out value="${sessionScope.match.coefDraw}"/>
+                        <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefDraw}"/>
                     </div>
 
                     <div>
@@ -41,9 +42,9 @@
                 </div>
 
                 <div class="coeff-change-bet" >
-                    <div>Победа <c:out value="${sessionScope.match.team2}"/>, </div>
+                    <div><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team2}"/>, </div>
                     <div class="coeff-val" >
-                        коэфф: <c:out value="${sessionScope.match.coefTeam2}"/>
+                        <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefTeam2}"/>
                     </div>
 
 
@@ -53,9 +54,9 @@
                 </div>
 
                 <div class="coeff-change-bet" >
-                    <div>Точный счёт, </div>
+                    <div><fmt:message key="change_bet.eScore"/> </div>
                     <div class="coeff-val">
-                        коэфф: <c:out value="${sessionScope.match.coefExAcc}"/>
+                        <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefExAcc}"/>
                     </div>
 
                     <div class="ExAcc" >
@@ -64,11 +65,11 @@
                 </div>
 
                 <div id="div1" class="ExAccVal">
-                    Голы <c:out value="${sessionScope.match.team1}"/>
+                    <fmt:message key="change_bet.goals"/> <c:out value="${sessionScope.match.team1}"/>
                     <input id="div3" class="exAccVal" type="text" name="exAccVal1" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
                 </div>
 
-                <div id="div2" class="ExAccVal"> Голы <c:out value="${sessionScope.match.team2}"/>
+                <div id="div2" class="ExAccVal"> <fmt:message key="change_bet.goals"/> <c:out value="${sessionScope.match.team2}"/>
                     <input id="div4" class="ExAccVal" type="text" name="exAccVal2" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
                 </div>
 
@@ -76,7 +77,7 @@
         </div>
 
         <div class="match">
-            <div>Введите размер ставки: </div>
+            <div><fmt:message key="change_bet.yBet"/> </div>
             <div style="margin-left: 1.5%">
                 <input id="div5" class="betVal" type="text" name="betVal" value="" size="1" pattern="^[0-9]([0-9]+)?$" required onchange="ajaxreq()"/>
                 <span id="responseBetValSpan" style="margin-left: 10px;"></span>
@@ -86,30 +87,31 @@
         <p style="text-align: center; padding-bottom: 10px;">
             <input type="hidden" name="matchId" value="${sessionScope.match.id}"/>
             <input type="hidden" name="command" value="change_bet"/>
-            <input type="button" value="Подтвердить" onclick="return confirmSubm($('.changeBet'))"/>
+            <input type="button" value='<fmt:message key="change_bet.confirm"/>' onclick="return confirmSubm($('.changeBet'))"/>
         </p>
     </form>
 </div>
+
 <div id="overlay_bet"></div>
 
 <script>
-    $(document).ready(function() { // вся мaгия пoсле зaгрузки стрaницы
-        $('#go_bet').click( function(event){ // лoвим клик пo ссылки с id="go"
-            event.preventDefault(); // выключaем стaндaртную рoль элементa
-            $('#overlay_bet').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
-                function(){ // пoсле выпoлнения предъидущей aнимaции
+    $(document).ready(function() {
+        $('#go_bet').click( function(event){
+            event.preventDefault();
+            $('#overlay_bet').fadeIn(400,
+                function(){
                     $('#modal_form_bet')
-                        .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
-                        .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+                        .css('display', 'block')
+                        .animate({opacity: 1, top: '50%'}, 200);
                 });
         });
-        /* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
-        $('#modal_close_bet, #overlay_bet').click( function(){ // лoвим клик пo крестику или пoдлoжке
+
+        $('#modal_close_bet, #overlay_bet').click( function(){
             $('#modal_form_bet')
-                .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
-                    function(){ // пoсле aнимaции
-                        $(this).css('display', 'none'); // делaем ему display: none;
-                        $('#overlay_bet').fadeOut(400); // скрывaем пoдлoжку
+                .animate({opacity: 0, top: '45%'}, 200,
+                    function(){
+                        $(this).css('display', 'none');
+                        $('#overlay_bet').fadeOut(400);
                     }
                 );
         });
@@ -117,17 +119,16 @@
 
     function ajaxreq() {
         var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
-
         $.ajax({
             type: "POST",
             data: data,
             url: 'ajax_controller',
-            success: function(serverData) { //Если запрос удачен
+            success: function(serverData) {
                 if (serverData.serverInfo === "true") {
                     $("#responseBetValSpan").text("");
                     $("#makeBetButton").prop('disabled', false);
                 } else {
-                    $("#responseBetValSpan").text("Недостаточно средств для ставки");
+                    $("#responseBetValSpan").text('<fmt:message key="change_bet.money"/>');
                     $("#makeBetButton").prop('disabled', true);
                 }
             }
@@ -135,10 +136,10 @@
     }
 
    function agreeForm(box) {
-        // Если поставлен флажок, снимаем блокирование кнопки
+
         var vis = (box.checked) ? "block" : "none";
         var req = (box.checked) ? "true" : "false";
-        // В противном случае вновь блокируем кнопку
+
         document.getElementById('div1').style.display = vis;
         document.getElementById('div2').style.display = vis;
         document.getElementById('div3').style.display = vis;

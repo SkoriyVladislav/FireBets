@@ -8,6 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <footer>
     <div class="logo-footer"><p>FireBets</p></div>
-    <div><p>© Общество с ограниченной ответственностью «FireBets», 2017</p>
-        <p>Не зарегистрированный товарный знак FireBets.BY</p></div>
+    <div><p><fmt:message key="footer.fireBets"/></p>
+        <p><fmt:message key="footer.allRights"/></p></div>
 </footer>

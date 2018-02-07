@@ -26,7 +26,12 @@ public class MainController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ICommand command = CommandFactory.getCommand(request);
-        command.execute(request, response);
+        try {
+            ICommand command = CommandFactory.getCommand(request);
+            command.execute(request, response);
+        } catch (Exception ex) {
+            request.setAttribute("error", ex);
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
     }
 }

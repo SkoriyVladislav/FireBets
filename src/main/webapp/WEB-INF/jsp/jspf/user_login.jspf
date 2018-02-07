@@ -11,30 +11,30 @@
     <div class="auth-form">
         <form action="controller" method="post">
             <div class="input-left input-login">
-                <input type="text" name="login" placeholder='Логин' autocomplete="off" value="" required/>
+                <input type="text" name="login" placeholder='<fmt:message key="login"/>' autocomplete="off" value="" required/>
             </div>
 
             <div class="input-right input-pass">
-                <input type="password" name="password" class="formlogin" placeholder='Пароль' autocomplete="off" value="" required/>
+                <input type="password" name="password" class="formlogin" placeholder='<fmt:message key="password"/>' autocomplete="off" value="" required/>
             </div>
 
             <div class="input-left input-enter">
                 <input type="hidden" name="command" value="login"/>
-                <input id="enter" type="submit" value="Вход"/>
+                <input id="enter" type="submit" value='<fmt:message key="enter"/>'/>
             </div>
 
             <div class="remember-pass">
-                <a href="#" class="link-block-remember-pass text-center">Забыли пароль? </a>
+                <a href="#" class="link-block-remember-pass text-center"><fmt:message key="fPassword"/> </a>
             </div>
 
             <div class="input-left input-registr">
-                <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" title="Регистрация в букмекерской конторе Fire Bets" class="link-block-registration" style="height: 100%">Регистрация </a>
+                <a href="${pageContext.request.contextPath}/controller?command=go_to_registration" class="link-block-registration" style="height: 100%"><fmt:message key="registration"/> </a>
             </div>
         </form>
 
         <div class="input-left" style="margin-left: 100%">
             <form action="controller" method="get">
-                <input type="hidden" name="from" value="${fn:escapeXml(param.from) != null ? fn:escapeXml(param.from) : ''}" />
+                <input type="hidden" name="from" value="${param.from != null ? fn:escapeXml(param.from) : null}" />
                 <input type="hidden" name="command" value="CHANGE_LOCALE"/>
                 <input type="submit" value="<fmt:message key="header.icon"/>"/>
             </form>

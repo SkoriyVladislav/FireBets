@@ -6,70 +6,70 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<input style="margin-left: 5.5%;" id="go" type="button" value="Создать матч">
+<input style="margin-left: 5.5%;" id="go" type="button" value='<fmt:message key="createMatch"/>'>
 
 <div id="modal_form">
     <span id="modal_close">X</span>
     <form action="controller" method="post">
-        <h3>Регистрация матча</h3>
-        <p>Все поля обязательны для заполнения.</p>
-        <p>Первая команда: <br />
+        <h3><fmt:message key="rMatch"/></h3>
+        <p><fmt:message key="change_bet.rItems"/></p>
+        <p><c:out value="${sessionScope.match.team1}"/>: <br />
             <input type="text" name="team1" value="" size="30" required />
         </p>
-        <p>Вторая команда: <br />
+        <p><c:out value="${sessionScope.match.team2}"/>: <br />
             <input type="text" name="team2" value="" size="30" required />
         </p>
 
-        <p>Дата проведения(гггг-мм-дд) <br/>
+        <p><fmt:message key="dMatch"/><br/>
             <input type="text" name="year" value="" size="4" required pattern="^[0-9]{4}" class="inputPole"/>-<input type="text" name="month" value="" size="2" required pattern="^[0-9]{2}$" class="inputPole"/>-<input type="text" name="day" value="" size="2" required pattern="^[0-9]{2}$" class="inputPole"/>
         </p>
 
-        <p>Время проведения(чч:мм) <br/>
+        <p><fmt:message key="tMatch"/> <br/>
             <input type="text" name="hour" value="" size="2" required pattern="^[0-9]{2}$" class="inputPole"/>:<input type="text" name="minute" value="" size="2" required pattern="^[0-9]{2}$" class="inputPole"/>
         </p>
 
         <div>
-            <p>Коэффициенты: <br/>
-            <p>Победа первой команды:
+            <p><fmt:message key="change_bet.coeff"/> <br/>
+            <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team1}"/>:
                 <input type="text" name="coefTeam1" value="" size="4" required />
             </p>
-            <p>Победа второй команды:
+            <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team2}"/>:
                 <input type="text" name="coefTeam2" value="" size="4" required />
             </p>
-            <p>Ничья:
+            <p><fmt:message key="change_bet.draw"/>
                 <input type="text" name="coefDraw" value="" size="4" required />
             </p>
-            <p>Точный счёт:
+            <p><fmt:message key="change_bet.eScore"/>
                 <input type="text" name="coefExAcc" value="" size="4" required />
             </p>
         </div>
 
         <p style="text-align: center; padding-bottom: 10px;">
             <input type="hidden" name="command" value="make_match"/>
-            <input type="submit" value="Отправить" />
+            <input type="submit" value='<fmt:message key="send"/>' />
         </p>
     </form>
 </div>
 <div id="overlay"></div>
 
 <script>
-    $(document).ready(function() { // вся мaгия пoсле зaгрузки стрaницы
-        $('#go').click( function(event){ // лoвим клик пo ссылки с id="go"
-            event.preventDefault(); // выключaем стaндaртную рoль элементa
-            $('#overlay').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
-                function(){ // пoсле выпoлнения предъидущей aнимaции
+    $(document).ready(function() {
+        $('#go').click( function(event){
+            event.preventDefault();
+            $('#overlay').fadeIn(400,
+                function(){
                     $('#modal_form')
-                        .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
-                        .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+                        .css('display', 'block')
+                        .animate({opacity: 1, top: '50%'}, 200);
                 });
         });
-        /* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
-        $('#modal_close, #overlay').click( function(){ // лoвим клик пo крестику или пoдлoжке
+
+        $('#modal_close, #overlay').click( function(){
             $('#modal_form')
-                .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
-                    function(){ // пoсле aнимaции
-                        $(this).css('display', 'none'); // делaем ему display: none;
-                        $('#overlay').fadeOut(400); // скрывaем пoдлoжку
+                .animate({opacity: 0, top: '45%'}, 200,
+                    function(){
+                        $(this).css('display', 'none');
+                        $('#overlay').fadeOut(400);
                     }
                 );
         });

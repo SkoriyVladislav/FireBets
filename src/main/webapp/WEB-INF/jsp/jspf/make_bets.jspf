@@ -7,13 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="match">
-    <div>Выберите тип ставки:</div>
+    <div><fmt:message key="change_bet.cType"/></div>
 
     <div class="coeff-info">
         <div class="coeff" >
-            <div>Победа <c:out value="${sessionScope.match.team1}"/>: </div>
+            <div><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team1}"/>: </div>
             <div class="coeff-val" >
-                Коэфф: <c:out value="${sessionScope.match.coefTeam1}"/>
+                <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefTeam1}"/>
             </div>
         </div>
         <div>
@@ -21,9 +21,9 @@
         </div>
 
         <div class="coeff" >
-            <div>Ничья: </div>
+            <div><fmt:message key="change_bet.draw"/> </div>
             <div class="coeff-val" >
-                Коэфф: <c:out value="${sessionScope.match.coefDraw}"/>
+                <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefDraw}"/>
             </div>
         </div>
         <div>
@@ -31,9 +31,9 @@
         </div>
 
         <div class="coeff" >
-            <div>Победа <c:out value="${sessionScope.match.team2}"/>: </div>
+            <div><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team2}"/>: </div>
             <div class="coeff-val" >
-                Коэфф: <c:out value="${sessionScope.match.coefTeam2}"/>
+                <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefTeam2}"/>
             </div>
         </div>
         <div>
@@ -41,21 +41,21 @@
         </div>
 
         <div class="coeff" >
-            <div>Точный счёт: </div>
+            <div><fmt:message key="change_bet.eScore"/> </div>
             <div class="coeff-val">
-                Коэфф: <c:out value="${sessionScope.match.coefExAcc}"/>
+                <fmt:message key="change_bet.coeff"/> <c:out value="${sessionScope.match.coefExAcc}"/>
             </div>
         </div>
         <div class="ExAcc" >
             <input id="form1" type="radio" name="betType" value="exAcc" onclick="agreeForm(this)" required>
         </div>
 
-        <div id="div1" class="ExAccVal">Голы <c:out value="${sessionScope.match.team1}"/></div>
+        <div id="div1" class="ExAccVal"><fmt:message key="change_bet.goals"/> <c:out value="${sessionScope.match.team1}"/></div>
         <div>
             <input id="div3" class="exAccVal" type="text" name="exAccVal1" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
         </div>
 
-        <div id="div2" class="ExAccVal"> : Голы <c:out value="${sessionScope.match.team2}"/></div>
+        <div id="div2" class="ExAccVal"> : <fmt:message key="change_bet.goals"/> <c:out value="${sessionScope.match.team2}"/></div>
         <div>
             <input id="div4" class="ExAccVal" type="text" name="exAccVal2" value="" size="1" pattern="^[0-9]?([0-9]+)?$" />
         </div>
@@ -63,14 +63,14 @@
 </div>
 
 <div class="match">
-    <div>Введите размер ставки: </div>
+    <div><fmt:message key="change_bet.yBet"/> </div>
     <div style="margin-left: 1.5%">
         <input id="div5" class="betVal" type="text" name="betVal" value="" size="4" pattern="^[0-9]([0-9]+)?$" required onchange="ajaxreq()"/>
         <span id="responseBetValSpan" style="margin-left: 10px;"></span>
     </div>
     <div style="margin-left: 1%; margin-top: 0.5%; margin-bottom: 0.5%">
         <input type="hidden" name="command" value="MAKE_BET"/>
-        <input id="makeBetButton" type="button" value="Создать ставку" onclick="return confirmSubm($('.form0'))"/>
+        <input id="makeBetButton" type="button" value='<fmt:message key="makeBet"/>' onclick="return confirmSubm($('.form0'))"/>
     </div>
 </div>
 
@@ -82,12 +82,12 @@
             type: "POST",
             data: data,
             url: 'ajax_controller',
-            success: function(serverData) { //Если запрос удачен
+            success: function(serverData) {
                 if (serverData.serverInfo === "true") {
                     $("#responseBetValSpan").text("");
                     $("#makeBetButton").prop('disabled', false);
                 } else {
-                    $("#responseBetValSpan").text("Недостаточно средств для ставки");
+                    $("#responseBetValSpan").text('<fmt:message key="change_bet.money"/>');
                     $("#makeBetButton").prop('disabled', true);
                 }
             }
@@ -95,10 +95,8 @@
     }
 
     function agreeForm(box) {
-        // Если поставлен флажок, снимаем блокирование кнопки
         var vis = (box.checked) ? "block" : "none";
         var req = (box.checked) ? "true" : "false";
-        // В противном случае вновь блокируем кнопку
         document.getElementById('div1').style.display = vis;
         document.getElementById('div2').style.display = vis;
         document.getElementById('div3').style.display = vis;

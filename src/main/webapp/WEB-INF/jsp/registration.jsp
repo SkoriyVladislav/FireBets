@@ -44,32 +44,32 @@
 
             <div class="head-title">
                 <div class="middle">
-                    <h1>Регистрация: </h1>
-                    <span class="regInfoSpan">Все поля формы являются обязательными к заполнению.</span>
+                    <h1><fmt:message key="registration"/> </h1>
+                    <span class="regInfoSpan"><fmt:message key="change_bet.rItems"/></span>
                 </div>
             </div>
 
             <div class="registerSteps">
 
                 <form onsubmit="return validateForm()" name="reg-form" action="controller" method="post">
-                    <div class="label">Логин:</div>
+                    <div class="label"><fmt:message key="login"/></div>
                     <div class="field" id="forAjLog">
                         <input type="text" name="login" class="inputPole" value="" placeholder=" " required id="ajLogin" onchange="ajaxreq()"/>
                         <span id="responseLoginSpan" style="margin-left: 10px;"></span>
                     </div>
 
-                    <div class="label">Имя:</div>
+                    <div class="label"><fmt:message key="name"/></div>
                     <div class="field-fname field">
                         <input type="text" name="name" class="inputPole" value="" placeholder=" " pattern="^([A-Z]|[А-я])+([a-z]|[а-я])+$" required /> <span></span>
 
                     </div>
 
-                    <div class="label">Фамилия:</div>
+                    <div class="label"><fmt:message key="sName"/></div>
                     <div class="field field-fname field-sname">
                         <input type="text" name="surname" class="inputPole" value="" placeholder=" " pattern="^([A-Z]|[А-я])+([a-z]|[а-я])+$" required /> <span></span>
                     </div>
 
-                    <div class="label">Номер телефона:</div>
+                    <div class="label"><fmt:message key="tNumber"/></div>
 
                     <div class="field field-fname field-phone">
                         <input type="text" name="phone" placeholder="+(*) (**) *** ** **" autocomplete="off" value="" pattern="^[\\+][0-9]{11}([0-9]+)?$" class="inputPole" required/> <span></span>
@@ -84,14 +84,14 @@
 
 
                     <div class="">
-                        <div class="label">Пароль:</div>
+                        <div class="label"><fmt:message key="password"/></div>
                         <div class="field field-fname field-pass">
                             <input type="password" name="pwd1" class="inputPole" placeholder=" " required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" id="err-pwd1"> <span></span>
                         </div>
                     </div>
 
                     <div class="overflow">
-                        <div class="label">Подтвердите пароль:</div>
+                        <div class="label"><fmt:message key="cPassword"/></div>
                         <div class="field">
                             <input type="password" name="pwd2" class="inputPole" > <span class="err" id="err-pwd2"></span>
                         </div>
@@ -100,7 +100,7 @@
 
                     <div class="but">
                         <input type="hidden" name="command" value="registration"/>
-                        <input id="regButton" type="submit" value="Зарегистрироваться" disabled>
+                        <input id="regButton" type="submit" value= '<fmt:message key="registration"/>' disabled>
                     </div>
                 </form>
 
@@ -120,7 +120,7 @@
                     type: "POST",
                     data: data,
                     url: 'ajax_controller',
-                    success: function(serverData) { //Если запрос удачен
+                    success: function(serverData) {
                         if (serverData.serverInfo === "true") {
                             $("#responseLoginSpan").text("Login занят");
                             $("#regButton").prop('disabled', true);

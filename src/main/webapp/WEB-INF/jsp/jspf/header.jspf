@@ -8,26 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <header class="text-center">
     <ul class="menu">
-        <li><a href="${pageContext.request.contextPath}/controller?command=go_to_main" class="link-block-menu"><p>Главная</p></a></li>
+        <li><a href="${pageContext.request.contextPath}/controller?command=go_to_main" class="link-block-menu"><p><fmt:message key="header.main"/></p></a></li>
         <li class="has-dropdown">
             <a href="${pageContext.request.contextPath}/controller?command=go_to_profile" class="link-block-menu"><p> <fmt:message key="header.profile"/> </p></a>
-            <ul class="dropdown animated-fast fadeInUpMenu" >
-                <li><a href="#">Кошелёк</a></li>
-            </ul>
         </li>
-        <li><a href="${pageContext.request.contextPath}/controller?command=go_to_my_bets" class="link-block-menu"><p>Мои ставки</p></a></li>
+        <li><a href="${pageContext.request.contextPath}/controller?command=go_to_my_bets" class="link-block-menu"><p><fmt:message key="header.myBets"/> </p></a></li>
         <c:choose>
             <c:when test="${sessionScope.user.role.role == 'admin'}">
-                <li><a href="${pageContext.request.contextPath}/controller?command=go_to_user_management" class="link-block-menu"><p>Управление пользователями</p></a></li>
+                <li><a href="${pageContext.request.contextPath}/controller?command=go_to_user_management" class="link-block-menu"><p><fmt:message key="header.manageUsers"/></p></a></li>
             </c:when>
         </c:choose>
 
         <li class="has-dropdown">
-            <a href="#" class="link-block-menu"><p>Помощь</p></a>
+            <a href="#" class="link-block-menu"><p><fmt:message key="header.FAQ"/></p></a>
             <ul class="dropdown dropdown-1 animated-fast fadeInUpMenu">
-                <li><a href="#">Как сделать ставку?</a></li>
-                <li><a href="#">Как пополнить счёт?</a></li>
-                <li><a href="#">Как вывести деньги?</a></li>
+                <li><a href="#"><fmt:message key="header.howBets"/></a></li>
+                <li><a href="#"><fmt:message key="header.howCash"/></a></li>
+                <li><a href="#"><fmt:message key="header.howWithdrawal"/></a></li>
             </ul>
         </li>
     </ul>

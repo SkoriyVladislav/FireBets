@@ -32,7 +32,7 @@
             <%@include file="jspf/header.jspf"%>
 
             <div id="matches" class="matches">
-                <div> Введите данные пользователя:
+                <div> <fmt:message key="eData"/>
                     <input style="margin-left: 1%" type="text" name="login" class="inputPole" value="" placeholder=" " required id="ajLogin" onchange="ajaxreq()"/>
                 </div>
 
@@ -52,22 +52,22 @@
                     type: "POST",
                     data: data,
                     url: 'ajax_controller',
-                    success: function(responseJson) {    // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...  <a href='${pageContext.request.contextPath}/controller?command=go_to_user_profile&login=${product.login}'>
+                    success: function(responseJson) {
                         $('#results').remove();
-                        var $table = $("<table width=\"100%\" border=\"0\" align=\"start\" id=\"results\">").appendTo($("#matches")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
-                        $("<tr>").appendTo($table)                     // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-                            .append($("<td>").text('Логин'))       // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-                            .append($("<td>").text('Имя'))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+                        var $table = $("<table width=\"100%\" border=\"0\" align=\"start\" id=\"results\">").appendTo($("#matches"));
+                        $("<tr>").appendTo($table)
+                            .append($("<td>").text('Логин'))
+                            .append($("<td>").text('Имя'))
                             .append($("<td>").text('Фамилия'))
                             .append($("<td>").text('Статус'))
                             .append($("<td>").text('Баланс'));
-                        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
-                            $("<tr>").appendTo($table)                     // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+                        $.each(responseJson, function(index, product) {
+                            $("<tr>").appendTo($table)
                                 .append($("<td>").html("<a class='link-block-registration link-block-in-table' href='${pageContext.request.contextPath}/controller?command=go_to_user_profile&login=" + product.login + "'>" + product.login + "</a>")) // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-                                .append($("<td>").text(product.name))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+                                .append($("<td>").text(product.name))
                                 .append($("<td>").text(product.surname))
                                 .append($("<td>").text(product.role))
-                                .append($("<td>").text(product.balance));    // Create HTML <td> element, set its text content with price of currently iterated product and append it to the <tr>.
+                                .append($("<td>").text(product.balance));
                                 $("<a>").attr("href", product.login).appendTo("#loginTd")
                         });
                     }

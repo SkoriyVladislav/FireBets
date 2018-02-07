@@ -37,12 +37,12 @@
                 <form action="controller" method="post" style="width: 100%" class="form0">
                     <div>
                         <div class="match">
-                            <div>Матч:</div>
-                            <div style="margin-left: 1.5%"><c:out value="${sessionScope.match.team1}"/> <c:out value=" ${sessionScope.match.goalsTeam1 != null ? sessionScope.match.goalsTeam1 : ''}"/>  - <c:out value=" ${sessionScope.match.goalsTeam2 != null ? sessionScope.match.goalsTeam2 : ''}"/>  <c:out value="${sessionScope.match.team2}"/> </div>
+                            <div><fmt:message key="match"/></div>
+                            <div style="margin-left: 1.5%"><c:out value="${sessionScope.match.team1}"/> <strong> <c:out value=" ${sessionScope.match.goalsTeam1 != null ? sessionScope.match.goalsTeam1 : ''}"/>  -  <c:out value=" ${sessionScope.match.goalsTeam2 != null ? sessionScope.match.goalsTeam2 : ''}"/> </strong> <c:out value="${sessionScope.match.team2}"/> </div>
                         </div>
 
                         <div class="match" >
-                            <div>Время:</div>
+                            <div><fmt:message key="tMatch"/></div>
                             <div style="margin-left: 1.5%">
                                 <div><c:out value="${sessionScope.match.time}"/></div>
                                 <div><c:out value="${sessionScope.match.data}"/></div>
@@ -90,19 +90,19 @@
                     type: "POST",
                     data: data,
                     url: 'ajax_controller',
-                    success: function(serverData) { //Если запрос удачен
+                    success: function(serverData) {
                         if (serverData.serverInfo === "true") {
                             form.submit();
                         } else {
-                            $("#resultCheckTime").text("Время ставок истекло");
+                            $("#resultCheckTime").text('<fmt:message key="tBet"/>');
                         }
                     }
                 });
             }
 
             function confirmSubm(form) {
-                if (confirm("Подтвердите действие")) {
-                    ajaxreqqwerty(form);
+                if (confirm('<fmt:message key="change_bet.confirm"/>')) {
+                    ajaxreqReq(form);
                 }
                 else
                     return false;

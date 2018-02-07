@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Мои ставки</title>
+        <title><fmt:message key="myBets"/></title>
         <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/web/css/styleMain.css" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">

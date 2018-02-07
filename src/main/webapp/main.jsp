@@ -43,24 +43,24 @@
             <div class="matches">
                 <div class="match-info">
                     <div style="margin-left: 1.5%">
-                        Время
+                        <fmt:message key="timeMatch"/>
                     </div>
 
                     <div>
-                        Событие
+                        <fmt:message key="match"/>
                     </div>
 
                     <div class="coeff">
                         <span style="margin-right: 1.5%;">
-                            Победа 1
+                            <fmt:message key="change_bet.win"/> 1
                         </span>
 
                         <span style="margin-left: 1.5%; margin-right: 1.5%; ">
-                            Ничья
+                            <fmt:message key="change_bet.draw"/>
                         </span>
 
                         <span style="margin-left: 1.5%; margin-right: 1.5%; ">
-                            Победа 2
+                            <fmt:message key="change_bet.win"/> 2
                         </span>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                             </div>
 
                             <div style="margin-left: -2.5%">
-                                <a href="${pageContext.request.contextPath}/controller?command=go_to_make_bet&match=${match.id}" class="link-block-match"><c:out value="${match.team1}"/> <c:out value=" ${match.goalsTeam1 != null ? match.goalsTeam1 : ''}"/> - <c:out value="${match.goalsTeam2 != null ? match.goalsTeam2 : ''} "/> <c:out value="${match.team2}"/></a>
+                                <a href="${pageContext.request.contextPath}/controller?command=go_to_make_bet&match=${match.id}" class="link-block-match"><c:out value="${match.team1}"/> <strong> <c:out value=" ${match.goalsTeam1 != null ? match.goalsTeam1 : ''}"/> - <c:out value="${match.goalsTeam2 != null ? match.goalsTeam2 : ''} "/> </strong> <c:out value="${match.team2}"/></a>
                             </div>
 
                             <div class="coeff-info">

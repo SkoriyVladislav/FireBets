@@ -39,28 +39,28 @@
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Ваш логин:</div>
+                        <div><fmt:message key="yLogin"/></div>
                         <div style="margin-left: 1.5%">
                             <div ><c:out value="${sessionScope.user.login}"/></div>
                         </div>
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Ваш е-мейл:</div>
+                        <div><fmt:message key="yMail"/></div>
                         <div style="margin-left: 1.5%">
                             <div><c:out value="${sessionScope.user.email}"/></div>
                         </div>
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Ваш баланс:</div>
+                        <div><fmt:message key="yBalance"/></div>
                         <div style="margin-left: 1.5%">
                             <div><c:out value="${sessionScope.user.balance}"/></div>
                         </div>
                     </div>
 
                     <div class="user-info-step" >
-                        <div>Ваш статус:</div>
+                        <div><fmt:message key="yStatus"/></div>
                         <div style="margin-left: 1.5%">
                             <div><c:out value="${sessionScope.user.role}"/></div>
                         </div>
