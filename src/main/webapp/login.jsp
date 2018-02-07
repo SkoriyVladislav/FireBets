@@ -37,12 +37,12 @@
 
                     <div class="login-step">
                         <h3 class="massage">Введите логин: </h3>
-                        <input type="text" name="login" placeholder='Логин' value=""/>
+                        <input type="text" name="login" placeholder='Логин' value="" required/>
                     </div>
 
                     <div class="login-step">
                         <h3 class="massage">Введите пароль: </h3>
-                        <input type="password" name="password" class="formlogin" placeholder='Пароль' autocomplete="off" value=""/>
+                        <input type="password" name="password" class="formlogin" placeholder='Пароль' autocomplete="off" value="" required/>
                     </div>
 
                     <div class="login-step" style="margin-left: 10%">

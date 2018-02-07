@@ -83,30 +83,30 @@
 
 
         <script>
-            function ajaxreqqwerty(form) {
+            $(document).ready(function ajaxreqqwerty(form) {
                 var data = {"matchId":"${sessionScope.match.id}", "command":"CHECK_TIME_AJAX"};
 
                 $.ajax({
                     type: "POST",
                     data: data,
                     url: 'ajax_controller',
-                    success: [function(serverData) { //Если запрос удачен
+                    success: function(serverData) { //Если запрос удачен
                         if (serverData.serverInfo === "true") {
                             form.submit();
                         } else {
                             $("#resultCheckTime").text("Время ставок истекло");
                         }
-                    }]
+                    }
                 });
-            }
+            });
 
-            function confirmSubm(form) {
+            $(document).ready(function confirmSubm(form) {
                 if (confirm("Подтвердите действие")) {
                     ajaxreqqwerty(form);
                 }
                 else
                     return false;
-            }
+            });
         </script>
     </body>
 </html>

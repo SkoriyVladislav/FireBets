@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<input style="margin-left: 5.5%;" id="go_bet" type="button" value="Изменить ставку"/>
+<input style="margin-left: 1%;" id="go_bet" type="button" value="Изменить ставку"/>
 
 <div id="modal_form_bet">
     <span id="modal_close_bet">X</span>
@@ -114,9 +114,7 @@
                 );
         });
     });
-</script>
 
-<script>
     function ajaxreq() {
         var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
 
@@ -124,7 +122,7 @@
             type: "POST",
             data: data,
             url: 'ajax_controller',
-            success: [function(serverData) { //Если запрос удачен
+            success: function(serverData) { //Если запрос удачен
                 if (serverData.serverInfo === "true") {
                     $("#responseBetValSpan").text("");
                     $("#makeBetButton").prop('disabled', false);
@@ -132,15 +130,11 @@
                     $("#responseBetValSpan").text("Недостаточно средств для ставки");
                     $("#makeBetButton").prop('disabled', true);
                 }
-            }]
+            }
         });
     }
-</script>
 
-
-
-<script>
-    function agreeForm(box) {
+   function agreeForm(box) {
         // Если поставлен флажок, снимаем блокирование кнопки
         var vis = (box.checked) ? "block" : "none";
         var req = (box.checked) ? "true" : "false";
@@ -157,5 +151,5 @@
             document.getElementById('div3').removeAttribute('required');
             document.getElementById('div3').removeAttribute('required');
         }
-    }
+   }
 </script>

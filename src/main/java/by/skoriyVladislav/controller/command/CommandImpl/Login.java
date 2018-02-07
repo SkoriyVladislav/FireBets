@@ -26,7 +26,6 @@ public class Login implements ICommand {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (ServiceException ex) {
-
             response.sendRedirect("error.jsp");
         }
         request.getSession().setAttribute("user", user);

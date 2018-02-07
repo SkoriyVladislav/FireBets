@@ -113,14 +113,14 @@
         </div>
 
         <script>
-            function ajaxreq() {
+            $(document).ready(function ajaxreq() {
                 var data = {"login":$("#ajLogin").val(), "command":"CHECK_LOGIN_AJAX"};
 
                 $.ajax({
                     type: "POST",
                     data: data,
                     url: 'ajax_controller',
-                    success: [function(serverData) { //Если запрос удачен
+                    success: function(serverData) { //Если запрос удачен
                         if (serverData.serverInfo === "true") {
                             $("#responseLoginSpan").text("Login занят");
                             $("#regButton").prop('disabled', true);
@@ -128,9 +128,9 @@
                             $("#responseLoginSpan").text("");
                             $("#regButton").prop('disabled', false);
                         }
-                    }]
+                    }
                 });
-            }
+            });
         </script>
     </body>
 </html>

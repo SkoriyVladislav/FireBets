@@ -12,18 +12,19 @@
         <li class="has-dropdown">
             <a href="${pageContext.request.contextPath}/controller?command=go_to_profile" class="link-block-menu"><p> <fmt:message key="header.profile"/> </p></a>
             <ul class="dropdown animated-fast fadeInUpMenu" >
-                <li><a href="${pageContext.request.contextPath}/controller?command=go_to_my_bets">Мои ставки</a></li>
                 <li><a href="#">Кошелёк</a></li>
-                <c:choose>
-                    <c:when test="${sessionScope.user.role.role == 'admin'}">
-                        <li><a href="${pageContext.request.contextPath}/controller?command=go_to_user_management">Управление пользователями</a></li>
-                    </c:when>
-                </c:choose>
             </ul>
         </li>
-        <li><a href="#" class="link-block-menu"><p>Новости</p></a></li>
-        <li><a href="#" class="link-block-menu"><p>О компании</p></a></li>
-        <li><a href="#" class="link-block-menu"><p>Связаться с нами</p></a></li>
+        <li><a href="${pageContext.request.contextPath}/controller?command=go_to_my_bets" class="link-block-menu"><p>Мои ставки</p></a></li>
+        <c:choose>
+            <c:when test="${sessionScope.user.role.role == 'admin'}">
+                <li><a href="${pageContext.request.contextPath}/controller?command=go_to_user_management" class="link-block-menu"><p>Управление пользователями</p></a></li>
+            </c:when>
+            <c:otherwise>
+
+            </c:otherwise>
+        </c:choose>
+
         <li class="has-dropdown">
             <a href="#" class="link-block-menu"><p>Помощь</p></a>
             <ul class="dropdown dropdown-1 animated-fast fadeInUpMenu">

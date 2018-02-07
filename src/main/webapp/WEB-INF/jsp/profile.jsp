@@ -26,6 +26,8 @@
                 <div class="logo-top">
                     FireBets
                 </div>
+
+                <%@include file="jspf/user_profile.jspf" %>
             </div>
 
             <%@include file="jspf/header.jspf"%>

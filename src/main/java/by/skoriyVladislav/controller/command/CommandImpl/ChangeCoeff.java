@@ -38,5 +38,7 @@ public class ChangeCoeff implements ICommand {
 
             response.sendRedirect("error.jsp");
         }
+
+        request.getRequestDispatcher("/controller?command=go_to_make_bet&match=" + idMatch).forward(request, response);
     }
 }

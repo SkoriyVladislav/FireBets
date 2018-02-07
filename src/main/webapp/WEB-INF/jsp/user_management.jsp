@@ -52,7 +52,7 @@
                     type: "POST",
                     data: data,
                     url: 'ajax_controller',
-                    success: [function(responseJson) {    // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...  <a href='${pageContext.request.contextPath}/controller?command=go_to_user_profile&login=${product.login}'>
+                    success: function(responseJson) {    // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...  <a href='${pageContext.request.contextPath}/controller?command=go_to_user_profile&login=${product.login}'>
                         $('#results').remove();
                         var $table = $("<table width=\"100%\" border=\"0\" align=\"start\" id=\"results\">").appendTo($("#matches")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
                         $("<tr>").appendTo($table)                     // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
@@ -70,7 +70,7 @@
                                 .append($("<td>").text(product.balance));    // Create HTML <td> element, set its text content with price of currently iterated product and append it to the <tr>.
                                 $("<a>").attr("href", product.login).appendTo("#loginTd")
                         });
-                    }]
+                    }
                 });
             }
         </script>

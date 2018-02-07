@@ -41,13 +41,13 @@
                 </c:choose>
             </div>
         </div>
+
+        <%@include file="change_bet.jspf" %>
     </div>
-    <%@include file="change_bet.jspf" %>
-    <%--<jsp:include page="jspf/change_bet.jspf"/> --%>
 </div>
 
 <form class="delForm">
-    <div class="but" style="margin-left: 2.5%">
+    <div class="but" style="margin-left: 1%">
         <input type="hidden" name="command" value="delete_bet"/>
         <input id="delBetButt" type="button" value="Удалить ставку" onclick="return confirmSubm($('.delForm'))">
         <span id="delBetButtSpan"></span>

@@ -27,6 +27,7 @@ public class ChangeBet implements ICommand {
                 request.setAttribute("bet", null);
                 request.getSession().setAttribute("bet", null);
             } else {
+
                 request.getRequestDispatcher("error.jsp").forward(request, response);
             }
         } catch (ServiceException ex) {

@@ -76,14 +76,14 @@
 </div>
 
 <script>
-    function ajaxreq() {
+    $(document).ready(function ajaxreq() {
         var data = {"betVal":$("#div5").val(), "command":"CHECK_SIZE_BETS_AJAX"};
 
         $.ajax({
             type: "POST",
             data: data,
             url: 'ajax_controller',
-            success: [function(serverData) { //Если запрос удачен
+            success: function(serverData) { //Если запрос удачен
                 if (serverData.serverInfo === "true") {
                     $("#responseBetValSpan").text("");
                     $("#makeBetButton").prop('disabled', false);
@@ -91,15 +91,11 @@
                     $("#responseBetValSpan").text("Недостаточно средств для ставки");
                     $("#makeBetButton").prop('disabled', true);
                 }
-            }]
+            }
         });
-    }
-</script>
+    });
 
-
-
-<script>
-    function agreeForm(box) {
+    $(document).ready(function agreeForm(box) {
         // Если поставлен флажок, снимаем блокирование кнопки
         var vis = (box.checked) ? "block" : "none";
         var req = (box.checked) ? "true" : "false";
@@ -116,5 +112,5 @@
             document.getElementById('div3').removeAttribute('required');
             document.getElementById('div3').removeAttribute('required');
         }
-    }
+    });
 </script>
