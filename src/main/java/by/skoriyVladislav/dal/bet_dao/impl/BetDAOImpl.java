@@ -2,10 +2,12 @@ package by.skoriyVladislav.dal.bet_dao.impl;
 
 import by.skoriyVladislav.dal.DAOFactory;
 import by.skoriyVladislav.dal.bet_dao.BetDAO;
+import by.skoriyVladislav.dal.connection_pool.ConnectionPool;
 import by.skoriyVladislav.dal.exception.DAOException;
 import by.skoriyVladislav.entity.bet.Bet;
 import by.skoriyVladislav.entity.bet.BetType;
 import by.skoriyVladislav.entity.user.User;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -14,13 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class BetDAOImpl implements BetDAO {
-    private final static String URL = "jdbc:mysql://localhost:3306/firebets"+
-            "?verifyServerCertificate=false"+
-            "&useSSL=false"+
-            "&requireSSL=false"+
-            "&useLegacyDatetimeCode=false"+
-            "&amp"+
-            "&serverTimezone=UTC";
+    private Logger logger = Logger.getLogger(ConnectionPool.class);
 
     private final static String INSERT_BETS = "INSERT INTO bets (Users_Login, Matches_idMatches, Size, Type, goalsTeam1, goalsTeam2) VALUES (?, ?, ?, ?, ?, ?)";
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN = "SELECT * FROM bets WHERE Users_Login = ?";
@@ -34,7 +30,6 @@ public class BetDAOImpl implements BetDAO {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
         try {
             connection = DAOFactory.getInstance().getConnectionPool().getConnection();
@@ -50,14 +45,16 @@ public class BetDAOImpl implements BetDAO {
             if (DAOFactory.getInstance().getUserDAO().transaktion(user, bet.getSize().negate())) {
                 preparedStatement.execute();
             } else {
-                throw new DAOException();
+                logger.error("Can not make transaction.");
+                throw new DAOException("Can not make transaction.");
             }
         } catch (SQLException e) {
-            throw new DAOException(e);
+            logger.error("Cannot connect the database!");
+            throw new DAOException("Cannot connect the database!", e);
         } finally {
-            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement);
         }
-
+        logger.info("The bet was successfully registered.");
         return true;
     }
 
@@ -115,16 +112,15 @@ public class BetDAOImpl implements BetDAO {
                         preparedStatement2.setInt(2, idMatches);
                         preparedStatement2.execute();
                     } else {
-                        throw new DAOException();
+                        logger.error("Can not make transaction.");
+                        throw new DAOException("Can not make transaction.");
                     }
                 } catch (SQLException e) {
+                    logger.error("Cannot connect the database!");
                     throw new DAOException("Cannot connect the database!", e);
                 } finally {
                     DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement);
                 }
-
-
-
             }
 
         } catch (SQLException e) {
@@ -132,7 +128,9 @@ public class BetDAOImpl implements BetDAO {
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
-        return false;
+
+        logger.info("Bet results are set.");
+        return true;
     }
 
     @Override
@@ -155,11 +153,13 @@ public class BetDAOImpl implements BetDAO {
             }
 
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         bets.sort(Comparator.comparing(Bet::getIdMatches).reversed());
+        logger.info("List of bets was given to caller.");
         return bets;
     }
 
@@ -188,6 +188,7 @@ public class BetDAOImpl implements BetDAO {
 
         bet = new Bet(loginUser, idMatches, size, betType, goalsTeam1, goalsTeam2, status);
 
+        logger.info("Bets was given to caller.");
         return bet;
     }
 
@@ -211,11 +212,13 @@ public class BetDAOImpl implements BetDAO {
                 bet = getBet(resultSet);
             }
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+        logger.info("Bets was given to caller.");
         return bet;
     }
 
@@ -223,7 +226,6 @@ public class BetDAOImpl implements BetDAO {
     public boolean deleteBet(User user, Bet bet) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
 
         try {
             connection = DAOFactory.getInstance().getConnectionPool().getConnection();
@@ -234,14 +236,16 @@ public class BetDAOImpl implements BetDAO {
             if (DAOFactory.getInstance().getUserDAO().transaktion(user, bet.getSize())) {
                 preparedStatement.execute();
             } else {
-                throw new SQLException();
+                logger.error("Can not make transaction");
+                throw new SQLException("Can not make transaction");
             }
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
-            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
+            DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement);
         }
-
+        logger.info("Bet successfully deleted.");
         return true;
     }
 }

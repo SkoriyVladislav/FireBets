@@ -1,9 +1,11 @@
 package by.skoriyVladislav.dal.match_dao.impl;
 
 import by.skoriyVladislav.dal.DAOFactory;
+import by.skoriyVladislav.dal.connection_pool.ConnectionPool;
 import by.skoriyVladislav.dal.exception.DAOException;
 import by.skoriyVladislav.dal.match_dao.MatchDAO;
 import by.skoriyVladislav.entity.match.Match;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -11,14 +13,7 @@ import java.util.*;
 import java.util.Date;
 
 public class MatchDAOImpl implements MatchDAO {
-
-    private final static String URL = "jdbc:mysql://localhost:3306/firebets"+
-            "?verifyServerCertificate=false"+
-            "&useSSL=false"+
-            "&requireSSL=false"+
-            "&useLegacyDatetimeCode=false"+
-            "&amp"+
-            "&serverTimezone=UTC";
+    private Logger logger = Logger.getLogger(ConnectionPool.class);
 
     private final static String SELECT_FROM_MATCHES = "SELECT * FROM matches";
     private final static String SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
@@ -50,11 +45,13 @@ public class MatchDAOImpl implements MatchDAO {
             }
 
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
         matches.sort(Comparator.comparing(Match::getData).thenComparing(Match::getTime).reversed());
+        logger.info("The list of matches was given to caller.");
         return matches;
     }
 
@@ -77,10 +74,12 @@ public class MatchDAOImpl implements MatchDAO {
             }
 
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
+        logger.info("Match was given to caller.");
         return match;
     }
 
@@ -99,10 +98,12 @@ public class MatchDAOImpl implements MatchDAO {
 
             DAOFactory.getInstance().getBetDAO().setResult(idMatches, goalsTeam1, goalsTeam2);
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement);
         }
+        logger.info("Set result of match.");
         return true;
     }
 
@@ -122,6 +123,7 @@ public class MatchDAOImpl implements MatchDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
@@ -141,11 +143,12 @@ public class MatchDAOImpl implements MatchDAO {
                 matchId = resultSet.getInt("idMatchs");
             }
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
-
+        logger.info("The match successfully registered.");
         return registrationCoefficients(matchId, coef);
     }
 
@@ -166,10 +169,12 @@ public class MatchDAOImpl implements MatchDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
+        logger.info("The coefficient of successfully registered.");
         return true;
     }
 
@@ -191,10 +196,12 @@ public class MatchDAOImpl implements MatchDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
+        logger.info("The coefficient if match successfully changed");
         return true;
     }
 
@@ -237,6 +244,7 @@ public class MatchDAOImpl implements MatchDAO {
         }
         match = new Match(id, team1, team2, dateTime[0], dateTime[1], coefTeam1, coefTeam2, coefDraw, coefExAcc, goalsTeam1, goalsTeam2);
 
+        logger.info("The match successfully created.");
         return match;
     }
 
@@ -272,8 +280,11 @@ public class MatchDAOImpl implements MatchDAO {
                     return true;
                 }
             }
+
+            logger.info("The time of match successfully checked.");
             return false;
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);

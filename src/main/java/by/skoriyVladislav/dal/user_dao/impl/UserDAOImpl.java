@@ -1,10 +1,12 @@
 package by.skoriyVladislav.dal.user_dao.impl;
 
 import by.skoriyVladislav.dal.DAOFactory;
+import by.skoriyVladislav.dal.connection_pool.ConnectionPool;
 import by.skoriyVladislav.dal.exception.DAOException;
 import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.entity.user.UserRole;
+import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -13,14 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-
-    private final static String URL = "jdbc:mysql://localhost:3306/firebets"+
-            "?verifyServerCertificate=false"+
-            "&useSSL=false"+
-            "&requireSSL=false"+
-            "&useLegacyDatetimeCode=false"+
-            "&amp"+
-            "&serverTimezone=UTC";
+    private Logger logger = Logger.getLogger(ConnectionPool.class);
 
     private final static String SELECT_FROM_USERS_WHERE_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE Login = ? AND Password = ?";
     private final static String INSERT_USERS = "INSERT INTO users (Login, Password, Name, SurName, Role, Balance, Email) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -42,6 +37,8 @@ public class UserDAOImpl implements UserDAO {
         hashSetUsers.addAll(createUsersByCriteria(SELECT_FROM_USERS_WHERE_CRITERIA_IS_SURNAME,'%' + criteria + '%'));
 
         setUsers.addAll(hashSetUsers);
+
+        logger.info("The users given to caller.");
         return setUsers;
     }
 
@@ -62,10 +59,13 @@ public class UserDAOImpl implements UserDAO {
                 setUsers.add(user);
             }
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
+
+        logger.info("The list of users given to caller.");
         return setUsers;
     }
 
@@ -91,11 +91,13 @@ public class UserDAOImpl implements UserDAO {
             }
 
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+        logger.info("The user given to caller.");
         return user;
     }
 
@@ -118,11 +120,13 @@ public class UserDAOImpl implements UserDAO {
             }
 
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+        logger.info("The user given to caller.");
         return user;
     }
 
@@ -147,11 +151,14 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+
+        logger.info("The user successfully registered.");
         return true;
     }
 
@@ -171,14 +178,17 @@ public class UserDAOImpl implements UserDAO {
 
 
             if (resultSet.next()) {
+                logger.info("Check login in database.");
                 return true;
             }
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+        logger.info("Check login in database.");
         return false;
     }
 
@@ -198,13 +208,16 @@ public class UserDAOImpl implements UserDAO {
 
             if (resultSet.next()) {
                 BigDecimal balance = resultSet.getBigDecimal("Balance");
+                logger.info("Check valance for bet in database.");
                 return balance.compareTo(size) == 1 || balance.compareTo(size) == 0;
             }
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
+        logger.info("Check valance for bet in database.");
         return false;
     }
 
@@ -223,11 +236,13 @@ public class UserDAOImpl implements UserDAO {
 
             user.setBalance(user.getBalance().add(size));
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+        logger.info("the transaction was successful");
         return true;
     }
 
@@ -244,11 +259,13 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(2, login);
             preparedStatement.execute();
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+        logger.info("the transaction was successful");
         return true;
     }
 
@@ -266,11 +283,13 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.execute();
         } catch (SQLException e) {
+            logger.error("Cannot connect the database!");
             throw new DAOException("Cannot connect the database!", e);
         } finally {
             DAOFactory.getInstance().getConnectionPool().close(connection, preparedStatement, resultSet);
         }
 
+        logger.info("user status was changed successfully");
         return true;
     }
 
@@ -285,6 +304,7 @@ public class UserDAOImpl implements UserDAO {
             UserRole role = UserRole.valueOf(resultSet.getString("Role").toUpperCase());
             user = new User(login, name, surname, money, email, role);
         }
+        logger.debug("user was created successfully");
         return user;
     }
 }

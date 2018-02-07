@@ -48,6 +48,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         try {
             Class.forName(DATABASE_DRIVER);
         } catch (ClassNotFoundException e) {
+            logger.error("Cannot load driver. Class not found.", e);
             throw new ConnectionPoolException("Cannot load driver. Class not found.", e);
         }
 
@@ -56,11 +57,13 @@ public class ConnectionPoolImpl implements ConnectionPool {
                 Connection connection = DriverManager.getConnection(url, username, password);
                 availableConnections.put(connection);
             } catch (InterruptedException e) {
+                logger.error("Cannot retrieve connection.", e);
                 throw new ConnectionPoolException("Cannot retrieve connection.", e);
             } catch (SQLException e) {
-                throw new ConnectionPoolException("Cannot retrieve new connection to database", e);
+                logger.error("Cannot retrieve new connection to database.", e);
+                throw new ConnectionPoolException("Cannot retrieve new connection to database.", e);
             }
-            logger.debug("New connection #" + i + " was created.");
+            logger.debug("Connection " + i + " was created.");
         }
 
         logger.info("Connection pool has been successfully initialized.");
@@ -73,6 +76,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
             connection = availableConnections.take();
             usedConnections.put(connection);
         } catch (InterruptedException e) {
+            logger.error("Cannot get connection.", e);
             throw new ConnectionPoolException("Cannot get connection.", e);
         }
         logger.debug("Connection was given to caller.");
@@ -106,20 +110,23 @@ public class ConnectionPoolImpl implements ConnectionPool {
     @Override
     public void close(Connection connection) throws ConnectionPoolException {
         if (connection == null) {
+            logger.error("Connection is null.");
             throw new ConnectionPoolException("Connection is null.");
         }
 
         boolean isOwnConnection = usedConnections.remove(connection);
         if(!isOwnConnection) {
+            logger.error("Attempt to close strange connection.");
             throw new ConnectionPoolException("Attempt to close strange connection.");
         }
 
         try {
             availableConnections.put(connection);
         } catch (InterruptedException e) {
+            logger.error("Cannot return connection into connection pool.");
             throw new ConnectionPoolException("Cannot return connection into connection pool.", e);
         }
-        logger.debug("Connection was returned into connection pool successfully.");
+        logger.info("Connection was returned into connection pool successfully.");
     }
 
     @Override

@@ -26,7 +26,7 @@ public class SetResult implements ICommand {
 
             response.sendRedirect("error.jsp");
         } catch (NullPointerException ex) {
-
+            request.setAttribute("error", ex);
             response.sendRedirect("error.jsp");
         }
         request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
