@@ -1,8 +1,7 @@
 package by.skoriyVladislav.controller.command.CommandImpl;
 
+import by.skoriyVladislav.constants.Constants;
 import by.skoriyVladislav.controller.command.ICommand;
-import by.skoriyVladislav.dal.DAOFactory;
-import by.skoriyVladislav.dal.user_dao.UserDAO;
 import by.skoriyVladislav.entity.user.User;
 import by.skoriyVladislav.service.ServiceFactory;
 import by.skoriyVladislav.service.exception.ServiceException;
@@ -24,7 +23,7 @@ public class Registration implements ICommand {
         String email = request.getParameter("email");
         User user = null;
         try {
-            ServiceFactory.getInstance().getUserService().registerUser(login, password, name, surname, "player", BigDecimal.TEN, email);
+            ServiceFactory.getInstance().getUserService().registerUser(login, password, name, surname, Constants.INITIALROLE, BigDecimal.valueOf((Constants.INITIALBALANCE)), email);
             user = ServiceFactory.getInstance().getUserService().getUser(login, password);
         }catch (ServiceException ex) {
             response.sendRedirect("error.jsp");

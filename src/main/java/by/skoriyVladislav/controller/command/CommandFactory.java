@@ -32,6 +32,7 @@ public class CommandFactory {
         commands.put(TypeCommand.GET_USERS_AJAX, new GetUsersAjax());
 
         commands.put(TypeCommand.GO_TO_MAIN, new GoToPageMain());
+        commands.put(TypeCommand.GO_TO_ERROR, new GoToPageError());
         commands.put(TypeCommand.GO_TO_LOGIN, new GoToPageLogin());
         commands.put(TypeCommand.GO_TO_MAKE_BET, new GoToPageMakeBet());
         commands.put(TypeCommand.GO_TO_MY_BETS, new GoToPageMyBets());

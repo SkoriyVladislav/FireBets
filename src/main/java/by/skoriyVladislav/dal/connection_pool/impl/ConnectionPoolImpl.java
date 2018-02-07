@@ -1,5 +1,6 @@
 package by.skoriyVladislav.dal.connection_pool.impl;
 
+import by.skoriyVladislav.constants.Constants;
 import by.skoriyVladislav.dal.connection_pool.ConnectionPool;
 import by.skoriyVladislav.dal.exception.ConnectionPoolException;
 import org.apache.log4j.Logger;
@@ -13,11 +14,6 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
 
-
-    private String url;
-    private String username;
-    private String password;
-    private int capacity;
     private BlockingQueue<Connection> availableConnections;
     private BlockingQueue<Connection> usedConnections;
 
@@ -25,25 +21,15 @@ public class ConnectionPoolImpl implements ConnectionPool {
         try {
             init();
         } catch (ConnectionPoolException ex) {
-
+            logger.error("Cannot initialise pool connections.");
         }
     }
 
     @Override
     public void init() throws ConnectionPoolException {
 
-        url = "jdbc:mysql://localhost:3306/firebets"+
-                "?verifyServerCertificate=false"+
-                "&useSSL=false"+
-                "&requireSSL=false"+
-                "&useLegacyDatetimeCode=false"+
-                "&amp"+
-                "&serverTimezone=UTC";
-        username = "root";
-        password = "root";
-        capacity = 10;
-        availableConnections = new LinkedBlockingQueue<>(capacity);
-        usedConnections = new LinkedBlockingQueue<>(capacity);
+        availableConnections = new LinkedBlockingQueue<>(Constants.INITCAPASITYPOOL);
+        usedConnections = new LinkedBlockingQueue<>(Constants.INITCAPASITYPOOL);
 
         try {
             Class.forName(DATABASE_DRIVER);
@@ -52,9 +38,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
             throw new ConnectionPoolException("Cannot load driver. Class not found.", e);
         }
 
-        for(int i = 1; i <= capacity; i++) {
+        for(int i = 1; i <= Constants.INITCAPASITYPOOL; i++) {
             try {
-                Connection connection = DriverManager.getConnection(url, username, password);
+                Connection connection = DriverManager.getConnection(Constants.URLTODATABASE, Constants.USERLOGINDB, Constants.USERPASSDB);
                 availableConnections.put(connection);
             } catch (InterruptedException e) {
                 logger.error("Cannot retrieve connection.", e);

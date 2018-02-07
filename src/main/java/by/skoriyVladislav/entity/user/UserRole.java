@@ -1,9 +1,12 @@
 package by.skoriyVladislav.entity.user;
 
+import by.skoriyVladislav.constants.Constants;
+
 public enum UserRole {
-    PLAYER("player"),
-    ADMIN("admin"),
-    BOOKMAKER("bookmaker");
+    PLAYER(Constants.PLAYER),
+    ADMIN(Constants.ADMIN),
+    BOOKMAKER(Constants.BOOKMAKER),
+    BANNED(Constants.BANNED);
 
     private String role;
 

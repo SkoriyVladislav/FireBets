@@ -1,10 +1,12 @@
 package by.skoriyVladislav.entity.bet;
 
+import by.skoriyVladislav.constants.Constants;
+
 public enum BetType {
-    TEAM1("Team1"),
-    TEAM2("Team2"),
-    DRAW("Draw"),
-    EXACTSCORE("ExactScore");
+    TEAM1(Constants.TEAM1),
+    TEAM2(Constants.TEAM2),
+    DRAW(Constants.DRAW),
+    EXACTSCORE(Constants.EXACTSCORE);
 
     private String type;
 

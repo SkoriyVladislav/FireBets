@@ -13,6 +13,7 @@ public enum TypeCommand {
     CHANGE_LOCALE,
     CHANGE_USERS_ROLE,
     GO_TO_MAIN,
+    GO_TO_ERROR,
     GO_TO_LOGIN,
     GO_TO_PROFILE,
     GO_TO_MY_BETS,

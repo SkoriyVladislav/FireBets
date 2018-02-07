@@ -41,7 +41,7 @@
     <%@include file="WEB-INF/jsp/jspf/header.jspf"%>
 
     <div class="matches">
-        ${requestScope.error.message}
+        <span>${requestScope.error.message != null ? requestScope.error.message : "Что-то пошло не так, попробуйте позже"}</span>
     </div>
 </div>
 
