@@ -1,8 +1,9 @@
 package by.skoriyVladislav.entity.bet;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Bet {
+public class Bet implements Serializable {
     private String loginUser;
     private int idMatches;
     private BigDecimal size;
@@ -106,5 +107,18 @@ public class Bet {
         result = 31 * result + (goalsTeam2 != null ? goalsTeam2.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Bet{" +
+                "loginUser='" + loginUser + '\'' +
+                ", idMatches=" + idMatches +
+                ", size=" + size +
+                ", type=" + type +
+                ", goalsTeam1=" + goalsTeam1 +
+                ", goalsTeam2=" + goalsTeam2 +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

@@ -1,6 +1,8 @@
 package by.skoriyVladislav.entity.match;
 
-public class Match {
+import java.io.Serializable;
+
+public class Match implements Serializable {
     private int id;
     private String team1;
     private String team2;
@@ -156,5 +158,22 @@ public class Match {
         result = 31 * result + (goalsTeam1 != null ? goalsTeam1.hashCode() : 0);
         result = 31 * result + (goalsTeam2 != null ? goalsTeam2.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "id=" + id +
+                ", team1='" + team1 + '\'' +
+                ", team2='" + team2 + '\'' +
+                ", data='" + data + '\'' +
+                ", time='" + time + '\'' +
+                ", coefTeam1=" + coefTeam1 +
+                ", coefTeam2=" + coefTeam2 +
+                ", coefDraw=" + coefDraw +
+                ", coefExAcc=" + coefExAcc +
+                ", goalsTeam1=" + goalsTeam1 +
+                ", goalsTeam2=" + goalsTeam2 +
+                '}';
     }
 }

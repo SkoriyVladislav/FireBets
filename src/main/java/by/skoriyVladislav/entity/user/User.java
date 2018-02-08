@@ -1,8 +1,9 @@
 package by.skoriyVladislav.entity.user;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class User {
+public class User implements Serializable{
     private String login;
     private String name;
     private String surname;
@@ -92,5 +93,17 @@ public class User {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", balance=" + balance +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
