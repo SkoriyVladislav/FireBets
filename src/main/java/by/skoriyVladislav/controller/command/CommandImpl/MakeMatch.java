@@ -35,10 +35,10 @@ public class MakeMatch implements ICommand {
             Integer hourValidation = Integer.valueOf(request.getParameter("hour"));
             Integer minuteValidation = Integer.valueOf(request.getParameter("minute"));
 
-            coefTeam1 = Double.valueOf(request.getParameter("coefTeam1"));
-            coefTeam2 = Double.valueOf(request.getParameter("coefTeam2"));
-            coefDraw = Double.valueOf(request.getParameter("coefDraw"));
-            coefExAcc = Double.valueOf(request.getParameter("coefExAcc"));
+            coefTeam1 = Double.valueOf(request.getParameter("CoefTEAM1"));
+            coefTeam2 = Double.valueOf(request.getParameter("CoefTEAM2"));
+            coefDraw = Double.valueOf(request.getParameter("CoefDRAW"));
+            coefExAcc = Double.valueOf(request.getParameter("CoefExAcc"));
 
         } catch (NullPointerException ex) {
             request.setAttribute("error", ex);

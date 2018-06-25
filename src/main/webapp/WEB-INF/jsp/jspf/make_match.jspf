@@ -13,10 +13,10 @@
     <form action="controller" method="post">
         <h3><fmt:message key="rMatch"/></h3>
         <p><fmt:message key="change_bet.rItems"/></p>
-        <p><c:out value="${sessionScope.match.team1}"/>: <br />
+        <p><c:out value="Команда 1"/>: <br />
             <input type="text" name="team1" value="" size="30" required />
         </p>
-        <p><c:out value="${sessionScope.match.team2}"/>: <br />
+        <p><c:out value="Команда 2"/>: <br />
             <input type="text" name="team2" value="" size="30" required />
         </p>
 
@@ -31,16 +31,16 @@
         <div>
             <p><fmt:message key="change_bet.coeff"/> <br/>
             <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team1}"/>:
-                <input type="text" name="coefTeam1" value="" size="4" required />
+                <input type="text" name="CoefTEAM1" value="" size="4" required />
             </p>
-            <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team2}"/>:
-                <input type="text" name="coefTeam2" value="" size="4" required />
+            <p><c:out value="Поражение"/> <c:out value="${sessionScope.match.team2}"/>:
+                <input type="text" name="CoefTEAM2" value="" size="4" required />
             </p>
             <p><fmt:message key="change_bet.draw"/>
-                <input type="text" name="coefDraw" value="" size="4" required />
+                <input type="text" name="CoefDRAW" value="" size="4" required />
             </p>
             <p><fmt:message key="change_bet.eScore"/>
-                <input type="text" name="coefExAcc" value="" size="4" required />
+                <input type="text" name="CoefExAcc" value="" size="4" required />
             </p>
         </div>
 

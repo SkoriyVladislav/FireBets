@@ -17,7 +17,7 @@
             </div>
         </div>
         <div>
-            <input type="radio" name="betType" value="team1" onclick="agreeForm(document.getElementById('form1'))" required>
+            <input type="radio" name="betType" value="Team1" onclick="agreeForm(document.getElementById('form1'))" required>
         </div>
 
         <div class="coeff" >
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div>
-            <input type="radio" name="betType" value="draw" onclick="agreeForm(document.getElementById('form1'))" required>
+            <input type="radio" name="betType" value="Draw" onclick="agreeForm(document.getElementById('form1'))" required>
         </div>
 
         <div class="coeff" >
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div>
-            <input type="radio" name="betType" value="team2" onclick="agreeForm(document.getElementById('form1'))" required >
+            <input type="radio" name="betType" value="Team2" onclick="agreeForm(document.getElementById('form1'))" required >
         </div>
 
         <div class="coeff" >
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="ExAcc" >
-            <input id="form1" type="radio" name="betType" value="exAcc" onclick="agreeForm(this)" required>
+            <input id="form1" type="radio" name="betType" value="ExactScore" onclick="agreeForm(this)" required>
         </div>
 
         <div id="div1" class="ExAccVal"><fmt:message key="change_bet.goals"/> <c:out value="${sessionScope.match.team1}"/></div>

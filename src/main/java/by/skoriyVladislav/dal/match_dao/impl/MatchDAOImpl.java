@@ -16,14 +16,14 @@ public class MatchDAOImpl implements MatchDAO {
     private Logger logger = Logger.getLogger(ConnectionPool.class);
 
     private final static String SELECT_FROM_MATCHES = "SELECT * FROM matches";
-    private final static String SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS = "SELECT * FROM coefficient WHERE Matches_idMatchs = ?";
+    private final static String SELECT_FROM_COEFFICIENT_WHERE_MATCHES_ID_MATCHS = "SELECT * FROM coefficient WHERE Matches_idMatches = ?";
     private final static String SELECT_FROM_MATCHES_WHERE_ID_MATCHS = "SELECT * FROM matches WHERE idMatches = ?";
     private final static String SELECT_FROM_MATCHES_WHERE_TEAM1_AND_TEAM2_AND_DATE_TIME = "SELECT * FROM matches WHERE Team1 = ? AND Team2 = ? AND DateTime = ?";
     private final static String str = "SELECT DateTime FROM matches WHERE idMatches = ?";
 
     private final static String INSERT_MATCHES = "INSERT INTO matches (Team1, Team2, DateTime) VALUES (?, ?, ?)";
-    private final static String INSERT_COEFFICIENT = "INSERT INTO coefficient (Matches_idMatchs, CoefTEAM1, CoefTEAM2, CoefDRAW, CoefExAcc) VALUES (?, ?, ?, ?, ?)";
-    private final static String UPDATE_COEFFICIENT = "UPDATE coefficient SET CoefTEAM1 = ?, CoefTEAM2 = ?, CoefDRAW = ?, CoefExAcc = ? WHERE Matches_idMatchs = ?";
+    private final static String INSERT_COEFFICIENT = "INSERT INTO coefficient (Matches_idMatches, CoefTEAM1, CoefTEAM2, CoefDRAW, CoefExAcc) VALUES (?, ?, ?, ?, ?)";
+    private final static String UPDATE_COEFFICIENT = "UPDATE coefficient SET CoefTEAM1 = ?, CoefTEAM2 = ?, CoefDRAW = ?, CoefExAcc = ? WHERE Matches_idMatches = ?";
     private final static String UPDATE_MATCHES_SET_GOALS_TEAM1_GOALS_TEAM2_WHERE_ID_MATCHES = "UPDATE matches SET goalsTeam1 = ?, goalsTeam2 = ? WHERE idMatches = ?";
 
     @Override
@@ -140,7 +140,7 @@ public class MatchDAOImpl implements MatchDAO {
 
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                matchId = resultSet.getInt("idMatchs");
+                matchId = resultSet.getInt("idMatches");
             }
         } catch (SQLException e) {
             logger.error("Cannot connect the database!");

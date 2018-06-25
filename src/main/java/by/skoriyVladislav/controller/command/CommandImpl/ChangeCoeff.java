@@ -14,22 +14,22 @@ public class ChangeCoeff implements ICommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        double coefTeam11 = 0;
-        double coefTeam21 = 0;
-        double coefDraw1 = 0;
-        double coefExAcc1 = 0;
+        double coefTeam1 = 0;
+        double coefTeam2 = 0;
+        double coefDraw = 0;
+        double coefExAcc = 0;
         int idMatch = -1;
         try {
-            coefTeam11 = Double.valueOf(request.getParameter("coefTeam1"));
-            coefTeam21 = Double.valueOf(request.getParameter("coefTeam2"));
-            coefDraw1 = Double.valueOf(request.getParameter("coefDraw"));
-            coefExAcc1 = Double.valueOf(request.getParameter("coefExAcc"));
+            coefTeam1 = Double.valueOf(request.getParameter("CoefTEAM1"));
+            coefTeam2 = Double.valueOf(request.getParameter("CoefTEAM2"));
+            coefDraw = Double.valueOf(request.getParameter("CoefDRAW"));
+            coefExAcc = Double.valueOf(request.getParameter("CoefExAcc"));
             idMatch = Integer.valueOf(request.getParameter("matchId"));
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());
             response.sendRedirect("error.jsp");
         }
-        double[] coeff = {coefTeam11, coefTeam21, coefDraw1, coefExAcc1};
+        double[] coeff = {coefTeam1, coefTeam2, coefDraw, coefExAcc};
 
 
         try {

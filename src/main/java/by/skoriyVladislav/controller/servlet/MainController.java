@@ -30,8 +30,7 @@ public class MainController extends HttpServlet {
             ICommand command = CommandFactory.getCommand(request);
             command.execute(request, response);
         } catch (Exception ex) {
-            request.setAttribute("error", ex);
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+
         }
     }
 }

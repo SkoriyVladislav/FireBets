@@ -34,7 +34,7 @@
 
         <div class="input-left" style="margin-left: 100%">
             <form action="controller" method="get">
-                <input type="hidden" name="from" value="${param.from != null ? fn:escapeXml(param.from) : null}" />
+                <input type="hidden" name="from" value="" />
                 <input type="hidden" name="command" value="CHANGE_LOCALE"/>
                 <input type="submit" value="<fmt:message key="header.icon"/>"/>
             </form>

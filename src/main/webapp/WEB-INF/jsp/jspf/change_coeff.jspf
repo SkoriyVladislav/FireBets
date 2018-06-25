@@ -15,16 +15,16 @@
 
         <div>
             <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team1}"/>
-                <input type="text" name="coefTeam1" value="" size="4" required />
+                <input type="text" name="CoefTEAM1" value="" size="4" required />
             </p>
             <p><fmt:message key="change_bet.win"/> <c:out value="${sessionScope.match.team2}"/>
-                <input type="text" name="coefTeam2" value="" size="4" required />
+                <input type="text" name="CoefTEAM2" value="" size="4" required />
             </p>
             <p><fmt:message key="change_bet.draw"/>
-                <input type="text" name="coefDraw" value="" size="4" required />
+                <input type="text" name="CoefDRAW" value="" size="4" required />
             </p>
             <p><fmt:message key="change_bet.eScore"/>
-                <input type="text" name="coefExAcc" value="" size="4" required />
+                <input type="text" name="CoefExAcc" value="" size="4" required />
             </p>
         </div>
 

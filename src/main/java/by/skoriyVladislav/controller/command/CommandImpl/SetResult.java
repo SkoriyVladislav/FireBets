@@ -29,6 +29,6 @@ public class SetResult implements ICommand {
             request.setAttribute("error", ex);
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("/WEB-INF/jsp/make_bet.jsp").forward(request, response);
+        response.sendRedirect("main.jsp");
     }
 }

@@ -23,7 +23,7 @@ public class BetDAOImpl implements BetDAO {
     private final static String SELECT_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES = "SELECT * FROM bets WHERE Users_Login = ? AND Matches_idMatches = ?";
     private final static String DELETE_FROM_BETS_WHERE_USERS_LOGIN_AND_MATCHES_ID_MATCHES = "DELETE FROM bets WHERE Users_login = ? AND Matches_idMatches = ?";
     private final static String UPDATE_BETS_SET_STATUS_WHERE_MATCHES_ID_MATCHES = "UPDATE bets SET status = ? WHERE Matches_idMatches = ?";
-    private final static String SELECT_FROM_BETS_WHERE_MATCHES_ID_MATCHES = "SELECT * FROM matches LEFT JOIN bets ON matches.idMatches = bets.Matches_idMatches LEFT JOIN coefficient ON matches.idMatches = coefficient.Matches_idMatchs WHERE idMatches = ?";
+    private final static String SELECT_FROM_BETS_WHERE_MATCHES_ID_MATCHES = "SELECT * FROM matches LEFT JOIN bets ON matches.idMatches = bets.Matches_idMatches LEFT JOIN coefficient ON matches.idMatches = coefficient.Matches_idMatches WHERE idMatches = ?";
 
     @Override
     public boolean registrationBet(Bet bet, User user) throws DAOException {

@@ -1,1 +1,1 @@
-SELECT * FROM matches LEFT JOIN bets ON matches.idMatches = bets.Matches_idMatches LEFT JOIN coefficient ON matches.idMatches = coefficient.Matches_idMatchs WHERE idMatches = 6;
+SELECT * FROM matches LEFT JOIN bets ON matches.idMatches = bets.Matches_idMatches LEFT JOIN coefficient ON matches.idMatches = coefficient.Matches_idMatches WHERE idMatches = 6;
